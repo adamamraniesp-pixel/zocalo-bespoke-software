@@ -932,9 +932,21 @@ export function StatsBand() {
 export function FinalCta() {
   const reduced = useReducedMotion();
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const finalCtaRef = useRef<HTMLElement | null>(null);
+  const { setInFinalCta } = useHeaderTheme();
+
+  const { scrollYProgress } = useScroll({
+    target: finalCtaRef,
+    offset: ["start end", "end start"],
+  });
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setInFinalCta(v > 0 && v < 1);
+  });
 
   return (
     <section
+      ref={finalCtaRef}
+      id="final-cta"
       className="section relative overflow-hidden border-t border-border"
       onMouseMove={(e) => {
         if (reduced) return;
