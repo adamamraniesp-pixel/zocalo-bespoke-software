@@ -2,11 +2,12 @@ type Props = {
   size?: number;
   className?: string;
   title?: string;
+  wordmarkClassName?: string;
 };
 
 /**
- * Zocalo icon mark: a rounded accent-blue "Z" that resolves into an open loop,
- * overlapping a secondary-blue ring, with a gold dot at the top-right terminus.
+ * Zocalo icon mark: a light-blue rounded "3/Z" stroke with a gold dot at its
+ * top-right terminus, interlocking with a deep-blue ring at the lower left.
  */
 export function ZocaloMark({ size = 32, className, title = "Zocalo" }: Props) {
   return (
@@ -18,35 +19,39 @@ export function ZocaloMark({ size = 32, className, title = "Zocalo" }: Props) {
       aria-label={title}
       className={className}
     >
-      {/* rear ring — secondary blue */}
+      {/* interlocking ring — deep brand blue */}
       <circle
-        cx="25"
-        cy="41.5"
-        r="10.5"
+        cx="25.5"
+        cy="42"
+        r="11.5"
         fill="none"
-        stroke="var(--secondary)"
-        strokeWidth="5"
+        stroke="var(--brand-navy)"
+        strokeWidth="5.5"
       />
-      {/* Z stroke: top bar, diagonal, then open loop */}
+      {/* the "3/Z" stroke — light brand blue, drawn over the ring */}
       <path
-        d="M17.5 13H40L20 34.5H24A9.6 9.6 0 1 1 21.4 48.4"
+        d="M18 14.5H44L25 33.5H29.5A11.2 11.2 0 1 1 21.6 51.5"
         fill="none"
-        stroke="var(--primary)"
-        strokeWidth="5"
+        stroke="var(--brand-blue)"
+        strokeWidth="5.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="40" cy="13" r="3.3" fill="var(--gold)" />
+      {/* gold terminus dot */}
+      <circle cx="45" cy="14" r="4" fill="var(--brand-dot)" />
     </svg>
   );
 }
 
-
-export function ZocaloLogo({ size = 30, className }: Props) {
+export function ZocaloLogo({ size = 30, className, wordmarkClassName }: Props) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
       <ZocaloMark size={size} />
-      <span className="text-[1.05rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
+      <span
+        className={`text-[1.05rem] font-semibold tracking-[-0.02em] lowercase ${wordmarkClassName ?? ""}`}
+      >
+        zocalo
+      </span>
     </span>
   );
 }
