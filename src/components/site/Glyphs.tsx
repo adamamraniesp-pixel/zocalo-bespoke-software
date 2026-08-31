@@ -66,9 +66,32 @@ export function GlyphPipeline({ className, style }: GlyphProps) {
 export function GlyphWorkflow({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
-      <path d="M8 32h18" {...stroke} />
-      <path d="M26 32c10 0 10-16 20-16h14" {...stroke} opacity="0.8" />
-      <path d="M26 32c10 0 10 16 20 16h14" {...stroke} opacity="0.5" />
+      <motion.path
+        d="M8 32h18"
+        {...stroke}
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      />
+      <motion.path
+        d="M26 32c10 0 10-16 20-16h14"
+        {...stroke}
+        opacity="0.8"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.9, delay: 0.45, ease: "easeInOut" }}
+      />
+      <motion.path
+        d="M26 32c10 0 10 16 20 16h14"
+        {...stroke}
+        opacity="0.6"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.9, delay: 0.65, ease: "easeInOut" }}
+      />
       <circle cx="26" cy="32" r="3.5" {...stroke} />
       <circle cx="62" cy="16" r="3.5" fill="currentColor" opacity="0.8" className="idle-breathe" />
       <circle cx="62" cy="48" r="3.5" {...stroke} opacity="0.6" />

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FinalCta, PageHeader, Process, TrustStatement } from "@/components/site/sections";
+import { FinalCta, PageHeader, Process } from "@/components/site/sections";
 
 const title = "Process — Discover, Design, Build, Scale | Zocalo";
 const description =
@@ -28,7 +28,6 @@ function ProcessPage() {
         body="No discovery theatre and no black-box delivery. You see the system take shape from the first increment."
       />
       <Process heading={false} />
-      <TrustStatement />
       <FinalCta />
     </>
   );
