@@ -31,10 +31,10 @@ export function HeroBackdrop() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
-        className="absolute -inset-24 opacity-[0.5]"
+        className="absolute -inset-24 opacity-[0.7]"
         style={{
           background:
-            "radial-gradient(45% 45% at 20% 8%, color-mix(in oklab, var(--secondary) 60%, transparent) 0%, transparent 70%), radial-gradient(38% 40% at 82% 30%, color-mix(in oklab, var(--primary) 16%, transparent) 0%, transparent 72%)",
+            "radial-gradient(45% 45% at 20% 8%, color-mix(in oklab, var(--primary) 20%, transparent) 0%, transparent 70%), radial-gradient(38% 40% at 82% 30%, color-mix(in oklab, var(--gold) 8%, transparent) 0%, transparent 72%)",
           transform: `translate3d(${pos.x * -14}px, ${pos.y * -10}px, 0)`,
           transition: "transform 900ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
