@@ -5,8 +5,8 @@ type Props = {
 };
 
 /**
- * Zocalo icon mark: a geometric "Z" whose lower terminus resolves into two
- * interlocking rings, with a gold dot at the top-right terminus.
+ * Zocalo icon mark: a rounded accent-blue "Z" that resolves into an open loop,
+ * overlapping a secondary-blue ring, with a gold dot at the top-right terminus.
  */
 export function ZocaloMark({ size = 32, className, title = "Zocalo" }: Props) {
   return (
@@ -20,36 +20,27 @@ export function ZocaloMark({ size = 32, className, title = "Zocalo" }: Props) {
     >
       {/* rear ring — secondary blue */}
       <circle
-        cx="26"
-        cy="42"
-        r="11"
+        cx="25"
+        cy="41.5"
+        r="10.5"
         fill="none"
         stroke="var(--secondary)"
-        strokeWidth="4.5"
+        strokeWidth="5"
       />
-      {/* Z stroke: top bar, diagonal, middle bar */}
+      {/* Z stroke: top bar, diagonal, then open loop */}
       <path
-        d="M20 13H45L19 34H38"
+        d="M17.5 13H40L20 34.5H24A9.6 9.6 0 1 1 21.4 48.4"
         fill="none"
         stroke="var(--primary)"
-        strokeWidth="4.5"
+        strokeWidth="5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* front ring — accent blue, closing the form */}
-      <circle
-        cx="38"
-        cy="42"
-        r="11"
-        fill="none"
-        stroke="var(--primary)"
-        strokeWidth="4.5"
-        strokeLinecap="round"
-      />
-      <circle cx="45.5" cy="13" r="3.4" fill="var(--gold)" />
+      <circle cx="40" cy="13" r="3.3" fill="var(--gold)" />
     </svg>
   );
 }
+
 
 export function ZocaloLogo({ size = 30, className }: Props) {
   return (
