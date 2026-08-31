@@ -265,15 +265,19 @@ function ContactPage() {
                       <motion.div
                         whileHover={{ x: 8 }}
                         transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                        className="group grid grid-cols-[2.5rem_1fr] gap-4 border-b border-border py-7 last:border-b-0 md:gap-8"
+                        className="group grid grid-cols-[2rem_1fr] items-start gap-4 border-b border-border py-7 last:border-b-0 md:gap-8"
                       >
-                        <span className="pt-1 font-mono text-xs tracking-[0.14em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-gold">
+                        <span className="pt-[0.4rem] text-right text-[0.7rem] font-light tracking-[0.22em] tabular-nums text-[#75A7DF] transition-opacity duration-500 group-hover:opacity-100 opacity-80">
                           {e.n}
                         </span>
                         <div>
                           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                            <h3 className="text-base font-medium tracking-[-0.01em] md:text-lg">
+                            <h3 className="relative inline-block text-base font-medium tracking-[-0.01em] md:text-lg">
                               {e.title}
+                              <span
+                                aria-hidden
+                                className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[#75A7DF] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                              />
                             </h3>
                             <span className="text-[0.7rem] font-medium tracking-[0.14em] text-primary/80 uppercase">
                               {e.meta}
