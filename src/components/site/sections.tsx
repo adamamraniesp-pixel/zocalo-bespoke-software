@@ -718,8 +718,16 @@ export function WhyZocalo({
 
 
   return (
-    <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
-      <div className="container-x">
+    <section
+      className={`section relative overflow-hidden ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}
+    >
+      {/* faint animated grid — keeps the list feeling alive, stays at z-0 */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <div className="alive-grid absolute inset-0 opacity-[0.5]" />
+      </div>
+      <SectionFloaters variant="d" />
+
+      <div className="container-x relative z-10">
         {heading ? (
           <Reveal>
             <p className="eyebrow mb-12">Why Zocalo</p>
@@ -729,19 +737,7 @@ export function WhyZocalo({
         <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <ol className="counter-rhythm">
             {shown.map((r, i) => (
-              <Reveal key={r.title} delay={i * 150} distance={15} as="li">
-                <div className="group grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-8 first:border-t md:gap-8">
-                  <span className="pt-1 text-2xl leading-none font-light tracking-display text-muted-foreground/40 transition-colors duration-200 ease-out group-hover:text-gold md:text-[2rem]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-medium tracking-[-0.02em] md:text-xl">{r.title}</h3>
-                    <p className="mt-3 max-w-lg text-sm leading-[1.8] tracking-[0.005em] text-muted-foreground">
-                      {r.body}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
+              <ReasonRow key={r.title} reason={r} index={i} />
             ))}
           </ol>
 
@@ -760,6 +756,46 @@ export function WhyZocalo({
     </section>
   );
 }
+
+/** One reason: slides in from the left, tilts subtly and reveals an underline. */
+function ReasonRow({
+  reason,
+  index,
+}: {
+  reason: (typeof reasons)[number];
+  index: number;
+}) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, x: -32 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.45 }}
+      transition={{ duration: 0.6, delay: index * 0.09, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={reduced ? {} : { rotateX: 3, rotateY: -3, y: -3 }}
+      style={{ transformPerspective: 900 }}
+      className="group relative grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-8 first:border-t md:gap-8"
+    >
+      <span className="pt-1 text-2xl leading-none font-light tracking-display text-muted-foreground/40 transition-colors duration-200 ease-out group-hover:text-gold md:text-[2rem]">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <div>
+        <h3 className="relative inline-block text-lg font-medium tracking-[-0.02em] md:text-xl">
+          {reason.title}
+          <span
+            aria-hidden
+            className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-primary transition-transform duration-500 ease-out group-hover:scale-x-100"
+          />
+        </h3>
+        <p className="mt-3 max-w-lg text-sm leading-[1.8] tracking-[0.005em] text-muted-foreground">
+          {reason.body}
+        </p>
+      </div>
+    </motion.li>
+  );
+}
+
 
 /* --------------------------- STATS / CREDIBILITY -------------------------- */
 
