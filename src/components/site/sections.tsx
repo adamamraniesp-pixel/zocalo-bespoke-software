@@ -197,46 +197,48 @@ export function Services({
           </>
         ) : null}
 
-        {/* Every service is a hero-scale block; sizing alternates for rhythm */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-12">
+        {/* Hero-scale blocks; each one breathes in its own container */}
+        <div className="mt-12 grid grid-cols-1 gap-10 md:gap-14 lg:grid-cols-2">
           {items.map((s, i) => {
-            const wide = i === 0 || i === 3;
-            return (
-              <Reveal
-                key={s.title}
-                delay={(i % 2) * 70}
-                className={wide ? "md:col-span-7" : "md:col-span-5"}
+            const card = (
+              <article
+                className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_45%,transparent)] md:p-12"
+                style={{ ["--service-accent" as never]: s.accent }}
               >
-                <article
-                  className={`group flex h-full flex-col justify-between gap-10 border-t border-border py-12 transition-colors duration-300 ease-out hover:bg-card/40 md:py-16 ${
-                    wide ? "md:pr-16" : "md:border-l md:pl-16"
-                  }`}
-                >
-                  <div>
-                    <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
-                      {s.n}
-                    </span>
-                    <h3
-                      className={`mt-6 max-w-lg font-medium tracking-display ${
-                        wide
-                          ? "text-[1.9rem] leading-[1.12] md:text-[2.6rem]"
-                          : "text-[1.6rem] leading-[1.14] md:text-[2.1rem]"
-                      }`}
-                    >
-                      {s.title}
-                    </h3>
-                    <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
-                      {s.body}
-                    </p>
-                  </div>
-                  <DrawIn className={wide ? "w-full max-w-md" : "w-full max-w-sm"}>
-                    <s.Glyph className="w-full opacity-70 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-                  </DrawIn>
-                </article>
+                <div>
+                  <span
+                    className="font-mono text-sm tracking-[0.22em]"
+                    style={{ color: "var(--service-accent)" }}
+                  >
+                    {s.n}
+                  </span>
+                  <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
+                    {s.title}
+                  </h3>
+                  <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
+                    {s.body}
+                  </p>
+                </div>
+                <DrawIn className="w-full" delay={80}>
+                  <s.Glyph
+                    className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
+                    style={{ color: "var(--service-accent)" }}
+                  />
+                </DrawIn>
+              </article>
+            );
+
+            return (
+              <Reveal key={s.title} delay={(i % 2) * 150} distance={15} className="h-full">
+                {card}
               </Reveal>
             );
           })}
         </div>
+
+        {/* Living connector: a slow data-flow between AI Automation & Internal Platforms */}
+        {!condensed ? <ServiceConnector /> : null}
+
 
 
         {condensed ? (
