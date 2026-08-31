@@ -197,47 +197,32 @@ export function Services({
           </>
         ) : null}
 
-        {/* Hero-scale blocks; each one breathes in its own container */}
-        <div className="mt-12 grid grid-cols-1 gap-10 md:gap-14 lg:grid-cols-2">
-          {items.map((s, i) => {
-            const card = (
-              <article
-                className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_45%,transparent)] md:p-12"
-                style={{ ["--service-accent" as never]: s.accent }}
-              >
-                <div>
-                  <span
-                    className="font-mono text-sm tracking-[0.22em]"
-                    style={{ color: "var(--service-accent)" }}
-                  >
-                    {s.n}
-                  </span>
-                  <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
-                    {s.title}
-                  </h3>
-                  <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
-                    {s.body}
-                  </p>
+        {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
+        <div className="mt-12 flex flex-col gap-10 md:gap-14">
+          {rows.map((row, rowIndex) => (
+            <div
+              key={row.map((r) => r.n).join("-")}
+              className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-0"
+            >
+              {row.map((s, i) => (
+                <Reveal
+                  key={s.title}
+                  delay={i * 150}
+                  distance={15}
+                  className={`h-full ${i === 0 ? "lg:pr-0" : ""}`}
+                >
+                  <ServiceCard service={s} />
+                </Reveal>
+              ))}
+              {row.length === 2 ? (
+                <div className="hidden lg:order-2 lg:block lg:w-14 xl:w-16">
+                  {row.some((s) => s.n === "03") ? <ServiceConnector /> : null}
                 </div>
-                <DrawIn className="w-full" delay={80}>
-                  <s.Glyph
-                    className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
-                    style={{ color: "var(--service-accent)" }}
-                  />
-                </DrawIn>
-              </article>
-            );
-
-            return (
-              <Reveal key={s.title} delay={(i % 2) * 150} distance={15} className="h-full">
-                {card}
-              </Reveal>
-            );
-          })}
+              ) : null}
+            </div>
+          ))}
         </div>
 
-        {/* Living connector: a slow data-flow between AI Automation & Internal Platforms */}
-        {!condensed ? <ServiceConnector /> : null}
 
 
 
