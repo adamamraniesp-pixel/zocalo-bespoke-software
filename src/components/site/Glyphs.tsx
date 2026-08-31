@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { motion } from "framer-motion";
 
 type GlyphProps = { className?: string; style?: CSSProperties };
 
@@ -6,7 +7,7 @@ const base = "text-primary";
 const stroke = {
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 1.25,
+  strokeWidth: 1.7,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
 };
@@ -20,7 +21,7 @@ export function GlyphAnswering({ className, style }: GlyphProps) {
       <path d="M44 44v8h-8" {...stroke} />
       <path d="M60 22a14 14 0 0 1 0 20" {...stroke} opacity="0.75" />
       <path d="M70 15a24 24 0 0 1 0 34" {...stroke} opacity="0.45" />
-      <path d="M80 8a34 34 0 0 1 0 48" {...stroke} opacity="0.2" />
+      <path d="M80 8a34 34 0 0 1 0 48" {...stroke} opacity="0.38" />
       {/* idle: signal rings expanding on a loop */}
       <g className="idle-pulse">
         <circle cx="52" cy="32" r="10" {...stroke} />
@@ -40,7 +41,7 @@ export function GlyphPipeline({ className, style }: GlyphProps) {
       <rect x="8" y="12" width="20" height="40" rx="2" {...stroke} opacity="0.5" />
       <rect x="34" y="12" width="20" height="40" rx="2" {...stroke} opacity="0.7" />
       <rect x="60" y="12" width="20" height="40" rx="2" {...stroke} />
-      <rect x="12" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.25" />
+      <rect x="12" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.42" />
       <rect x="38" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.45" />
       <rect x="64" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.8" />
       <path d="M84 32h6M86 28l4 4-4 4" {...stroke} />
@@ -71,7 +72,7 @@ export function GlyphWorkflow({ className, style }: GlyphProps) {
       <circle cx="26" cy="32" r="3.5" {...stroke} />
       <circle cx="62" cy="16" r="3.5" fill="currentColor" opacity="0.8" className="idle-breathe" />
       <circle cx="62" cy="48" r="3.5" {...stroke} opacity="0.6" />
-      <path d="M68 16h20M68 48h14" {...stroke} opacity="0.35" />
+      <path d="M68 16h20M68 48h14" {...stroke} opacity="0.52" />
       {/* idle: intake packet travelling into the branch */}
       <circle
         className="idle-packet"
@@ -86,16 +87,48 @@ export function GlyphWorkflow({ className, style }: GlyphProps) {
   );
 }
 
-/** Sequential steps ascending — client onboarding. */
+/** Sequential steps ascending — client onboarding. Draws itself in view. */
 export function GlyphOnboarding({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
-      <path d="M8 52h16V40h16V28h16V16h16" {...stroke} />
-      <circle cx="24" cy="40" r="2.5" fill="currentColor" opacity="0.3" />
-      <circle cx="40" cy="28" r="2.5" fill="currentColor" opacity="0.55" />
-      <circle cx="56" cy="16" r="2.5" fill="currentColor" opacity="0.8" className="idle-breathe" />
-      <path d="M72 16h16" {...stroke} opacity="0.35" />
-      <path d="M8 8v44" {...stroke} opacity="0.25" />
+      <path d="M8 8v44" {...stroke} opacity="0.42" />
+      <motion.path
+        d="M8 52h16V40h16V28h16V16h16"
+        {...stroke}
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1.4, ease: "easeInOut" }}
+      />
+      {[
+        { cx: 24, cy: 40, d: 0.5 },
+        { cx: 40, cy: 28, d: 0.85 },
+        { cx: 56, cy: 16, d: 1.2 },
+      ].map((p) => (
+        <motion.circle
+          key={p.cx}
+          cx={p.cx}
+          cy={p.cy}
+          r="2.8"
+          fill="currentColor"
+          initial={{ opacity: 0, scale: 0.4 }}
+          whileInView={{ opacity: [0, 0.9, 0.55, 0.9], scale: [0.4, 1.35, 1, 1.15] }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            opacity: { duration: 2.4, delay: p.d, repeat: Infinity, repeatDelay: 0.6 },
+            scale: { duration: 2.4, delay: p.d, repeat: Infinity, repeatDelay: 0.6 },
+          }}
+        />
+      ))}
+      <motion.path
+        d="M72 16h16"
+        {...stroke}
+        opacity="0.52"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
+      />
     </svg>
   );
 }
@@ -107,7 +140,7 @@ export function GlyphPlinth({ className, style }: GlyphProps) {
       <path d="M10 70h100" {...stroke} />
       <path d="M22 70V52h76v18" {...stroke} opacity="0.75" />
       <path d="M34 52V36h52v16" {...stroke} opacity="0.5" />
-      <path d="M46 36V22h28v14" {...stroke} opacity="0.3" />
+      <path d="M46 36V22h28v14" {...stroke} opacity="0.48" />
       <circle cx="60" cy="14" r="3" fill="currentColor" opacity="0.7" />
     </svg>
   );
@@ -119,7 +152,7 @@ export function GlyphPlinth({ className, style }: GlyphProps) {
 export function GlyphBespoke({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
-      <rect x="8" y="8" width="80" height="48" rx="2" {...stroke} opacity="0.28" />
+      <rect x="8" y="8" width="80" height="48" rx="2" {...stroke} opacity="0.45" />
       <rect x="20" y="17" width="56" height="30" rx="2" {...stroke} opacity="0.55" />
       <rect x="34" y="25" width="28" height="14" rx="2" {...stroke} />
       <path d="M8 32h12M76 32h12M48 8v9M48 47v9" {...stroke} opacity="0.4" />
@@ -137,8 +170,8 @@ export function GlyphCrm({ className, style }: GlyphProps) {
       <circle cx="10" cy="32" r="4" {...stroke} />
       <circle cx="68" cy="18" r="3" fill="currentColor" opacity="0.85" />
       <circle cx="68" cy="32" r="3" fill="currentColor" opacity="0.55" />
-      <circle cx="68" cy="46" r="3" fill="currentColor" opacity="0.3" />
-      <path d="M74 18h14M74 32h10M74 46h6" {...stroke} opacity="0.3" />
+      <circle cx="68" cy="46" r="3" fill="currentColor" opacity="0.48" />
+      <path d="M74 18h14M74 32h10M74 46h6" {...stroke} opacity="0.48" />
     </svg>
   );
 }
@@ -165,7 +198,7 @@ export function GlyphPlatform({ className, style }: GlyphProps) {
     <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <rect x="8" y="10" width="34" height="20" rx="2" {...stroke} />
       <rect x="48" y="10" width="40" height="12" rx="2" {...stroke} opacity="0.55" />
-      <rect x="48" y="26" width="40" height="28" rx="2" {...stroke} opacity="0.35" />
+      <rect x="48" y="26" width="40" height="28" rx="2" {...stroke} opacity="0.52" />
       <rect x="8" y="34" width="34" height="20" rx="2" {...stroke} opacity="0.7" />
       <path d="M14 18h14M14 42h20M54 34h26M54 42h18" {...stroke} opacity="0.45" />
     </svg>
@@ -213,8 +246,8 @@ export function GlyphDiscover({ className, style }: GlyphProps) {
       <path d="M60 40 88 22" {...stroke} />
       <path d="M82 40a22 22 0 0 0-22-22" {...stroke} opacity="0.6" />
       <path d="M94 40a34 34 0 0 0-34-34" {...stroke} opacity="0.4" />
-      <path d="M106 40a46 46 0 0 0-46-46" {...stroke} opacity="0.2" />
-      <path d="M14 40h34M60 52v22" {...stroke} opacity="0.3" />
+      <path d="M106 40a46 46 0 0 0-46-46" {...stroke} opacity="0.38" />
+      <path d="M14 40h34M60 52v22" {...stroke} opacity="0.48" />
       <circle cx="88" cy="22" r="2.5" fill="currentColor" opacity="0.85" />
       <circle cx="36" cy="58" r="2" fill="currentColor" opacity="0.5" />
     </svg>
@@ -227,9 +260,9 @@ export function GlyphDesign({ className, style }: GlyphProps) {
     <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <rect x="10" y="10" width="100" height="60" rx="2" {...stroke} opacity="0.45" />
       <path d="M10 24h100M40 24v46" {...stroke} opacity="0.5" />
-      <rect x="48" y="32" width="34" height="8" rx="1.5" fill="currentColor" opacity="0.35" />
+      <rect x="48" y="32" width="34" height="8" rx="1.5" fill="currentColor" opacity="0.52" />
       <path d="M48 50h50M48 58h32" {...stroke} opacity="0.5" />
-      <path d="M18 34h14M18 42h10M18 50h14" {...stroke} opacity="0.35" />
+      <path d="M18 34h14M18 42h10M18 50h14" {...stroke} opacity="0.52" />
       <path d="M86 46l14 14-6 1-2 6-6-21z" {...stroke} />
       <circle cx="86" cy="46" r="2" fill="currentColor" />
     </svg>
@@ -242,10 +275,10 @@ export function GlyphBuild({ className, style }: GlyphProps) {
     <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <rect x="12" y="52" width="56" height="16" rx="2" {...stroke} opacity="0.85" />
       <rect x="20" y="34" width="56" height="16" rx="2" {...stroke} opacity="0.6" />
-      <rect x="28" y="16" width="56" height="16" rx="2" {...stroke} opacity="0.35" />
+      <rect x="28" y="16" width="56" height="16" rx="2" {...stroke} opacity="0.52" />
       <path d="M74 60h30M96 55l8 5-8 5" {...stroke} opacity="0.7" />
       <path d="M82 42h22M98 37l6 5-6 5" {...stroke} opacity="0.45" />
-      <path d="M90 24h14" {...stroke} opacity="0.25" />
+      <path d="M90 24h14" {...stroke} opacity="0.42" />
       <circle cx="20" cy="60" r="2" fill="currentColor" />
     </svg>
   );
@@ -258,7 +291,7 @@ export function GlyphScale({ className, style }: GlyphProps) {
       <path d="M10 62h20c14 0 12-24 26-24h18" {...stroke} opacity="0.75" />
       <path d="M30 62c14 0 14 8 26 8h18" {...stroke} opacity="0.4" />
       <path d="M74 38h12M80 33l6 5-6 5" {...stroke} opacity="0.7" />
-      <path d="M74 70h10" {...stroke} opacity="0.35" />
+      <path d="M74 70h10" {...stroke} opacity="0.52" />
       <circle cx="30" cy="62" r="3.5" {...stroke} />
       <path d="M92 26a14 14 0 1 1-14-14" {...stroke} opacity="0.8" />
       <path d="M78 6l6 6-6 6" {...stroke} opacity="0.8" />
