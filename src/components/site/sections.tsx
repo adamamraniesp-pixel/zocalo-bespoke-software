@@ -349,7 +349,7 @@ export function Problem() {
 
           <Reveal delay={240}>
             <p className="mt-12 border-t border-border pt-8 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl">
-              We build software that eliminates those bottlenecks.
+              We build software that eliminates those bottlenecks
             </p>
           </Reveal>
         </div>
@@ -729,7 +729,7 @@ function BedrockPanel() {
         <blockquote className="mt-6 text-[2.1rem] leading-[1.08] font-light tracking-[-0.03em] text-cream text-balance md:text-[3rem]">
           A foundation,
           <br />
-          <span className="text-cream/60">not a subscription.</span>
+          <span className="text-cream/60">not a subscription</span>
         </blockquote>
 
         {/* Cut-away foundation layers */}
@@ -864,7 +864,7 @@ export function StatsBand() {
 
         <Reveal delay={380}>
           <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
-            Clients stay because the system keeps earning its place.{" "}
+            Clients stay because the system keeps earning its place{" "}
             <span className="text-muted-foreground">
               {/* [PLACEHOLDER] retention figure */}
               Retention across engagements: 100%.
