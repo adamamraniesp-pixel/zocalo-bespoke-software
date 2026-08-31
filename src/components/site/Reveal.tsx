@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ComponentType, type ElementType, type ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -10,7 +10,7 @@ type RevealProps = {
 const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 export function Reveal({ children, delay = 0, className, as }: RevealProps) {
-  const Tag = (as ?? "div") as ElementType;
+  const Tag = (as ?? "div") as ComponentType<Record<string, unknown>>;
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
 
