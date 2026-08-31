@@ -677,12 +677,13 @@ function BedrockPanel() {
     return () => io.disconnect();
   }, []);
 
+  // Narrow at the top, widest at the base — a plinth in cut-away section.
   const layers = [
-    { width: "100%", accent: "var(--amber)" },
+    { width: "58%", accent: "var(--primary)" },
+    { width: "70%", accent: "var(--teal)" },
+    { width: "82%", accent: "var(--cream)" },
     { width: "92%", accent: "var(--gold)" },
-    { width: "84%", accent: "var(--teal)" },
-    { width: "74%", accent: "var(--primary)" },
-    { width: "62%", accent: "var(--indigo)" },
+    { width: "100%", accent: "var(--amber)" },
   ];
 
   return (
@@ -706,17 +707,17 @@ function BedrockPanel() {
         </blockquote>
 
         {/* Cut-away foundation layers */}
-        <div aria-hidden className="mt-10 flex flex-col items-start gap-2">
+        <div aria-hidden className="mt-10 flex flex-col items-center gap-2">
           {layers.map((l, i) => (
             <div
               key={l.width}
               className="bedrock-layer h-7 rounded-md border md:h-9"
               style={{
                 width: l.width,
-                marginLeft: `${i * 5}%`,
                 borderColor: `color-mix(in oklab, ${l.accent} 55%, transparent)`,
                 background: `linear-gradient(90deg, color-mix(in oklab, ${l.accent} 30%, transparent), transparent)`,
                 ["--layer-delay" as never]: `${(layers.length - 1 - i) * 110}ms`,
+                boxShadow: `0 10px 30px -18px color-mix(in oklab, ${l.accent} 60%, transparent)`,
               }}
             />
           ))}
