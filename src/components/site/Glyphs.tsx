@@ -1,4 +1,6 @@
-type GlyphProps = { className?: string };
+import type { CSSProperties } from "react";
+
+type GlyphProps = { className?: string; style?: CSSProperties };
 
 const base = "text-primary";
 const stroke = {
@@ -10,9 +12,9 @@ const stroke = {
 };
 
 /** Ringing handset with outbound signal arcs — after-hours answering. */
-export function GlyphAnswering({ className }: GlyphProps) {
+export function GlyphAnswering({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M16 20c0 16 12 28 28 28" {...stroke} />
       <path d="M12 16h10l4 9-6 4" {...stroke} />
       <path d="M44 44v8h-8" {...stroke} />
@@ -25,9 +27,9 @@ export function GlyphAnswering({ className }: GlyphProps) {
 }
 
 /** Staged pipeline columns with a moving card — CRM. */
-export function GlyphPipeline({ className }: GlyphProps) {
+export function GlyphPipeline({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <rect x="8" y="12" width="20" height="40" rx="2" {...stroke} opacity="0.5" />
       <rect x="34" y="12" width="20" height="40" rx="2" {...stroke} opacity="0.7" />
       <rect x="60" y="12" width="20" height="40" rx="2" {...stroke} />
@@ -40,9 +42,9 @@ export function GlyphPipeline({ className }: GlyphProps) {
 }
 
 /** Branching intake path with checkpoints — patient workflow. */
-export function GlyphWorkflow({ className }: GlyphProps) {
+export function GlyphWorkflow({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M8 32h18" {...stroke} />
       <path d="M26 32c10 0 10-16 20-16h14" {...stroke} opacity="0.8" />
       <path d="M26 32c10 0 10 16 20 16h14" {...stroke} opacity="0.5" />
@@ -55,9 +57,9 @@ export function GlyphWorkflow({ className }: GlyphProps) {
 }
 
 /** Sequential steps ascending — client onboarding. */
-export function GlyphOnboarding({ className }: GlyphProps) {
+export function GlyphOnboarding({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M8 52h16V40h16V28h16V16h16" {...stroke} />
       <circle cx="24" cy="40" r="2.5" fill="currentColor" opacity="0.3" />
       <circle cx="40" cy="28" r="2.5" fill="currentColor" opacity="0.55" />
@@ -69,9 +71,9 @@ export function GlyphOnboarding({ className }: GlyphProps) {
 }
 
 /** Plinth / base diagram used as the Why section's editorial mark. */
-export function GlyphPlinth({ className }: GlyphProps) {
+export function GlyphPlinth({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 120 80" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 120 80" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M10 70h100" {...stroke} />
       <path d="M22 70V52h76v18" {...stroke} opacity="0.75" />
       <path d="M34 52V36h52v16" {...stroke} opacity="0.5" />
@@ -84,9 +86,9 @@ export function GlyphPlinth({ className }: GlyphProps) {
 /* ------------------------------ SERVICE GLYPHS ---------------------------- */
 
 /** Nested blueprint frames converging on a core — bespoke engineering. */
-export function GlyphBespoke({ className }: GlyphProps) {
+export function GlyphBespoke({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <rect x="8" y="8" width="80" height="48" rx="2" {...stroke} opacity="0.28" />
       <rect x="20" y="17" width="56" height="30" rx="2" {...stroke} opacity="0.55" />
       <rect x="34" y="25" width="28" height="14" rx="2" {...stroke} />
@@ -97,9 +99,9 @@ export function GlyphBespoke({ className }: GlyphProps) {
 }
 
 /** Node-and-stage relationship graph — CRM systems. */
-export function GlyphCrm({ className }: GlyphProps) {
+export function GlyphCrm({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M14 32h20M46 32h18M46 18h18M46 46h18" {...stroke} opacity="0.5" />
       <path d="M34 32c6 0 6-14 12-14M34 32c6 0 6 14 12 14" {...stroke} opacity="0.7" />
       <circle cx="10" cy="32" r="4" {...stroke} />
@@ -112,9 +114,9 @@ export function GlyphCrm({ className }: GlyphProps) {
 }
 
 /** Decision diamond with automated branches — AI automation. */
-export function GlyphAi({ className }: GlyphProps) {
+export function GlyphAi({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M6 32h18" {...stroke} opacity="0.6" />
       <path d="M38 32l12-12 12 12-12 12z" {...stroke} />
       <path d="M24 32h14" {...stroke} />
@@ -128,9 +130,9 @@ export function GlyphAi({ className }: GlyphProps) {
 }
 
 /** Modular panel arrangement — internal platforms. */
-export function GlyphPlatform({ className }: GlyphProps) {
+export function GlyphPlatform({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <rect x="8" y="10" width="34" height="20" rx="2" {...stroke} />
       <rect x="48" y="10" width="40" height="12" rx="2" {...stroke} opacity="0.55" />
       <rect x="48" y="26" width="40" height="28" rx="2" {...stroke} opacity="0.35" />
@@ -141,9 +143,9 @@ export function GlyphPlatform({ className }: GlyphProps) {
 }
 
 /** Browser frame with performance meter — websites. */
-export function GlyphWebsite({ className }: GlyphProps) {
+export function GlyphWebsite({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <rect x="8" y="10" width="80" height="44" rx="3" {...stroke} opacity="0.6" />
       <path d="M8 20h80" {...stroke} opacity="0.6" />
       <circle cx="15" cy="15" r="1.5" fill="currentColor" opacity="0.7" />
@@ -156,9 +158,9 @@ export function GlyphWebsite({ className }: GlyphProps) {
 }
 
 /** Cross-connected endpoints — integrations. */
-export function GlyphIntegration({ className }: GlyphProps) {
+export function GlyphIntegration({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <circle cx="16" cy="16" r="5" {...stroke} />
       <circle cx="16" cy="48" r="5" {...stroke} opacity="0.6" />
       <circle cx="80" cy="16" r="5" {...stroke} opacity="0.6" />
@@ -173,7 +175,7 @@ export function GlyphIntegration({ className }: GlyphProps) {
 /* ------------------------------ PROCESS GLYPHS ---------------------------- */
 
 /** Concentric scan arcs around a central node — discovery. */
-export function GlyphDiscover({ className }: GlyphProps) {
+export function GlyphDiscover({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 120 80" className={className} aria-hidden>
       <circle cx="60" cy="40" r="3" fill="currentColor" />
@@ -190,7 +192,7 @@ export function GlyphDiscover({ className }: GlyphProps) {
 }
 
 /** Wireframe sketch with a pointer — design. */
-export function GlyphDesign({ className }: GlyphProps) {
+export function GlyphDesign({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 120 80" className={className} aria-hidden>
       <rect x="10" y="10" width="100" height="60" rx="2" {...stroke} opacity="0.45" />
@@ -205,7 +207,7 @@ export function GlyphDesign({ className }: GlyphProps) {
 }
 
 /** Layered production tiers shipped forward — build. */
-export function GlyphBuild({ className }: GlyphProps) {
+export function GlyphBuild({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 120 80" className={className} aria-hidden>
       <rect x="12" y="52" width="56" height="16" rx="2" {...stroke} opacity="0.85" />
@@ -220,7 +222,7 @@ export function GlyphBuild({ className }: GlyphProps) {
 }
 
 /** Branching expansion with a feedback cycle — scale. */
-export function GlyphScale({ className }: GlyphProps) {
+export function GlyphScale({ className, style }: GlyphProps) {
   return (
     <svg viewBox="0 0 120 80" className={className} aria-hidden>
       <path d="M10 62h20c14 0 12-24 26-24h18" {...stroke} opacity="0.75" />
