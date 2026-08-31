@@ -46,12 +46,40 @@ export function HeroBackdrop() {
           transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       />
+
+      {/* Continuously drifting geometry — always moving, cursor-independent */}
+      <div className="absolute inset-0">
+        <svg
+          className="absolute top-[12%] right-[6%] h-40 w-40 text-primary opacity-[0.22] float-slow md:h-56 md:w-56"
+          viewBox="0 0 100 100"
+          aria-hidden
+        >
+          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="0.7" />
+          <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.7" />
+        </svg>
+        <svg
+          className="spin-slow absolute bottom-[16%] right-[22%] h-24 w-24 text-gold opacity-[0.2] md:h-32 md:w-32"
+          viewBox="0 0 100 100"
+          aria-hidden
+        >
+          <rect x="14" y="14" width="72" height="72" fill="none" stroke="currentColor" strokeWidth="0.8" />
+        </svg>
+        <svg
+          className="float-slower absolute top-[52%] left-[4%] h-20 w-20 text-secondary opacity-[0.18] md:h-28 md:w-28"
+          viewBox="0 0 100 100"
+          aria-hidden
+        >
+          <path d="M50 8 92 82H8Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
+        </svg>
+      </div>
+
       <div
         className="absolute inset-x-0 bottom-0 h-40"
         style={{
           background: "linear-gradient(to bottom, transparent, var(--background))",
         }}
       />
+
     </div>
   );
 }

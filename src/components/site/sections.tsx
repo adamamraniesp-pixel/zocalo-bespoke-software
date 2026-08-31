@@ -3,9 +3,11 @@ import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { DrawIn, Reveal, StaggerWords } from "./motion";
+import { DrawIn, Reveal, StaggerWords, useElementProgress } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { HeroSystemGraphic } from "./HeroSystemGraphic";
+
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
   GlyphAi,
@@ -81,33 +83,41 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center overflow-hidden px-6 pt-32 pb-24 md:px-10 md:pt-40"
     >
       <HeroBackdrop />
-      <div className="container-x relative">
-        <Reveal>
-          <p className="eyebrow">Bespoke Software Engineering</p>
-        </Reveal>
-        <Reveal delay={60}>
-          <h1 className="mt-7 max-w-4xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
-            Software Built Around Your Business.
-          </h1>
-        </Reveal>
-        <Reveal delay={120}>
-          <p className="mt-8 max-w-2xl text-base leading-[1.75] text-muted-foreground md:text-lg">
-            We design and build bespoke software—from CRMs and AI systems to internal platforms,
-            automation, and high-performance websites—built around the way your business actually
-            works.
-          </p>
-        </Reveal>
-        <Reveal delay={180}>
-          <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <MagneticCta to="/contact" variant="gold">
-              Book a Consultation
-            </MagneticCta>
-            <MagneticCta to="/what-we-build" variant="primary">
-              View Our Work
-            </MagneticCta>
-          </div>
-        </Reveal>
+      <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div>
+          <Reveal>
+            <p className="eyebrow">Bespoke Software Engineering</p>
+          </Reveal>
+          <Reveal delay={60}>
+            <h1 className="mt-7 max-w-3xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
+              Software Built Around Your Business
+            </h1>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="mt-8 max-w-2xl text-base leading-[1.75] text-muted-foreground md:text-lg">
+              We design and build bespoke software—from CRMs and AI systems to internal platforms,
+              automation, and high-performance websites—built around the way your business actually
+              works.
+            </p>
+          </Reveal>
+          <Reveal delay={180}>
+            <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <MagneticCta to="/contact" variant="gold">
+                Book a Consultation
+              </MagneticCta>
+              <MagneticCta to="/what-we-build" variant="primary">
+                View Our Work
+              </MagneticCta>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Self-drawing system schematic */}
+        <div className="hidden lg:block">
+          <HeroSystemGraphic className="h-auto w-full" />
+        </div>
       </div>
+
     </section>
   );
 }
@@ -188,42 +198,50 @@ const services: Service[] = [
 
 export const serviceNames = services.map((s) => s.title);
 
-function ServiceCard({ service }: { service: Service }) {
+/**
+ * Services identity: a full-width vertical stacked list. Each service is one
+ * hairline-separated row — numeral rail, copy column, diagram parked to the
+ * side. Deliberately *not* a card grid, so it reads differently from
+ * /what-we-build.
+ */
+function ServiceRow({ service, index }: { service: Service; index: number }) {
   return (
-    <article
-      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_50%,transparent)] md:p-12"
-      style={{ ["--service-accent" as never]: service.accent }}
-    >
-      <div>
-        <span className="font-mono text-sm tracking-[0.22em]" style={{ color: service.accent }}>
+    <Reveal delay={index * 70} distance={14} as="li">
+      <article
+        className="group relative grid grid-cols-1 items-center gap-8 border-t border-border py-12 transition-[background-color,padding] duration-300 ease-out hover:bg-card/40 md:grid-cols-[6rem_minmax(0,1fr)_16rem] md:gap-12 md:py-16 lg:grid-cols-[7rem_minmax(0,1fr)_20rem]"
+        style={{ ["--service-accent" as never]: service.accent }}
+      >
+        {/* accent edge that grows on hover */}
+        <span
+          aria-hidden
+          className="absolute top-0 left-0 h-px w-0 origin-left transition-[width] duration-500 ease-out group-hover:w-full"
+          style={{ background: service.accent }}
+        />
+
+        <span
+          className="font-mono text-sm tracking-[0.22em] transition-transform duration-500 ease-out group-hover:translate-x-1 md:text-base"
+          style={{ color: service.accent }}
+        >
           {service.n}
         </span>
-        <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
-          {service.title}
-        </h3>
-        <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
-          {service.body}
-        </p>
-      </div>
-      <DrawIn className="w-full" delay={80}>
-        <service.Glyph
-          className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
-          style={{ color: service.accent }}
-        />
-      </DrawIn>
-    </article>
-  );
-}
 
-/** Slow, always-on data flow living in the gap between two service blocks. */
-function ServiceConnector() {
-  return (
-    <div aria-hidden className="relative mx-auto h-full w-px">
-      <div className="connector-rail absolute inset-y-6 left-1/2 w-px -translate-x-1/2 opacity-60" />
-      <div className="absolute inset-y-6 left-1/2 w-px">
-        <div className="connector-orb absolute top-0 left-1/2 h-2 w-2 rounded-full bg-primary shadow-[0_0_16px_4px_color-mix(in_oklab,var(--primary)_45%,transparent)]" />
-      </div>
-    </div>
+        <div>
+          <h3 className="text-[1.65rem] leading-[1.14] font-medium tracking-display md:text-[2.15rem]">
+            {service.title}
+          </h3>
+          <p className="mt-5 max-w-xl text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
+            {service.body}
+          </p>
+        </div>
+
+        <DrawIn className="w-full md:justify-self-end" delay={60}>
+          <service.Glyph
+            className="h-28 w-full opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-32"
+            style={{ color: service.accent }}
+          />
+        </DrawIn>
+      </article>
+    </Reveal>
   );
 }
 
@@ -235,14 +253,9 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
-  const rows: Service[][] = [];
-  for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
-
-
-
 
   return (
-    <section className={`services-field relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
+    <section className={`relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
       <div className="container-x relative">
         {heading ? (
           <>
@@ -251,48 +264,21 @@ export function Services({
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Engineering across the full operational stack.
+                Engineering across the full operational stack
               </h2>
             </Reveal>
           </>
         ) : null}
 
-        {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
-        <div className="mt-12 flex flex-col gap-12 md:gap-16">
-          {rows.map((row) => {
-            const linked = row.some((s) => s.n === "03");
-            const [first, second] = row;
-            if (!first) return null;
-            return (
-              <div
-                key={row.map((r) => r.n).join("-")}
-                className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_2.5rem_1fr] lg:gap-0 xl:grid-cols-[1fr_3.75rem_1fr]"
-              >
-                <Reveal distance={15} className="h-full lg:col-start-1">
-                  <ServiceCard service={first} />
-                </Reveal>
-
-                <div className="hidden lg:col-start-2 lg:block">
-                  {linked ? <ServiceConnector /> : null}
-                </div>
-
-                {second ? (
-                  <Reveal delay={150} distance={15} className="h-full lg:col-start-3">
-                    <ServiceCard service={second} />
-                  </Reveal>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-
-
-
-
+        <ol className="mt-4 border-b border-border">
+          {items.map((s, i) => (
+            <ServiceRow key={s.n} service={s} index={i} />
+          ))}
+        </ol>
 
         {condensed ? (
           <Reveal delay={200}>
-            <div className="mt-12 border-t border-border pt-10">
+            <div className="mt-12">
               <LearnMore to="/services" label="All services" />
             </div>
           </Reveal>
@@ -301,6 +287,7 @@ export function Services({
     </section>
   );
 }
+
 
 /* -------------------------------- PROBLEM --------------------------------- */
 
@@ -330,7 +317,7 @@ export function Problem() {
           </Reveal>
           <Reveal delay={50}>
             <h2 className="mt-6 text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-              Growth stalls in the gaps between your tools.
+              Growth stalls in the gaps between your tools
             </h2>
           </Reveal>
           <Reveal delay={100}>
@@ -362,7 +349,7 @@ export function Problem() {
 
           <Reveal delay={240}>
             <p className="mt-12 border-t border-border pt-8 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl">
-              We build software that eliminates those bottlenecks.
+              We build software that eliminates those bottlenecks
             </p>
           </Reveal>
         </div>
@@ -473,7 +460,7 @@ export function WhatWeBuild({
               </Reveal>
               <Reveal delay={50}>
                 <h2 className="mt-6 max-w-xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                  Systems in production, by sector.
+                  Systems in production, by sector
                 </h2>
               </Reveal>
             </div>
@@ -540,62 +527,68 @@ const steps = [
   },
 ];
 
-/** Editorial process block. `scale` drives the asymmetric large/small rhythm. */
+/**
+ * One timeline step. `active` is driven by the section's scroll progress, so the
+ * step animates in exactly as the rail fill reaches its marker.
+ */
 function ProcessStep({
   step,
   index,
-  prominent,
+  active,
 }: {
   step: (typeof steps)[number];
   index: number;
-  prominent: boolean;
+  active: boolean;
 }) {
   return (
-    <Reveal delay={index * 60} as="li" className={prominent ? "md:col-span-7" : "md:col-span-5"}>
-      <article
-        className={`group relative flex flex-col overflow-hidden border-t border-border transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-border-strong hover:bg-card/40 ${
-          prominent ? "gap-10 px-1 pt-9 pb-14 md:px-8 md:pt-12 md:pb-16" : "gap-8 px-1 pt-8 pb-12 md:px-8 md:pt-10 md:pb-14"
-        }`}
-      >
-        <div>
-          <div className="flex items-baseline gap-5">
-            <span
-              className={`origin-left font-light tracking-display transition-transform duration-500 ease-out group-hover:scale-105 ${step.accent} ${
-                prominent ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
-              }`}
-            >
-              {step.n}
-            </span>
-            <span
-              aria-hidden
-              className="h-px flex-1 origin-left scale-x-100 bg-border transition-colors duration-300 ease-out group-hover:bg-primary/50"
-            />
-          </div>
-          <h3
-            className={`mt-8 font-medium tracking-display ${
-              prominent ? "text-2xl md:text-[2.4rem]" : "text-xl md:text-[1.75rem]"
-            }`}
-          >
-            {step.title}
-          </h3>
-          <p
-            className={`mt-5 text-sm leading-[1.8] text-muted-foreground ${
-              prominent ? "max-w-md md:text-base" : "max-w-sm"
-            }`}
-          >
-            {step.body}
-          </p>
-        </div>
-        <DrawIn
-          delay={index * 120}
-          className={`${step.accent} opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 ${
-            prominent ? "w-full max-w-[16rem] self-end" : "w-full max-w-[11rem]"
+    <li className="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-6 pb-16 last:pb-0 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-12 md:pb-24">
+      {/* marker sitting on the rail */}
+      <div className="relative">
+        <span
+          aria-hidden
+          className={`absolute top-2 left-[0.4rem] size-3 rounded-full border transition-[background-color,border-color,box-shadow,transform] duration-500 ease-out md:left-[0.65rem] ${
+            active ? "scale-110 border-transparent" : "border-border-strong bg-background"
           }`}
+          style={
+            active
+              ? {
+                  backgroundColor: "currentColor",
+                  boxShadow: "0 0 0 5px color-mix(in oklab, currentColor 16%, transparent)",
+                }
+              : undefined
+          }
+        />
+        <span
+          className={`block pl-9 font-light tracking-display transition-[opacity,transform] duration-700 ease-out md:pl-12 ${step.accent} ${
+            active ? "translate-y-0 opacity-100" : "translate-y-2 opacity-30"
+          } text-3xl md:text-5xl`}
         >
-          <step.Glyph className="w-full" />
-        </DrawIn>
-      </article>
-    </Reveal>
+          {step.n}
+        </span>
+      </div>
+
+      <div
+        className={`group transition-[opacity,transform] duration-700 ease-out ${
+          active ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        }`}
+        style={{ transitionDelay: `${index * 40}ms` }}
+      >
+        <div className="flex flex-col gap-8 border-t border-border pt-8 md:flex-row md:items-start md:justify-between md:gap-14">
+          <div>
+            <h3 className="text-2xl font-medium tracking-display md:text-[2.2rem]">{step.title}</h3>
+            <p className="mt-5 max-w-md text-sm leading-[1.8] text-muted-foreground md:text-base">
+              {step.body}
+            </p>
+          </div>
+          <DrawIn
+            delay={80}
+            className={`w-full max-w-[13rem] shrink-0 ${step.accent} opacity-70 transition-opacity duration-300 ease-out hover:opacity-100`}
+          >
+            <step.Glyph className="w-full" />
+          </DrawIn>
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -606,6 +599,8 @@ export function Process({
   condensed?: boolean;
   heading?: boolean;
 }) {
+  const { ref, progress } = useElementProgress<HTMLOListElement>();
+
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
       <div className="container-x">
@@ -616,15 +611,31 @@ export function Process({
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Discover → Design → Build → Scale.
+                Discover → Design → Build → Scale
               </h2>
             </Reveal>
           </>
         ) : null}
 
-        <ol className="mt-6 grid grid-cols-1 gap-x-14 md:grid-cols-12">
+        <ol ref={ref} className="relative mt-14">
+          {/* rail + scroll-driven fill */}
+          <div
+            aria-hidden
+            className="absolute top-2 bottom-2 left-[0.95rem] w-px bg-border md:left-[1.2rem]"
+          >
+            <div
+              className="proc-rail-fill h-full w-px bg-primary"
+              style={{ ["--proc-progress" as never]: progress }}
+            />
+          </div>
+
           {steps.map((s, i) => (
-            <ProcessStep key={s.n} step={s} index={i} prominent={i === 0 || i === 3} />
+            <ProcessStep
+              key={s.n}
+              step={s}
+              index={i}
+              active={progress >= (i + 0.35) / steps.length}
+            />
           ))}
         </ol>
 
@@ -639,6 +650,7 @@ export function Process({
     </section>
   );
 }
+
 
 /* ------------------------------- WHY ZOCALO ------------------------------- */
 
@@ -717,7 +729,7 @@ function BedrockPanel() {
         <blockquote className="mt-6 text-[2.1rem] leading-[1.08] font-light tracking-[-0.03em] text-cream text-balance md:text-[3rem]">
           A foundation,
           <br />
-          <span className="text-cream/60">not a subscription.</span>
+          <span className="text-cream/60">not a subscription</span>
         </blockquote>
 
         {/* Cut-away foundation layers */}
@@ -803,14 +815,91 @@ export function WhyZocalo({
   );
 }
 
+/* --------------------------- STATS / CREDIBILITY -------------------------- */
+
+/*
+ * [PLACEHOLDER] Swap these figures for real numbers when available.
+ * Keep the shape: value + unit + label.
+ */
+const stats = [
+  { value: "$250K+", label: "in software delivered" },
+  { value: "6", label: "disciplines under one roof" },
+  { value: "100%", label: "custom-built, zero templates" },
+  { value: "10+", label: "years of engineering experience" },
+];
+
+/** Credibility band — large numerals, short labels. Homepage social proof. */
+export function StatsBand() {
+  return (
+    <section className="section border-t border-border">
+      <div className="container-x">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <Reveal>
+            <p className="eyebrow">By the numbers</p>
+          </Reveal>
+          <Reveal delay={60}>
+            <p className="max-w-sm text-sm leading-[1.7] text-muted-foreground">
+              Engineering measured in systems that stayed in production — not decks.
+            </p>
+          </Reveal>
+        </div>
+
+        <dl className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 90} distance={14}>
+              <div className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span className="block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl">
+                    {s.value}
+                  </span>
+                  <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
+                    {s.label}
+                  </span>
+                </dd>
+              </div>
+            </Reveal>
+          ))}
+        </dl>
+
+        <Reveal delay={380}>
+          <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
+            Clients stay because the system keeps earning its place.{" "}
+            <span className="text-muted-foreground">
+              {/* [PLACEHOLDER] retention figure */}
+              Retention across engagements: 100%.
+            </span>
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------- FINAL CTA -------------------------------- */
 
 export function FinalCta() {
   return (
-    <section className="section border-t border-border">
-      <div className="container-x text-center">
+    <section className="section relative overflow-hidden border-t border-border">
+      {/* continuously animated field behind the closing conversion point */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="cta-field absolute -inset-24 opacity-70" />
+        <div className="cta-grid absolute inset-0 opacity-[0.35]" />
+        <div
+          className="absolute inset-x-0 top-0 h-32"
+          style={{ background: "linear-gradient(to bottom, var(--background), transparent)" }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-32"
+          style={{ background: "linear-gradient(to top, var(--background), transparent)" }}
+        />
+      </div>
+
+      <div className="container-x relative text-center">
         <StaggerWords
           text="Ready to Build Software That Fits Your Business?"
+          stagger={75}
+          scale
           className="mx-auto max-w-3xl text-3xl leading-[1.1] font-medium tracking-display text-balance md:text-[3.25rem]"
         />
         <Reveal delay={140}>
@@ -820,15 +909,20 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={220}>
           <div className="mt-11 flex justify-center">
-            <MagneticCta to="/contact" variant="gold" glow>
-              Let's Build It
-            </MagneticCta>
+            <div className="halo-ring relative rounded-md">
+              <div className="shimmer-sweep relative overflow-hidden rounded-md">
+                <MagneticCta to="/contact" variant="gold">
+                  Let's Build It
+                </MagneticCta>
+              </div>
+            </div>
           </div>
         </Reveal>
       </div>
     </section>
   );
 }
+
 
 /* --------------------------------- FOOTER --------------------------------- */
 
@@ -1003,7 +1097,7 @@ export function WhyTeaserVisual() {
       <blockquote className="border-l border-gold/60 pl-6 text-xl leading-[1.3] font-light tracking-[-0.025em] text-balance transition-colors duration-300 ease-out md:text-[1.9rem]">
         A foundation,{" "}
         <span className="text-muted-foreground group-hover/teaser:text-foreground">
-          not a subscription.
+          not a subscription
         </span>
       </blockquote>
     </Reveal>

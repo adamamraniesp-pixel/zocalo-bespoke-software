@@ -138,7 +138,7 @@ function ContactPage() {
     <>
       <PageHeader
         eyebrow="Contact"
-        title="Let's map what should be engineered."
+        title="Let's map what should be engineered"
         body="Tell us how your business runs. We'll show you what should be engineered."
       />
 
@@ -153,7 +153,7 @@ function ContactPage() {
                     What the consultation covers
                   </p>
                   <h2 className="mt-6 text-2xl leading-[1.18] font-medium tracking-display text-balance md:text-[2.1rem]">
-                    A structured review before a single line of code.
+                    A structured review before a single line of code
                   </h2>
                   <div className="mt-10 h-px w-full bg-border" />
 
@@ -189,7 +189,7 @@ function ContactPage() {
                     Request a slot
                   </p>
                   <h2 className="mt-6 text-xl font-medium tracking-[-0.02em] md:text-2xl">
-                    Start the conversation.
+                    Start the conversation
                   </h2>
                   <div className="mt-8 mb-9 h-px w-full bg-border" />
                   <ConsultationForm />

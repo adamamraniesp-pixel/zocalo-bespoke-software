@@ -24,7 +24,7 @@ function WhatWeBuildPage() {
     <>
       <PageHeader
         eyebrow="What We Build"
-        title="Examples of systems in production."
+        title="Examples of systems in production"
         body="Different operations, different architectures. Each one engineered around a specific bottleneck."
       />
       <WhatWeBuild heading={false} />

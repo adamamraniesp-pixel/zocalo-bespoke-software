@@ -122,11 +122,14 @@ export function StaggerWords({
   className,
   stagger = 55,
   as,
+  scale = false,
 }: {
   text: string;
   className?: string;
   stagger?: number;
   as?: ElementType;
+  /** Adds a slight scale-up alongside the rise for a more pronounced entrance. */
+  scale?: boolean;
 }) {
   const Tag = (as ?? "h2") as ElementType;
   const ref = useRef<HTMLElement | null>(null);
@@ -152,18 +155,22 @@ export function StaggerWords({
     return () => io.disconnect();
   }, []);
 
+  const hidden = scale ? "translateY(0.85em) scale(0.9)" : "translateY(0.7em)";
+  const duration = scale ? 780 : 620;
+
   return (
     <Tag ref={ref} className={className}>
       {words.map((w, i) => (
-        <span key={`${w}-${i}`} className="inline-block overflow-hidden align-bottom">
+        <span key={`${w}-${i}`} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
           <span
             className="inline-block"
             style={{
               opacity: shown ? 1 : 0,
-              transform: shown || reduced ? "none" : "translateY(0.7em)",
+              transform: shown || reduced ? "none" : hidden,
+              transformOrigin: "left bottom",
               transition: reduced
                 ? `opacity 400ms ease-out ${i * 30}ms`
-                : `opacity 620ms ${EASE} ${i * stagger}ms, transform 620ms ${EASE} ${i * stagger}ms`,
+                : `opacity ${duration}ms ${EASE} ${i * stagger}ms, transform ${duration}ms ${EASE} ${i * stagger}ms`,
             }}
           >
             {w}
@@ -174,6 +181,45 @@ export function StaggerWords({
     </Tag>
   );
 }
+
+/* ----------------------- Element-scoped scroll progress -------------------- */
+
+/**
+ * Returns 0..1 progress of an element travelling through the viewport.
+ * Used to drive the process timeline fill.
+ */
+export function useElementProgress<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const start = window.innerHeight * 0.82;
+      const total = rect.height + start - window.innerHeight * 0.28;
+      const travelled = start - rect.top;
+      setProgress(Math.min(1, Math.max(0, travelled / Math.max(1, total))));
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return { ref, progress };
+}
+
 
 /* ------------------------------ Magnetic hover ---------------------------- */
 

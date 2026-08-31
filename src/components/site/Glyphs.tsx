@@ -21,7 +21,14 @@ export function GlyphAnswering({ className, style }: GlyphProps) {
       <path d="M60 22a14 14 0 0 1 0 20" {...stroke} opacity="0.75" />
       <path d="M70 15a24 24 0 0 1 0 34" {...stroke} opacity="0.45" />
       <path d="M80 8a34 34 0 0 1 0 48" {...stroke} opacity="0.2" />
+      {/* idle: signal rings expanding on a loop */}
+      <g className="idle-pulse">
+        <circle cx="52" cy="32" r="10" {...stroke} />
+        <circle cx="52" cy="32" r="18" {...stroke} />
+        <circle cx="52" cy="32" r="26" {...stroke} />
+      </g>
       <circle cx="52" cy="32" r="2" fill="currentColor" />
+
     </svg>
   );
 }
@@ -37,6 +44,19 @@ export function GlyphPipeline({ className, style }: GlyphProps) {
       <rect x="38" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.45" />
       <rect x="64" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.8" />
       <path d="M84 32h6M86 28l4 4-4 4" {...stroke} />
+      {/* idle: card travelling across the pipeline stages */}
+      <rect
+        className="idle-packet"
+        x="12"
+        y="40"
+        width="12"
+        height="7"
+        rx="1.5"
+        fill="currentColor"
+        opacity="0.9"
+        style={{ ["--packet-distance" as never]: "52px" }}
+      />
+
     </svg>
   );
 }
@@ -49,9 +69,19 @@ export function GlyphWorkflow({ className, style }: GlyphProps) {
       <path d="M26 32c10 0 10-16 20-16h14" {...stroke} opacity="0.8" />
       <path d="M26 32c10 0 10 16 20 16h14" {...stroke} opacity="0.5" />
       <circle cx="26" cy="32" r="3.5" {...stroke} />
-      <circle cx="62" cy="16" r="3.5" fill="currentColor" opacity="0.8" />
+      <circle cx="62" cy="16" r="3.5" fill="currentColor" opacity="0.8" className="idle-breathe" />
       <circle cx="62" cy="48" r="3.5" {...stroke} opacity="0.6" />
       <path d="M68 16h20M68 48h14" {...stroke} opacity="0.35" />
+      {/* idle: intake packet travelling into the branch */}
+      <circle
+        className="idle-packet"
+        cx="10"
+        cy="32"
+        r="2"
+        fill="currentColor"
+        style={{ ["--packet-distance" as never]: "48px" }}
+      />
+
     </svg>
   );
 }
@@ -63,7 +93,7 @@ export function GlyphOnboarding({ className, style }: GlyphProps) {
       <path d="M8 52h16V40h16V28h16V16h16" {...stroke} />
       <circle cx="24" cy="40" r="2.5" fill="currentColor" opacity="0.3" />
       <circle cx="40" cy="28" r="2.5" fill="currentColor" opacity="0.55" />
-      <circle cx="56" cy="16" r="2.5" fill="currentColor" opacity="0.8" />
+      <circle cx="56" cy="16" r="2.5" fill="currentColor" opacity="0.8" className="idle-breathe" />
       <path d="M72 16h16" {...stroke} opacity="0.35" />
       <path d="M8 8v44" {...stroke} opacity="0.25" />
     </svg>
