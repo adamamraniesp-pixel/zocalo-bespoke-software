@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Check } from "lucide-react";
 import { PageHeader } from "@/components/site/sections";
 import { SectionFloaters } from "@/components/site/SectionFloaters";
 import { useReducedMotion } from "@/components/site/motion";
@@ -71,19 +71,24 @@ function FieldShell({
       >
         {label}
       </label>
-      <div className="relative mt-3 rounded-md transition-shadow duration-300 ease-out group-hover:shadow-[0_0_0_1px_color-mix(in_oklab,var(--primary)_45%,transparent)] group-focus-within:shadow-[0_0_0_1px_var(--primary),0_10px_30px_-16px_color-mix(in_oklab,var(--primary)_70%,transparent)]">
+      <motion.div
+        whileHover={{ y: -1 }}
+        transition={{ type: "spring", stiffness: 320, damping: 24 }}
+        className="focus-pulse relative mt-3 rounded-md transition-shadow duration-300 ease-out group-hover:shadow-[0_0_0_1px_color-mix(in_oklab,var(--primary)_45%,transparent)]"
+      >
         {children}
         <span
           aria-hidden
           className="pointer-events-none absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-500 ease-out group-focus-within:scale-x-100"
         />
-      </div>
+      </motion.div>
     </div>
   );
 }
 
 function ConsultationForm() {
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
+  const [sent, setSent] = useState(false);
 
   const mailto = () => {
     const body = [
@@ -99,13 +104,16 @@ function ConsultationForm() {
   };
 
   const inputCls =
-    "w-full rounded-md border border-border bg-background/70 px-4 py-3 text-base text-foreground transition-colors duration-200 ease-out outline-none placeholder:text-muted-foreground/45 focus:border-primary";
+    "w-full rounded-md border border-border bg-background/70 px-4 py-3 text-base text-foreground transition-colors duration-200 ease-out outline-none placeholder:text-muted-foreground/45 focus:border-gold";
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        window.location.href = mailto();
+        setSent(true);
+        window.setTimeout(() => {
+          window.location.href = mailto();
+        }, 650);
       }}
       className="space-y-6"
     >
@@ -154,12 +162,44 @@ function ConsultationForm() {
       <motion.button
         type="submit"
         whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ scale: 0.96, y: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
         className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-gold px-7 py-4 text-sm font-medium tracking-[0.02em] text-gold-foreground shadow-[0_14px_36px_-20px_color-mix(in_oklab,var(--gold)_80%,transparent)] transition-colors duration-200 ease-out hover:bg-gold/90"
       >
-        Book a consultation
-        <ArrowUpRight className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        <AnimatePresence mode="wait" initial={false}>
+          {sent ? (
+            <motion.span
+              key="sent"
+              className="inline-flex items-center gap-2"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: EASE }}
+            >
+              <motion.span
+                initial={{ scale: 0, rotate: -30 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 380, damping: 18 }}
+                className="inline-flex"
+              >
+                <Check className="size-4" />
+              </motion.span>
+              Opening your email
+            </motion.span>
+          ) : (
+            <motion.span
+              key="idle"
+              className="inline-flex items-center gap-2"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: EASE }}
+            >
+              Book a consultation
+              <ArrowUpRight className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.button>
 
       <p className="text-xs leading-[1.7] text-muted-foreground">
@@ -188,7 +228,7 @@ function ContactPage() {
 
       <section className="section relative overflow-hidden border-t border-border pt-0 md:pt-0">
         <SectionFloaters variant="b" />
-        <div className="container-x relative">
+        <div className="container-x relative z-10">
           <div className="overflow-hidden rounded-lg border border-border bg-card/60">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               {/* Left — value proposition and formal timeline */}
@@ -222,7 +262,11 @@ function ContactPage() {
                       viewport={{ once: true, amount: 0.5 }}
                       transition={{ duration: 0.6, delay: 0.18 + i * 0.12, ease: EASE }}
                     >
-                      <div className="group grid grid-cols-[2.5rem_1fr] gap-4 border-b border-border py-7 last:border-b-0 md:gap-8">
+                      <motion.div
+                        whileHover={{ x: 8 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                        className="group grid grid-cols-[2.5rem_1fr] gap-4 border-b border-border py-7 last:border-b-0 md:gap-8"
+                      >
                         <span className="pt-1 font-mono text-xs tracking-[0.14em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-gold">
                           {e.n}
                         </span>
@@ -239,7 +283,7 @@ function ContactPage() {
                             {e.body}
                           </p>
                         </div>
-                      </div>
+                      </motion.div>
                     </motion.li>
                   ))}
                 </ol>
