@@ -381,7 +381,7 @@ export function WhyZocalo() {
             <Reveal
               key={r.title}
               delay={i * 60}
-              className={i === reasons.length - 1 ? "sm:col-span-2" : undefined}
+              className={i === reasons.length - 1 ? "sm:col-span-2" : ""}
             >
               <div className="h-full bg-background p-8 transition-colors duration-500 hover:bg-card">
                 <r.icon className="size-5 text-primary" />
