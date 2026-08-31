@@ -633,3 +633,48 @@ export function SiteFooter() {
     </footer>
   );
 }
+
+/* --------------------------- HOMEPAGE TEASERS ----------------------------- */
+
+export function SectionTeaser({
+  eyebrow,
+  title,
+  body,
+  to,
+  label = "Learn more",
+  first = false,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  to: Path;
+  label?: string;
+  first?: boolean;
+}) {
+  return (
+    <section className={`section${first ? "" : " border-t border-border"}`}>
+      <div className="container-x grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="md:col-span-4">
+          <Reveal>
+            <p className="eyebrow">{eyebrow}</p>
+          </Reveal>
+        </div>
+        <div className="md:col-span-8">
+          <Reveal delay={60}>
+            <h2 className="max-w-2xl text-[1.75rem] leading-[1.15] font-medium tracking-display text-balance md:text-[2.5rem]">
+              {title}
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="mt-6 max-w-xl text-base leading-[1.75] text-muted-foreground">{body}</p>
+          </Reveal>
+          <Reveal delay={180}>
+            <div className="mt-8">
+              <LearnMore to={to} label={label} />
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
