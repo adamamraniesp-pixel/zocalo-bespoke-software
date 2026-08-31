@@ -40,19 +40,26 @@ function PainCard({ pain, index }: { pain: (typeof pains)[number]; index: number
 
   return (
     <motion.li
-      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.85, delay: index * 0.05, ease: EASE }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: EASE }}
     >
-      <div className="group relative h-full rounded-xl border border-border bg-card/60 px-6 py-7 transition-[border-color,box-shadow] duration-500 ease-out hover:border-primary/60 md:px-7 md:py-8">
-        <span className="absolute top-5 right-6 font-mono text-[0.65rem] leading-none font-light tracking-[0.18em] text-muted-foreground/45 transition-colors duration-500 ease-out group-hover:text-muted-foreground/70">
-          {pain.n}
-        </span>
-        <h3 className="mt-1 max-w-[16rem] text-[1.05rem] leading-[1.4] font-medium tracking-[-0.01em] text-foreground md:text-lg">
-          {pain.title}
-        </h3>
-        <p className="mt-2.5 text-sm leading-[1.7] text-muted-foreground">{pain.body}</p>
+      <div className="group relative h-full rounded-xl border border-border bg-card/60 px-6 py-7 transition-[border-color,box-shadow] duration-500 ease-out hover:border-primary/40 md:px-7 md:py-8">
+        <div className="flex items-start gap-4">
+          <span
+            aria-hidden
+            className="mt-2.5 h-6 w-px rounded-full transition-all duration-500 ease-out group-hover:h-8 group-hover:opacity-80"
+            style={{
+              background: "color-mix(in oklab, var(--primary) 45%, transparent)",
+              boxShadow: "0 0 10px color-mix(in oklab, var(--primary) 35%, transparent)",
+            }}
+          />
+          <h3 className="max-w-[16rem] text-[1.05rem] leading-[1.4] font-medium tracking-[-0.01em] text-foreground md:text-lg">
+            {pain.title}
+          </h3>
+        </div>
+        <p className="mt-3.5 text-sm leading-[1.7] text-muted-foreground">{pain.body}</p>
       </div>
     </motion.li>
   );
