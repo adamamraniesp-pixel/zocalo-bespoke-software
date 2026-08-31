@@ -310,6 +310,14 @@ const pains = [
   "Lost opportunities",
 ];
 
+const painAccents = [
+  "var(--primary)",
+  "var(--amber)",
+  "var(--teal)",
+  "var(--gold)",
+  "var(--secondary)",
+];
+
 export function Problem() {
   return (
     <section className="section border-t border-border">
