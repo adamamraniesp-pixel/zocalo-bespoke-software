@@ -309,16 +309,104 @@ export function GlyphBuild({ className, style }: GlyphProps) {
 
 /** Branching expansion with a feedback cycle — scale. */
 export function GlyphScale({ className, style }: GlyphProps) {
+  const rings = [16, 26, 36];
   return (
     <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
-      <path d="M10 62h20c14 0 12-24 26-24h18" {...stroke} opacity="0.75" />
-      <path d="M30 62c14 0 14 8 26 8h18" {...stroke} opacity="0.4" />
-      <path d="M74 38h12M80 33l6 5-6 5" {...stroke} opacity="0.7" />
-      <path d="M74 70h10" {...stroke} opacity="0.52" />
-      <circle cx="30" cy="62" r="3.5" {...stroke} />
-      <path d="M92 26a14 14 0 1 1-14-14" {...stroke} opacity="0.8" />
-      <path d="M78 6l6 6-6 6" {...stroke} opacity="0.8" />
-      <path d="M10 74V44M22 74V52M34 74V38M46 74V28" {...stroke} opacity="0.22" />
+      {/* expanding concentric node rings */}
+      {rings.map((r, i) => (
+        <motion.circle
+          key={r}
+          cx="52"
+          cy="42"
+          r={r}
+          {...stroke}
+          strokeWidth={0.9}
+          initial={{ opacity: 0, scale: 0.6 }}
+          whileInView={{ opacity: [0.15, 0.5, 0.15], scale: [0.85, 1.06, 0.85] }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{
+            duration: 4.4,
+            delay: i * 0.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{ transformOrigin: "52px 42px" }}
+        />
+      ))}
+
+      {/* glowing circular growth arrow */}
+      <motion.g
+        initial={{ pathLength: 0, opacity: 0 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 1.3, ease: "easeInOut" }}
+      >
+        <motion.path
+          d="M52 18a24 24 0 1 1-22 14.5"
+          {...stroke}
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <path d="M45 13.5 52 18l-4.5 7" {...stroke} />
+      </motion.g>
+
+      {/* orbiting node + satellite nodes */}
+      <motion.circle
+        cx="52"
+        cy="42"
+        r="4"
+        fill="currentColor"
+        animate={{ opacity: [0.55, 1, 0.55] }}
+        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      {[
+        { x: 88, y: 22 },
+        { x: 100, y: 46 },
+        { x: 84, y: 64 },
+      ].map((n, i) => (
+        <g key={`${n.x}-${n.y}`}>
+          <motion.path
+            d={`M56 42 ${n.x} ${n.y}`}
+            {...stroke}
+            strokeWidth={0.9}
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 0.55 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.5 + i * 0.18, ease: "easeOut" }}
+          />
+          <motion.circle
+            cx={n.x}
+            cy={n.y}
+            r="3"
+            fill="currentColor"
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.9 + i * 0.18, ease: "backOut" }}
+            style={{ transformOrigin: `${n.x}px ${n.y}px` }}
+          />
+        </g>
+      ))}
+
+      {/* rising baseline bars */}
+      {[
+        { x: 10, h: 12 },
+        { x: 18, h: 20 },
+        { x: 26, h: 30 },
+      ].map((b, i) => (
+        <motion.path
+          key={b.x}
+          d={`M${b.x} 74V${74 - b.h}`}
+          {...stroke}
+          strokeWidth={1.4}
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 0.35 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 + i * 0.14, ease: "easeOut" }}
+        />
+      ))}
     </svg>
   );
 }
