@@ -8,7 +8,7 @@ import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } fr
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { SectionFloaters } from "./SectionFloaters";
-import { HeroLogoStage } from "./HeroLogoStage";
+
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
 
 import { ZocaloLogo } from "./ZocaloLogo";
@@ -86,8 +86,8 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center overflow-hidden px-6 pt-32 pb-24 md:px-10 md:pt-40"
     >
       <HeroBackdrop />
-      <div className="container-x relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-        <div>
+      <div className="container-x relative z-10 grid items-center gap-14">
+        <div className="max-w-3xl">
           <Reveal>
             <p className="eyebrow">Bespoke Software Engineering</p>
           </Reveal>
@@ -114,12 +114,8 @@ export function Hero() {
             </div>
           </Reveal>
         </div>
-
-        {/* Brand mark, floating in 3D amid drifting geometry */}
-        <div className="hidden lg:block">
-          <HeroLogoStage />
-        </div>
       </div>
+
 
     </section>
   );
