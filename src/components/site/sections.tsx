@@ -473,6 +473,36 @@ const steps = [
 ];
 
 /**
+ * Process illustration: draws itself in on scroll, breathes with a slow float
+ * and tilts in 3D on hover — the same treatment for every step.
+ */
+function ProcessGlyph({ step, index }: { step: (typeof steps)[number]; index: number }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      className={`w-full max-w-[17rem] shrink-0 md:max-w-[18rem] ${step.accent}`}
+      style={{ transformPerspective: 900 }}
+      initial={{ opacity: 0, y: 26, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={reduced ? {} : { rotateX: 6, rotateY: -8, scale: 1.05 }}
+    >
+      <motion.div
+        animate={reduced ? {} : { y: [0, -8, 0] }}
+        transition={{ duration: 6 + index, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <DrawIn delay={120 + index * 60}>
+          <step.Glyph className="w-full" />
+        </DrawIn>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+
+/**
  * One timeline step. `active` is driven by the section's scroll progress, so the
  * step animates in exactly as the rail fill reaches its marker.
  */
