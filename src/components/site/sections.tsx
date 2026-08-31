@@ -99,8 +99,10 @@ export function Hero() {
         </Reveal>
         <Reveal delay={180}>
           <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <MagneticCta to="/contact">Book a Consultation</MagneticCta>
-            <MagneticCta to="/what-we-build" variant="ghost">
+            <MagneticCta to="/contact" variant="gold">
+              Book a Consultation
+            </MagneticCta>
+            <MagneticCta to="/what-we-build" variant="primary">
               View Our Work
             </MagneticCta>
           </div>
