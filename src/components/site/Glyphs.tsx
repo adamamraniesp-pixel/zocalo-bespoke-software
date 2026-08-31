@@ -116,7 +116,7 @@ export function GlyphOnboarding({ className, style }: GlyphProps) {
     <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} style={style} aria-hidden>
       <path d="M8 8v44" {...stroke} opacity="0.42" />
       <motion.path
-        d="M8 52h16V40h16V28h16V16h16"
+        d="M8 52h20V38h20V24h20"
         {...stroke}
         initial={{ pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
@@ -124,9 +124,9 @@ export function GlyphOnboarding({ className, style }: GlyphProps) {
         transition={{ duration: 1.4, ease: "easeInOut" }}
       />
       {[
-        { cx: 24, cy: 40, d: 0.5 },
-        { cx: 40, cy: 28, d: 0.85 },
-        { cx: 56, cy: 16, d: 1.2 },
+        { cx: 28, cy: 38, d: 0.5 },
+        { cx: 48, cy: 24, d: 0.9 },
+        { cx: 68, cy: 24, d: 1.3 },
       ].map((p) => (
         <motion.circle
           key={p.cx}
@@ -144,7 +144,7 @@ export function GlyphOnboarding({ className, style }: GlyphProps) {
         />
       ))}
       <motion.path
-        d="M72 16h16"
+        d="M68 24h20"
         {...stroke}
         opacity="0.52"
         initial={{ pathLength: 0 }}
@@ -152,6 +152,7 @@ export function GlyphOnboarding({ className, style }: GlyphProps) {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
       />
+
     </svg>
   );
 }
