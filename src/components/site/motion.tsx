@@ -73,7 +73,7 @@ type RevealProps = {
 };
 
 export function Reveal({ children, delay = 0, className, as, distance = 16, style }: RevealProps) {
-  const Tag = (as ?? "div") as ElementType;
+  const Tag = (as ?? "div") as React.ComponentType<Record<string, unknown>>;
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
   const reduced = useReducedMotion();
@@ -128,7 +128,7 @@ export function StaggerWords({
   stagger?: number;
   as?: ElementType;
 }) {
-  const Tag = (as ?? "h2") as ElementType;
+  const Tag = (as ?? "h2") as React.ComponentType<Record<string, unknown>>;
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
   const reduced = useReducedMotion();
