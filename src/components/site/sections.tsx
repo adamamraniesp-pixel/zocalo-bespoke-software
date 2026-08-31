@@ -646,6 +646,89 @@ const reasons = [
   },
 ];
 
+/**
+ * Architectural bedrock centrepiece: staggered foundation layers that stack up
+ * on scroll, with a slow drifting mote field for a sense of life.
+ */
+function BedrockPanel() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [stacked, setStacked] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setStacked(true);
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const layers = [
+    { width: "100%", accent: "var(--amber)" },
+    { width: "92%", accent: "var(--gold)" },
+    { width: "84%", accent: "var(--teal)" },
+    { width: "74%", accent: "var(--primary)" },
+    { width: "62%", accent: "var(--indigo)" },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      data-stacked={stacked ? "true" : "false"}
+      className="relative overflow-hidden rounded-2xl border border-border-strong p-9 md:p-12 lg:sticky lg:top-28"
+      style={{
+        backgroundImage:
+          "linear-gradient(160deg, var(--indigo) 0%, var(--slateblue) 55%, color-mix(in oklab, var(--gold) 55%, var(--slateblue)) 100%)",
+      }}
+    >
+      <div aria-hidden className="motes pointer-events-none absolute inset-0 opacity-25" />
+
+      <div className="relative">
+        <p className="eyebrow text-cream/70">The name</p>
+        <blockquote className="mt-6 text-[2.1rem] leading-[1.08] font-light tracking-[-0.03em] text-cream text-balance md:text-[3rem]">
+          A foundation,
+          <br />
+          <span className="text-cream/60">not a subscription.</span>
+        </blockquote>
+
+        {/* Cut-away foundation layers */}
+        <div aria-hidden className="mt-10 flex flex-col items-start gap-2">
+          {layers.map((l, i) => (
+            <div
+              key={l.width}
+              className="bedrock-layer h-7 rounded-md border md:h-9"
+              style={{
+                width: l.width,
+                marginLeft: `${i * 5}%`,
+                borderColor: `color-mix(in oklab, ${l.accent} 55%, transparent)`,
+                background: `linear-gradient(90deg, color-mix(in oklab, ${l.accent} 30%, transparent), transparent)`,
+                ["--layer-delay" as never]: `${(layers.length - 1 - i) * 110}ms`,
+              }}
+            />
+          ))}
+        </div>
+
+        <Reveal delay={700} distance={15}>
+          <p className="mt-10 max-w-md text-lg leading-[1.75] tracking-[0.005em] text-cream/80 md:text-xl">
+            Zocalo means the base a structure is built on. We engineer the layer your business stands
+            on for the next decade.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  );
+}
+
+
 export function WhyZocalo({
   condensed = false,
   heading = true,
