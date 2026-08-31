@@ -51,17 +51,19 @@ export function HeroSystemGraphic({ className }: { className?: string }) {
       <motion.div
         animate={
           reduced
-            ? { rotateX: 0, rotateY: 0, y: 0 }
+            ? { rotateX: 0, rotateY: 0, y: 0, scale: 1 }
             : {
-                rotateX: tilt.x,
-                rotateY: tilt.y,
-                y: [0, -10, 0],
+                rotateX: [0, 3.5, 0, -3.5, 0],
+                rotateY: [0, -7, 0, 7, 0],
+                y: [0, -14, 0, -8, 0],
+                scale: [1, 1.025, 1, 1.015, 1],
               }
         }
         transition={{
-          rotateX: { type: "spring", stiffness: 60, damping: 18 },
-          rotateY: { type: "spring", stiffness: 60, damping: 18 },
-          y: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+          rotateX: { duration: 24, repeat: Infinity, ease: "easeInOut" },
+          rotateY: { duration: 30, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 14, repeat: Infinity, ease: "easeInOut" },
+          scale: { duration: 18, repeat: Infinity, ease: "easeInOut" },
         }}
         style={{ transformStyle: "preserve-3d" }}
       >
