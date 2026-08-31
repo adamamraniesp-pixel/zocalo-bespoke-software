@@ -8,7 +8,8 @@ import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } fr
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { SectionFloaters } from "./SectionFloaters";
-import { HeroSystemGraphic } from "./HeroSystemGraphic";
+import { HeroLogoStage } from "./HeroLogoStage";
+import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
 
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
