@@ -232,34 +232,8 @@
   }
 }
 
-/* Stroke draw-in reveal for inline line glyphs */
-.glyph-draw svg path,
-.glyph-draw svg circle,
-.glyph-draw svg rect,
-.glyph-draw svg line {
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
-  transition:
-    stroke-dashoffset 1100ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 600ms ease-out;
-}
-
-.glyph-draw.is-drawn svg path,
-.glyph-draw.is-drawn svg circle,
-.glyph-draw.is-drawn svg rect,
-.glyph-draw.is-drawn svg line {
-  stroke-dashoffset: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .glyph-draw svg path,
-  .glyph-draw svg circle,
-  .glyph-draw svg rect,
-  .glyph-draw svg line {
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-    transition: none;
-  }
+
 
 
   .dot-drift,
