@@ -5,11 +5,11 @@ type Props = {
 };
 
 /**
- * Zocalo icon mark: a light accent-blue "Z" whose tail resolves into an open
- * ring, overlapping a deep steel-blue ring, with a gold dot at the top-right
- * terminus of the Z stroke.
+ * Zocalo icon mark: a light accent-blue "Z" — top bar with a gold dot terminus,
+ * a steep diagonal that runs into an open accent-blue loop, overlapping a deep
+ * steel-blue ring behind it.
  */
-export function ZocaloMark({ size = 40, className, title = "Zocalo" }: Props) {
+export function ZocaloMark({ size = 44, className, title = "Zocalo" }: Props) {
   return (
     <svg
       width={size}
@@ -19,43 +19,29 @@ export function ZocaloMark({ size = 40, className, title = "Zocalo" }: Props) {
       aria-label={title}
       className={className}
     >
-      {/* Z: top bar + diagonal */}
+      {/* rear ring — deep steel blue */}
+      <circle cx="25" cy="42" r="10" fill="none" stroke="var(--secondary)" strokeWidth="5" />
+      {/* Z: top bar + steep diagonal running into the loop */}
       <path
-        d="M15 14H43L27 33"
+        d="M14 16H44L26 38"
         fill="none"
         stroke="var(--primary)"
-        strokeWidth="5.5"
+        strokeWidth="5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* rear ring — deep steel blue */}
-      <circle
-        cx="24"
-        cy="40.5"
-        r="10.5"
-        fill="none"
-        stroke="var(--secondary)"
-        strokeWidth="5.5"
-      />
-      {/* front loop — accent blue, continues the Z tail */}
-      <circle
-        cx="38"
-        cy="42"
-        r="12.5"
-        fill="none"
-        stroke="var(--primary)"
-        strokeWidth="5.5"
-      />
-      <circle cx="45.5" cy="13.5" r="3.6" fill="var(--gold)" />
+      {/* front loop — accent blue */}
+      <circle cx="37" cy="45" r="12" fill="none" stroke="var(--primary)" strokeWidth="5" />
+      <circle cx="45.5" cy="15.5" r="3.4" fill="var(--gold)" />
     </svg>
   );
 }
 
-export function ZocaloLogo({ size = 40, className }: Props) {
+export function ZocaloLogo({ size = 44, className }: Props) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
       <ZocaloMark size={size} />
-      <span className="text-[1.2rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
+      <span className="text-[1.25rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
     </span>
   );
 }
