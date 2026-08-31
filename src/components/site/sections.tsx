@@ -121,52 +121,44 @@ export function TrustStatement() {
 
 const services = [
   {
-    icon: Cpu,
+    n: "01",
     title: "Bespoke Software Development",
     body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
+    Glyph: GlyphBespoke,
   },
   {
-    icon: Users,
+    n: "02",
     title: "CRM Systems",
     body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
+    Glyph: GlyphCrm,
   },
   {
-    icon: Bot,
+    n: "03",
     title: "AI Automation",
     body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
+    Glyph: GlyphAi,
   },
   {
-    icon: LayoutGrid,
+    n: "04",
     title: "Internal Platforms",
     body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
+    Glyph: GlyphPlatform,
   },
   {
-    icon: Globe,
+    n: "05",
     title: "Websites",
     body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
+    Glyph: GlyphWebsite,
   },
   {
-    icon: Link2,
+    n: "06",
     title: "Integrations",
     body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
+    Glyph: GlyphIntegration,
   },
 ];
 
-function ServicesGrid({ items = services }: { items?: typeof services }) {
-  return (
-    <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((s, i) => (
-        <Reveal key={s.title} delay={i * 50}>
-          <article className="group h-full border-r border-b border-border p-8 transition-colors duration-200 ease-out hover:bg-card md:p-10">
-            <s.icon className="size-5 text-primary transition-transform duration-200 ease-out group-hover:-translate-y-0.5" />
-            <h3 className="mt-7 text-base font-medium tracking-[-0.01em]">{s.title}</h3>
-            <p className="mt-3 text-sm leading-[1.7] text-muted-foreground">{s.body}</p>
-          </article>
-        </Reveal>
-      ))}
-    </div>
-  );
-}
+export const serviceNames = services.map((s) => s.title);
 
 export function Services({
   condensed = false,
@@ -175,6 +167,11 @@ export function Services({
   condensed?: boolean;
   heading?: boolean;
 }) {
+  const items = condensed ? services.slice(0, 3) : services;
+  const lead = items[0]!;
+  const second = items[1];
+  const rest = items.slice(2);
+
   return (
     <section className={heading ? "section" : "section pt-0 md:pt-0"}>
       <div className="container-x">
@@ -191,11 +188,72 @@ export function Services({
           </>
         ) : null}
 
-        <ServicesGrid items={condensed ? services.slice(0, 3) : services} />
+        {/* Lead + secondary — asymmetric feature row */}
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-12">
+          <Reveal className="md:col-span-7">
+            <article className="group flex h-full flex-col justify-between gap-12 border-t border-border py-12 md:py-16 md:pr-16">
+              <div>
+                <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
+                  {lead.n}
+                </span>
+                <h3 className="mt-6 max-w-lg text-[1.9rem] leading-[1.12] font-medium tracking-display md:text-[2.75rem]">
+                  {lead.title}
+                </h3>
+                <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
+                  {lead.body}
+                </p>
+              </div>
+              <lead.Glyph className="w-full max-w-xs opacity-80 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+            </article>
+          </Reveal>
+
+          {second ? (
+            <Reveal delay={80} className="md:col-span-5">
+              <article className="group flex h-full flex-col justify-between gap-10 border-t border-border py-12 md:border-l md:py-16 md:pl-16">
+                <div>
+                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
+                    {second.n}
+                  </span>
+                  <h3 className="mt-6 text-xl leading-[1.18] font-medium tracking-[-0.02em] md:text-[1.8rem]">
+                    {second.title}
+                  </h3>
+                  <p className="mt-4 max-w-sm text-sm leading-[1.75] text-muted-foreground">
+                    {second.body}
+                  </p>
+                </div>
+                <second.Glyph className="h-16 w-40 opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+              </article>
+            </Reveal>
+          ) : null}
+        </div>
+
+        {/* Remaining services — tighter rhythm, staggered borders */}
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {rest.map((s, i) => (
+            <Reveal key={s.title} delay={i * 60}>
+              <article
+                className={`group flex h-full items-start justify-between gap-8 border-t border-border py-10 transition-colors duration-300 ease-out hover:bg-card/50 md:py-12 ${
+                  i % 2 === 0 ? "md:pr-14" : "md:border-l md:pl-14"
+                }`}
+              >
+                <div>
+                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">{s.n}</span>
+                  <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] md:text-xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm leading-[1.7] text-muted-foreground">
+                    {s.body}
+                  </p>
+                </div>
+                <s.Glyph className="mt-1 hidden h-12 w-28 shrink-0 opacity-45 transition-opacity duration-300 ease-out group-hover:opacity-90 sm:block" />
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
         {condensed ? (
           <Reveal delay={200}>
-            <div className="mt-12">
+            <div className="mt-12 border-t border-border pt-10">
               <LearnMore to="/services" label="All services" />
             </div>
           </Reveal>
