@@ -169,3 +169,68 @@ export function GlyphIntegration({ className }: GlyphProps) {
     </svg>
   );
 }
+
+/* ------------------------------ PROCESS GLYPHS ---------------------------- */
+
+/** Concentric scan arcs around a central node — discovery. */
+export function GlyphDiscover({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+      <circle cx="60" cy="40" r="3" fill="currentColor" />
+      <circle cx="60" cy="40" r="12" {...stroke} opacity="0.8" />
+      <path d="M60 40 88 22" {...stroke} />
+      <path d="M82 40a22 22 0 0 0-22-22" {...stroke} opacity="0.6" />
+      <path d="M94 40a34 34 0 0 0-34-34" {...stroke} opacity="0.4" />
+      <path d="M106 40a46 46 0 0 0-46-46" {...stroke} opacity="0.2" />
+      <path d="M14 40h34M60 52v22" {...stroke} opacity="0.3" />
+      <circle cx="88" cy="22" r="2.5" fill="currentColor" opacity="0.85" />
+      <circle cx="36" cy="58" r="2" fill="currentColor" opacity="0.5" />
+    </svg>
+  );
+}
+
+/** Wireframe sketch with a pointer — design. */
+export function GlyphDesign({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+      <rect x="10" y="10" width="100" height="60" rx="2" {...stroke} opacity="0.45" />
+      <path d="M10 24h100M40 24v46" {...stroke} opacity="0.5" />
+      <rect x="48" y="32" width="34" height="8" rx="1.5" fill="currentColor" opacity="0.35" />
+      <path d="M48 50h50M48 58h32" {...stroke} opacity="0.5" />
+      <path d="M18 34h14M18 42h10M18 50h14" {...stroke} opacity="0.35" />
+      <path d="M86 46l14 14-6 1-2 6-6-21z" {...stroke} />
+      <circle cx="86" cy="46" r="2" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Layered production tiers shipped forward — build. */
+export function GlyphBuild({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+      <rect x="12" y="52" width="56" height="16" rx="2" {...stroke} opacity="0.85" />
+      <rect x="20" y="34" width="56" height="16" rx="2" {...stroke} opacity="0.6" />
+      <rect x="28" y="16" width="56" height="16" rx="2" {...stroke} opacity="0.35" />
+      <path d="M74 60h30M96 55l8 5-8 5" {...stroke} opacity="0.7" />
+      <path d="M82 42h22M98 37l6 5-6 5" {...stroke} opacity="0.45" />
+      <path d="M90 24h14" {...stroke} opacity="0.25" />
+      <circle cx="20" cy="60" r="2" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Branching expansion with a feedback cycle — scale. */
+export function GlyphScale({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+      <path d="M10 62h20c14 0 12-24 26-24h18" {...stroke} opacity="0.75" />
+      <path d="M30 62c14 0 14 8 26 8h18" {...stroke} opacity="0.4" />
+      <path d="M74 38h12M80 33l6 5-6 5" {...stroke} opacity="0.7" />
+      <path d="M74 70h10" {...stroke} opacity="0.35" />
+      <circle cx="30" cy="62" r="3.5" {...stroke} />
+      <path d="M92 26a14 14 0 1 1-14-14" {...stroke} opacity="0.8" />
+      <path d="M78 6l6 6-6 6" {...stroke} opacity="0.8" />
+      <path d="M10 74V44M22 74V52M34 74V38M46 74V28" {...stroke} opacity="0.22" />
+    </svg>
+  );
+}

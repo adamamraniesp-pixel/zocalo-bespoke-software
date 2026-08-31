@@ -1,13 +1,17 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Reveal, StaggerWords } from "./motion";
+import { DrawIn, Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
   GlyphAi,
   GlyphAnswering,
+  GlyphBuild,
+  GlyphDesign,
+  GlyphDiscover,
+  GlyphScale,
   GlyphBespoke,
   GlyphCrm,
   GlyphIntegration,
@@ -470,23 +474,90 @@ const steps = [
     n: "01",
     title: "Discover",
     body: "We map how your business runs today—people, handoffs, systems, and cost of friction.",
+    accent: "text-primary",
+    Glyph: GlyphDiscover,
   },
   {
     n: "02",
     title: "Design",
     body: "Architecture, data model, and interface designed around the workflow you actually use.",
+    accent: "text-cream",
+    Glyph: GlyphDesign,
   },
   {
     n: "03",
     title: "Build",
     body: "Shipped in tight increments with production-grade engineering and continuous review.",
+    accent: "text-gold",
+    Glyph: GlyphBuild,
   },
   {
     n: "04",
     title: "Scale",
     body: "Monitoring, iteration, and expansion as the system becomes core infrastructure.",
+    accent: "text-primary",
+    Glyph: GlyphScale,
   },
 ];
+
+/** Editorial process block. `scale` drives the asymmetric large/small rhythm. */
+function ProcessStep({
+  step,
+  index,
+  prominent,
+}: {
+  step: (typeof steps)[number];
+  index: number;
+  prominent: boolean;
+}) {
+  return (
+    <Reveal delay={index * 60} as="li" className={prominent ? "md:col-span-7" : "md:col-span-5"}>
+      <article
+        className={`group relative flex flex-col overflow-hidden border-t border-border transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-border-strong hover:bg-card/40 ${
+          prominent ? "gap-10 px-1 pt-9 pb-14 md:px-8 md:pt-12 md:pb-16" : "gap-8 px-1 pt-8 pb-12 md:px-8 md:pt-10 md:pb-14"
+        }`}
+      >
+        <div>
+          <div className="flex items-baseline gap-5">
+            <span
+              className={`origin-left font-light tracking-display transition-transform duration-500 ease-out group-hover:scale-105 ${step.accent} ${
+                prominent ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
+              }`}
+            >
+              {step.n}
+            </span>
+            <span
+              aria-hidden
+              className="h-px flex-1 origin-left scale-x-100 bg-border transition-colors duration-300 ease-out group-hover:bg-primary/50"
+            />
+          </div>
+          <h3
+            className={`mt-8 font-medium tracking-display ${
+              prominent ? "text-2xl md:text-[2.4rem]" : "text-xl md:text-[1.75rem]"
+            }`}
+          >
+            {step.title}
+          </h3>
+          <p
+            className={`mt-5 text-sm leading-[1.8] text-muted-foreground ${
+              prominent ? "max-w-md md:text-base" : "max-w-sm"
+            }`}
+          >
+            {step.body}
+          </p>
+        </div>
+        <DrawIn
+          delay={index * 120}
+          className={`${step.accent} opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 ${
+            prominent ? "w-full max-w-[16rem] self-end" : "w-full max-w-[11rem]"
+          }`}
+        >
+          <step.Glyph className="w-full" />
+        </DrawIn>
+      </article>
+    </Reveal>
+  );
+}
 
 export function Process({
   condensed = false,
@@ -511,21 +582,9 @@ export function Process({
           </>
         ) : null}
 
-        <ol className="mt-4 grid grid-cols-1 gap-12 md:grid-cols-4 md:gap-8">
+        <ol className="mt-6 grid grid-cols-1 gap-x-14 md:grid-cols-12">
           {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 60} as="li">
-              <div className="group border-t border-border pt-7">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs tracking-[0.18em] text-primary">{s.n}</span>
-                  <span
-                    aria-hidden
-                    className="h-px flex-1 origin-left bg-border transition-colors duration-200 ease-out group-hover:bg-primary/50"
-                  />
-                </div>
-                <h3 className="mt-5 text-lg font-medium tracking-[-0.02em]">{s.title}</h3>
-                <p className="mt-3 text-sm leading-[1.7] text-muted-foreground">{s.body}</p>
-              </div>
-            </Reveal>
+            <ProcessStep key={s.n} step={s} index={i} prominent={i === 0 || i === 3} />
           ))}
         </ol>
 
