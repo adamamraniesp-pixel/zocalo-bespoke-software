@@ -259,6 +259,8 @@ export function Services({
         <div className="mt-12 flex flex-col gap-12 md:gap-16">
           {rows.map((row) => {
             const linked = row.some((s) => s.n === "03");
+            const [first, second] = row;
+            if (!first) return null;
             return (
               <div
                 key={row.map((r) => r.n).join("-")}
