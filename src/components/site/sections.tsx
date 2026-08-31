@@ -199,7 +199,7 @@ export function Services({
 
         {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
         <div className="mt-12 flex flex-col gap-10 md:gap-14">
-          {rows.map((row, rowIndex) => (
+          {rows.map((row) => (
             <div
               key={row.map((r) => r.n).join("-")}
               className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-0"
