@@ -87,7 +87,7 @@ export function Hero() {
         </Reveal>
         <Reveal delay={60}>
           <h1 className="mt-7 max-w-4xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
-            Software Built Around Your Business.
+            Software Built Around Your Business
           </h1>
         </Reveal>
         <Reveal delay={120}>
@@ -188,42 +188,50 @@ const services: Service[] = [
 
 export const serviceNames = services.map((s) => s.title);
 
-function ServiceCard({ service }: { service: Service }) {
+/**
+ * Services identity: a full-width vertical stacked list. Each service is one
+ * hairline-separated row — numeral rail, copy column, diagram parked to the
+ * side. Deliberately *not* a card grid, so it reads differently from
+ * /what-we-build.
+ */
+function ServiceRow({ service, index }: { service: Service; index: number }) {
   return (
-    <article
-      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_50%,transparent)] md:p-12"
-      style={{ ["--service-accent" as never]: service.accent }}
-    >
-      <div>
-        <span className="font-mono text-sm tracking-[0.22em]" style={{ color: service.accent }}>
+    <Reveal delay={index * 70} distance={14} as="li">
+      <article
+        className="group relative grid grid-cols-1 items-center gap-8 border-t border-border py-12 transition-[background-color,padding] duration-300 ease-out hover:bg-card/40 md:grid-cols-[6rem_minmax(0,1fr)_16rem] md:gap-12 md:py-16 lg:grid-cols-[7rem_minmax(0,1fr)_20rem]"
+        style={{ ["--service-accent" as never]: service.accent }}
+      >
+        {/* accent edge that grows on hover */}
+        <span
+          aria-hidden
+          className="absolute top-0 left-0 h-px w-0 origin-left transition-[width] duration-500 ease-out group-hover:w-full"
+          style={{ background: service.accent }}
+        />
+
+        <span
+          className="font-mono text-sm tracking-[0.22em] transition-transform duration-500 ease-out group-hover:translate-x-1 md:text-base"
+          style={{ color: service.accent }}
+        >
           {service.n}
         </span>
-        <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
-          {service.title}
-        </h3>
-        <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
-          {service.body}
-        </p>
-      </div>
-      <DrawIn className="w-full" delay={80}>
-        <service.Glyph
-          className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
-          style={{ color: service.accent }}
-        />
-      </DrawIn>
-    </article>
-  );
-}
 
-/** Slow, always-on data flow living in the gap between two service blocks. */
-function ServiceConnector() {
-  return (
-    <div aria-hidden className="relative mx-auto h-full w-px">
-      <div className="connector-rail absolute inset-y-6 left-1/2 w-px -translate-x-1/2 opacity-60" />
-      <div className="absolute inset-y-6 left-1/2 w-px">
-        <div className="connector-orb absolute top-0 left-1/2 h-2 w-2 rounded-full bg-primary shadow-[0_0_16px_4px_color-mix(in_oklab,var(--primary)_45%,transparent)]" />
-      </div>
-    </div>
+        <div>
+          <h3 className="text-[1.65rem] leading-[1.14] font-medium tracking-display md:text-[2.15rem]">
+            {service.title}
+          </h3>
+          <p className="mt-5 max-w-xl text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
+            {service.body}
+          </p>
+        </div>
+
+        <DrawIn className="w-full md:justify-self-end" delay={60}>
+          <service.Glyph
+            className="h-28 w-full opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-32"
+            style={{ color: service.accent }}
+          />
+        </DrawIn>
+      </article>
+    </Reveal>
   );
 }
 
@@ -235,14 +243,9 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
-  const rows: Service[][] = [];
-  for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
-
-
-
 
   return (
-    <section className={`services-field relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
+    <section className={`relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
       <div className="container-x relative">
         {heading ? (
           <>
@@ -251,48 +254,21 @@ export function Services({
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Engineering across the full operational stack.
+                Engineering across the full operational stack
               </h2>
             </Reveal>
           </>
         ) : null}
 
-        {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
-        <div className="mt-12 flex flex-col gap-12 md:gap-16">
-          {rows.map((row) => {
-            const linked = row.some((s) => s.n === "03");
-            const [first, second] = row;
-            if (!first) return null;
-            return (
-              <div
-                key={row.map((r) => r.n).join("-")}
-                className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_2.5rem_1fr] lg:gap-0 xl:grid-cols-[1fr_3.75rem_1fr]"
-              >
-                <Reveal distance={15} className="h-full lg:col-start-1">
-                  <ServiceCard service={first} />
-                </Reveal>
-
-                <div className="hidden lg:col-start-2 lg:block">
-                  {linked ? <ServiceConnector /> : null}
-                </div>
-
-                {second ? (
-                  <Reveal delay={150} distance={15} className="h-full lg:col-start-3">
-                    <ServiceCard service={second} />
-                  </Reveal>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-
-
-
-
+        <ol className="mt-4 border-b border-border">
+          {items.map((s, i) => (
+            <ServiceRow key={s.n} service={s} index={i} />
+          ))}
+        </ol>
 
         {condensed ? (
           <Reveal delay={200}>
-            <div className="mt-12 border-t border-border pt-10">
+            <div className="mt-12">
               <LearnMore to="/services" label="All services" />
             </div>
           </Reveal>
@@ -301,6 +277,7 @@ export function Services({
     </section>
   );
 }
+
 
 /* -------------------------------- PROBLEM --------------------------------- */
 
@@ -330,7 +307,7 @@ export function Problem() {
           </Reveal>
           <Reveal delay={50}>
             <h2 className="mt-6 text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-              Growth stalls in the gaps between your tools.
+              Growth stalls in the gaps between your tools
             </h2>
           </Reveal>
           <Reveal delay={100}>
@@ -473,7 +450,7 @@ export function WhatWeBuild({
               </Reveal>
               <Reveal delay={50}>
                 <h2 className="mt-6 max-w-xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                  Systems in production, by sector.
+                  Systems in production, by sector
                 </h2>
               </Reveal>
             </div>
