@@ -86,7 +86,7 @@ function PainCard({ pain, index }: { pain: (typeof pains)[number]; index: number
             transformStyle: "preserve-3d",
           } as MotionStyle
         }
-        whileHover={reduced ? undefined : { y: -4 }}
+        whileHover={reduced ? {} : { y: -4 }}
         transition={{ type: "spring", stiffness: 260, damping: 24 }}
         className="group relative flex items-start gap-6 rounded-lg border border-border bg-card px-6 py-7 backdrop-blur-[2px] transition-[border-color,box-shadow] duration-300 ease-out hover:border-primary hover:shadow-[0_18px_50px_-22px_color-mix(in_oklab,var(--primary)_65%,transparent)] md:px-8 md:py-8"
       >
