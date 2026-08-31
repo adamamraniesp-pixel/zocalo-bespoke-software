@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Zócalo design system — dark-mode-first.
+ * Zocalo design system — dark-mode-first.
  * All colors are semantic tokens in oklch. Never hardcode colors in components.
  */
 
@@ -195,5 +195,51 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* Hero dot grid drift */
+.dot-drift {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--primary) 45%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 34px 34px;
+  animation: dot-drift 34s linear infinite;
+}
+
+@keyframes dot-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 34px 34px;
+  }
+}
+
+/* Border glow pulse for the primary closing CTA */
+.glow-pulse {
+  animation: glow-pulse 3.4s ease-in-out 3;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--gold) 14%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-drift,
+  .glow-pulse {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
   }
 }

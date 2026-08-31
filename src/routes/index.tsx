@@ -1,20 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SiteNav } from "@/components/site/SiteNav";
 import {
   FinalCta,
   Hero,
   Problem,
   Process,
   Services,
-  SiteFooter,
   TrustStatement,
   WhatWeBuild,
   WhyZocalo,
 } from "@/components/site/sections";
 
-const title = "Zócalo — Bespoke Software Built Around Your Business";
+const title = "Zocalo — Bespoke Software Built Around Your Business";
 const description =
-  "Zócalo designs and builds bespoke software: custom CRMs, AI automation, internal platforms, high-performance websites, and integrations engineered around how your business operates.";
+  "Zocalo designs and builds bespoke software: custom CRMs, AI automation, internal platforms, high-performance websites, and integrations engineered around how your business operates.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,19 +30,15 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      <SiteNav />
-      <main>
-        <Hero />
-        <TrustStatement />
-        <Services />
-        <Problem />
-        <WhatWeBuild />
-        <Process />
-        <WhyZocalo />
-        <FinalCta />
-      </main>
-      <SiteFooter />
-    </div>
+    <>
+      <Hero />
+      <TrustStatement />
+      <Services condensed />
+      <Problem />
+      <WhatWeBuild condensed />
+      <Process condensed />
+      <WhyZocalo condensed />
+      <FinalCta />
+    </>
   );
 }

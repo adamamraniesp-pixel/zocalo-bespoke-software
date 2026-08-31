@@ -5,10 +5,10 @@ type Props = {
 };
 
 /**
- * Zócalo icon mark: two interlocking ring shapes with a bold "Z" stroke
+ * Zocalo icon mark: two interlocking ring shapes with a bold "Z" stroke
  * running through them, plus a gold dot at the top-right terminus.
  */
-export function ZocaloMark({ size = 32, className, title = "Zócalo" }: Props) {
+export function ZocaloMark({ size = 32, className, title = "Zocalo" }: Props) {
   return (
     <svg
       width={size}
