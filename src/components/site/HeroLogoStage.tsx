@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useReducedMotion } from "./motion";
-import logoAsset from "@/assets/zocalo-logo.png.asset.json";
+import { ZocaloMark } from "./ZocaloLogo";
 
 type Shape = {
   cls: string;
@@ -72,15 +73,42 @@ const shapes: Shape[] = [
 ];
 
 /**
- * Hero centrepiece: the uploaded Zocalo mark rendered crisply as a flat
- * <img>, floating gently with Framer Motion. Small geometric shapes drift
- * behind it at z-0.
+ * Hero centrepiece: the Zocalo mark as transparent inline SVG geometry,
+ * inside a 3D transform container. Slow idle Y-axis auto-rotation, cursor
+ * parallax tilt (~18deg), and a gentle vertical float.
  */
 export function HeroLogoStage({ className }: { className?: string }) {
   const reduced = useReducedMotion();
+  const stageRef = useRef<HTMLDivElement | null>(null);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 90, damping: 18, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 90, damping: 18, mass: 0.6 });
+  const tiltY = useTransform(sx, [-0.5, 0.5], [-18, 18]);
+  const tiltX = useTransform(sy, [-0.5, 0.5], [15, -15]);
+
+  const [spin, setSpin] = useState(true);
+
+  useEffect(() => {
+    if (reduced) return;
+    const onMove = (e: MouseEvent) => {
+      const el = stageRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const nx = (e.clientX - cx) / Math.max(window.innerWidth / 2, 1);
+      const ny = (e.clientY - cy) / Math.max(window.innerHeight / 2, 1);
+      mx.set(Math.max(-0.5, Math.min(0.5, nx)));
+      my.set(Math.max(-0.5, Math.min(0.5, ny)));
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [reduced, mx, my]);
 
   return (
-    <div className={`relative aspect-square w-full ${className ?? ""}`}>
+    <div ref={stageRef} className={`relative aspect-square w-full ${className ?? ""}`}>
       {/* soft halo */}
       <div
         aria-hidden
@@ -114,24 +142,37 @@ export function HeroLogoStage({ className }: { className?: string }) {
         ))}
       </div>
 
-      {/* the uploaded mark — crisp, flat, animated */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center">
+      {/* the mark — transparent SVG inside a 3D stage */}
+      <div
+        className="absolute inset-0 z-10 flex items-center justify-center"
+        style={{ perspective: 1200 }}
+        onMouseEnter={() => setSpin(false)}
+        onMouseLeave={() => setSpin(true)}
+      >
         <motion.div
-          animate={
-            reduced
-              ? {}
-              : { y: [0, -18, 0], rotateY: [-9, 9, -9] }
-          }
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformStyle: "preserve-3d", perspective: 1000 }}
+          animate={reduced ? {} : { y: [0, -18, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          style={{ transformStyle: "preserve-3d" }}
         >
-          <img
-            src={logoAsset.url}
-            alt="Zocalo"
-            className="h-auto w-[92%] max-w-[500px] min-w-[320px] mix-blend-multiply select-none"
-            draggable={false}
-          />
-
+          <motion.div
+            style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+          >
+            <motion.div
+              animate={reduced || !spin ? { rotateY: 0 } : { rotateY: [0, 360] }}
+              transition={
+                reduced || !spin
+                  ? { duration: 0.8, ease: "easeOut" }
+                  : { duration: 26, repeat: Infinity, ease: "linear" }
+              }
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <ZocaloMark
+                size={500}
+                title="Zocalo"
+                className="h-auto w-[92vw] max-w-[500px] min-w-[300px] select-none"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
