@@ -428,3 +428,285 @@
     transition: none;
   }
 }
+
+/* ======================= Added motion system (v2) ========================= */
+
+/* ---- Hero: continuously drifting geometric shapes ---- */
+.float-slow {
+  animation: float-slow 22s ease-in-out infinite;
+}
+.float-slower {
+  animation: float-slow 34s ease-in-out infinite reverse;
+}
+.spin-slow {
+  animation: spin-slow 60s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(14px, -22px, 0);
+  }
+  66% {
+    transform: translate3d(-12px, 12px, 0);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Hero system graphic: self-drawing strokes on load ---- */
+.hero-draw path,
+.hero-draw circle,
+.hero-draw rect,
+.hero-draw line {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: hero-stroke 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--hero-draw-delay, 0ms);
+}
+
+@keyframes hero-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-node {
+  animation: hero-node-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--hero-draw-delay, 0ms);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes hero-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---- Idle diagram life: pulsing radar rings + travelling packet ---- */
+.idle-pulse > * {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: idle-pulse 3.6s ease-out infinite;
+}
+.idle-pulse > *:nth-child(2) {
+  animation-delay: 0.9s;
+}
+.idle-pulse > *:nth-child(3) {
+  animation-delay: 1.8s;
+}
+.idle-pulse > *:nth-child(4) {
+  animation-delay: 2.7s;
+}
+
+@keyframes idle-pulse {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.55);
+  }
+  70% {
+    opacity: 0.06;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+.idle-packet {
+  animation: idle-packet 4.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes idle-packet {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--packet-distance, 60px));
+  }
+}
+
+.idle-breathe {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: idle-breathe 4.2s ease-in-out infinite;
+}
+
+@keyframes idle-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---- Process page: scroll-driven progress rail ---- */
+.proc-rail-fill {
+  transform-origin: top;
+  transform: scaleY(var(--proc-progress, 0));
+  transition: transform 220ms linear;
+}
+
+/* ---- Final CTA: animated field, shimmer + halo on the button ---- */
+.cta-field {
+  background:
+    radial-gradient(
+      50% 55% at 20% 30%,
+      color-mix(in oklab, var(--primary) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 50% at 82% 66%,
+      color-mix(in oklab, var(--gold) 14%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      40% 45% at 50% 100%,
+      color-mix(in oklab, var(--teal) 14%, transparent),
+      transparent 72%
+    );
+  background-size: 180% 180%;
+  animation: cta-drift 26s ease-in-out infinite;
+}
+
+@keyframes cta-drift {
+  0%,
+  100% {
+    background-position:
+      0% 40%,
+      100% 60%,
+      50% 100%;
+  }
+  50% {
+    background-position:
+      25% 60%,
+      70% 30%,
+      40% 70%;
+  }
+}
+
+.cta-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--primary) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--primary) 12%, transparent) 1px, transparent 1px);
+  background-size: 62px 62px;
+  animation: cta-grid-shift 30s linear infinite;
+}
+
+@keyframes cta-grid-shift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 62px 62px;
+  }
+}
+
+.halo-ring::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid color-mix(in oklab, var(--gold) 55%, transparent);
+  opacity: 0;
+  animation: halo-ring 4.2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes halo-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.14);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.16);
+  }
+}
+
+.shimmer-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 35%,
+    rgb(255 255 255 / 0.42) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  animation: shimmer-sweep 5.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer-sweep {
+  0%,
+  62% {
+    transform: translateX(-120%);
+  }
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-slower,
+  .spin-slow,
+  .idle-pulse > *,
+  .idle-packet,
+  .idle-breathe,
+  .cta-field,
+  .cta-grid,
+  .halo-ring::after,
+  .shimmer-sweep::before {
+    animation: none;
+  }
+  .hero-draw path,
+  .hero-draw circle,
+  .hero-draw rect,
+  .hero-draw line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .hero-node {
+    opacity: 1;
+    animation: none;
+  }
+}
