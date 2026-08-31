@@ -177,7 +177,7 @@ export function GlyphIntegration({ className, style }: GlyphProps) {
 /** Concentric scan arcs around a central node — discovery. */
 export function GlyphDiscover({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+    <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <circle cx="60" cy="40" r="3" fill="currentColor" />
       <circle cx="60" cy="40" r="12" {...stroke} opacity="0.8" />
       <path d="M60 40 88 22" {...stroke} />
@@ -194,7 +194,7 @@ export function GlyphDiscover({ className, style }: GlyphProps) {
 /** Wireframe sketch with a pointer — design. */
 export function GlyphDesign({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+    <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <rect x="10" y="10" width="100" height="60" rx="2" {...stroke} opacity="0.45" />
       <path d="M10 24h100M40 24v46" {...stroke} opacity="0.5" />
       <rect x="48" y="32" width="34" height="8" rx="1.5" fill="currentColor" opacity="0.35" />
@@ -209,7 +209,7 @@ export function GlyphDesign({ className, style }: GlyphProps) {
 /** Layered production tiers shipped forward — build. */
 export function GlyphBuild({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+    <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <rect x="12" y="52" width="56" height="16" rx="2" {...stroke} opacity="0.85" />
       <rect x="20" y="34" width="56" height="16" rx="2" {...stroke} opacity="0.6" />
       <rect x="28" y="16" width="56" height="16" rx="2" {...stroke} opacity="0.35" />
@@ -224,7 +224,7 @@ export function GlyphBuild({ className, style }: GlyphProps) {
 /** Branching expansion with a feedback cycle — scale. */
 export function GlyphScale({ className, style }: GlyphProps) {
   return (
-    <svg viewBox="0 0 120 80" className={className} aria-hidden>
+    <svg viewBox="0 0 120 80" className={className} style={style} aria-hidden>
       <path d="M10 62h20c14 0 12-24 26-24h18" {...stroke} opacity="0.75" />
       <path d="M30 62c14 0 14 8 26 8h18" {...stroke} opacity="0.4" />
       <path d="M74 38h12M80 33l6 5-6 5" {...stroke} opacity="0.7" />
