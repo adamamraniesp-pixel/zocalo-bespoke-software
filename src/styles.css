@@ -669,6 +669,7 @@
     transparent 65%
   );
   transform: translateX(-120%);
+  z-index: 2;
   animation: shimmer-sweep 5.4s ease-in-out infinite;
   pointer-events: none;
 }

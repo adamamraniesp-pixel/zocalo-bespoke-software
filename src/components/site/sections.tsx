@@ -899,10 +899,12 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={220}>
           <div className="mt-11 flex justify-center">
-            <div className="halo-ring shimmer-sweep relative overflow-hidden rounded-md">
-              <MagneticCta to="/contact" variant="gold">
-                Let's Build It
-              </MagneticCta>
+            <div className="halo-ring relative rounded-md">
+              <div className="shimmer-sweep relative overflow-hidden rounded-md">
+                <MagneticCta to="/contact" variant="gold">
+                  Let's Build It
+                </MagneticCta>
+              </div>
             </div>
           </div>
         </Reveal>
