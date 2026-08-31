@@ -229,7 +229,11 @@ function ContactPage() {
       <section className="section relative overflow-hidden border-t border-border pt-0 md:pt-0">
         <SectionFloaters variant="b" />
         <div className="container-x relative z-10">
-          <div className="overflow-hidden rounded-lg border border-border bg-card/60">
+          <div
+            aria-hidden
+            className="drift-field pointer-events-none absolute -inset-x-10 -inset-y-16 -z-10 opacity-70"
+          />
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card/60">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               {/* Left — value proposition and formal timeline */}
               <div className="border-b border-border p-8 md:p-14 lg:border-r lg:border-b-0">
