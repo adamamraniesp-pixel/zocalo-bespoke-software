@@ -525,12 +525,7 @@ function ProcessStep({
               {step.body}
             </p>
           </div>
-          <DrawIn
-            delay={80}
-            className={`w-full max-w-[17rem] shrink-0 md:max-w-[18rem] ${step.accent} [perspective:800px] transition-transform duration-500 ease-out hover:[transform:rotateX(6deg)_rotateY(-8deg)_scale(1.04)]`}
-          >
-            <step.Glyph className="w-full" />
-          </DrawIn>
+          <ProcessGlyph step={step} index={index} />
         </div>
       </div>
     </li>
