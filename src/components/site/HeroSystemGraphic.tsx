@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 import { useReducedMotion } from "./motion";
@@ -11,14 +11,6 @@ const stroke = {
   strokeLinejoin: "round" as const,
 };
 
-type LineProps = {
-  d?: string;
-  delay: number;
-  opacity: number;
-  as?: "path" | "rect" | "circle";
-  attrs?: Record<string, string | number>;
-};
-
 function drawTransition(delay: number) {
   return {
     pathLength: { duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] as const },
@@ -28,39 +20,13 @@ function drawTransition(delay: number) {
 
 /**
  * Abstract engineering schematic: outer frame, central module, spine routing,
- * and satellite nodes. Lines draw themselves when scrolled into view, and the
- * whole group tilts subtly toward the cursor with a gentle idle float.
+ * and satellite nodes. Lines draw themselves when scrolled into view, then the
+ * whole group drifts on its own — slow float, gentle rotation, soft breathing.
  */
 export function HeroSystemGraphic({ className }: { className?: string }) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (reduced) return;
-    let frame = 0;
-    const onMove = (e: MouseEvent) => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        const el = ref.current;
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const nx = (e.clientX - (r.left + r.width / 2)) / (r.width || 1);
-        const ny = (e.clientY - (r.top + r.height / 2)) / (r.height || 1);
-        setTilt({
-          x: Math.max(-1, Math.min(1, ny)) * -10,
-          y: Math.max(-1, Math.min(1, nx)) * 14,
-        });
-      });
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [reduced]);
 
   const draw = (delay: number, opacity: number) =>
     reduced
@@ -85,17 +51,19 @@ export function HeroSystemGraphic({ className }: { className?: string }) {
       <motion.div
         animate={
           reduced
-            ? { rotateX: 0, rotateY: 0, y: 0 }
+            ? { rotateX: 0, rotateY: 0, y: 0, scale: 1 }
             : {
-                rotateX: tilt.x,
-                rotateY: tilt.y,
-                y: [0, -10, 0],
+                rotateX: [0, 3.5, 0, -3.5, 0],
+                rotateY: [0, -7, 0, 7, 0],
+                y: [0, -14, 0, -8, 0],
+                scale: [1, 1.025, 1, 1.015, 1],
               }
         }
         transition={{
-          rotateX: { type: "spring", stiffness: 60, damping: 18 },
-          rotateY: { type: "spring", stiffness: 60, damping: 18 },
-          y: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+          rotateX: { duration: 24, repeat: Infinity, ease: "easeInOut" },
+          rotateY: { duration: 30, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 14, repeat: Infinity, ease: "easeInOut" },
+          scale: { duration: 18, repeat: Infinity, ease: "easeInOut" },
         }}
         style={{ transformStyle: "preserve-3d" }}
       >

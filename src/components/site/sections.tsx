@@ -11,8 +11,9 @@ import { HeroSystemGraphic } from "./HeroSystemGraphic";
 import { SectionFloaters } from "./SectionFloaters";
 
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
+import { CountUp } from "./CountUp";
 
-import { ZocaloLogo } from "./ZocaloLogo";
+import navMark from "@/assets/zocalo-mark.png.asset.json";
 import {
   GlyphAi,
   GlyphAnswering,
@@ -332,7 +333,7 @@ const useCases = [
     sector: "Professional Services",
     title: "Client onboarding systems",
     body: "Engagement letters, data collection, and kickoff orchestrated end to end, with every handoff visible and nothing waiting on a reminder someone forgot to send.",
-    metric: "04",
+    metric: "03",
     metricLabel: "steps, automated",
     accent: "var(--primary)",
     Glyph: GlyphOnboarding,
@@ -881,23 +882,35 @@ export function StatsBand() {
           </Reveal>
         </div>
 
-        <dl className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
+        <motion.dl
+          className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10"
+          initial={{ opacity: 0, y: 34 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+        >
           {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 90} distance={14}>
-              <div className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
-                <dt className="sr-only">{s.label}</dt>
-                <dd>
-                  <span className="block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl">
-                    {s.value}
-                  </span>
-                  <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
-                    {s.label}
-                  </span>
-                </dd>
-              </div>
-            </Reveal>
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.75, delay: 0.12 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
+            >
+              <dt className="sr-only">{s.label}</dt>
+              <dd>
+                <CountUp
+                  value={s.value}
+                  className="stat-glow block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl"
+                />
+                <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
+                  {s.label}
+                </span>
+              </dd>
+            </motion.div>
           ))}
-        </dl>
+        </motion.dl>
 
         <Reveal delay={380}>
           <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
@@ -1023,10 +1036,11 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border px-6 py-12 md:px-10">
       <div className="container-x flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-        <Link to="/" aria-label="Zocalo home">
-          <span className="float-soft inline-block">
-            <ZocaloLogo size={30} />
+        <Link to="/" aria-label="Zocalo home" className="inline-flex items-center gap-2.5">
+          <span className="float-soft inline-flex">
+            <img src={navMark.url} alt="" aria-hidden className="h-10 w-10 object-contain" />
           </span>
+          <span className="text-[1.15rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
         </Link>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Zocalo. Bespoke software engineering.

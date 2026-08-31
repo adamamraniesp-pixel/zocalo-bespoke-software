@@ -40,16 +40,16 @@ function PainCard({ pain, index }: { pain: (typeof pains)[number]; index: number
 
   return (
     <motion.li
-      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 28 }}
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{ duration: 0.6, delay: index * 0.09, ease: EASE }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.85, delay: index * 0.05, ease: EASE }}
     >
-      <div className="group h-full rounded-xl border border-border bg-card/60 px-6 py-7 transition-[border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-primary hover:shadow-[0_16px_40px_-26px_color-mix(in_oklab,var(--primary)_60%,transparent)] md:px-7 md:py-8">
-        <span className="font-mono text-xs leading-none tracking-[0.16em] text-muted-foreground/60 transition-colors duration-300 ease-out group-hover:text-gold">
+      <div className="group relative h-full rounded-xl border border-border bg-card/60 px-6 py-7 transition-[border-color,box-shadow] duration-500 ease-out hover:border-primary/60 md:px-7 md:py-8">
+        <span className="absolute top-5 right-6 font-mono text-[0.65rem] leading-none font-light tracking-[0.18em] text-muted-foreground/45 transition-colors duration-500 ease-out group-hover:text-muted-foreground/70">
           {pain.n}
         </span>
-        <h3 className="mt-5 text-[1.05rem] leading-[1.4] font-medium tracking-[-0.01em] text-foreground md:text-lg">
+        <h3 className="mt-1 max-w-[16rem] text-[1.05rem] leading-[1.4] font-medium tracking-[-0.01em] text-foreground md:text-lg">
           {pain.title}
         </h3>
         <p className="mt-2.5 text-sm leading-[1.7] text-muted-foreground">{pain.body}</p>

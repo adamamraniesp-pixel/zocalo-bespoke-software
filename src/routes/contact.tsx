@@ -72,9 +72,9 @@ function FieldShell({
         {label}
       </label>
       <motion.div
-        whileHover={{ y: -1 }}
-        transition={{ type: "spring", stiffness: 320, damping: 24 }}
-        className="focus-pulse relative mt-3 rounded-md transition-shadow duration-300 ease-out group-hover:shadow-[0_0_0_1px_color-mix(in_oklab,var(--primary)_45%,transparent)]"
+        whileHover={{ y: -2 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className="focus-pulse relative mt-3 rounded-md transition-shadow duration-500 ease-out group-hover:shadow-[0_0_0_1px_#75A7DF,0_0_18px_-2px_color-mix(in_oklab,#75A7DF_55%,transparent)] group-focus-within:shadow-[0_0_0_1px_#75A7DF,0_0_22px_-2px_color-mix(in_oklab,#75A7DF_60%,transparent)]"
       >
         {children}
         <span
@@ -162,8 +162,8 @@ function ConsultationForm() {
       <motion.button
         type="submit"
         whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.96, y: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        whileTap={{ scale: 0.9, y: 3 }}
+        transition={{ type: "spring", stiffness: 620, damping: 12, mass: 0.6 }}
         className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-gold px-7 py-4 text-sm font-medium tracking-[0.02em] text-gold-foreground shadow-[0_14px_36px_-20px_color-mix(in_oklab,var(--gold)_80%,transparent)] transition-colors duration-200 ease-out hover:bg-gold/90"
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -229,7 +229,11 @@ function ContactPage() {
       <section className="section relative overflow-hidden border-t border-border pt-0 md:pt-0">
         <SectionFloaters variant="b" />
         <div className="container-x relative z-10">
-          <div className="overflow-hidden rounded-lg border border-border bg-card/60">
+          <div
+            aria-hidden
+            className="drift-field pointer-events-none absolute -inset-x-10 -inset-y-16 -z-10 opacity-70"
+          />
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card/60">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               {/* Left — value proposition and formal timeline */}
               <div className="border-b border-border p-8 md:p-14 lg:border-r lg:border-b-0">
@@ -265,15 +269,19 @@ function ContactPage() {
                       <motion.div
                         whileHover={{ x: 8 }}
                         transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                        className="group grid grid-cols-[2.5rem_1fr] gap-4 border-b border-border py-7 last:border-b-0 md:gap-8"
+                        className="group grid grid-cols-[2rem_1fr] items-start gap-4 border-b border-border py-7 last:border-b-0 md:gap-8"
                       >
-                        <span className="pt-1 font-mono text-xs tracking-[0.14em] text-muted-foreground/60 transition-colors duration-300 group-hover:text-gold">
+                        <span className="pt-[0.4rem] text-right text-[0.7rem] font-light tracking-[0.22em] tabular-nums text-[#75A7DF] transition-opacity duration-500 group-hover:opacity-100 opacity-80">
                           {e.n}
                         </span>
                         <div>
                           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                            <h3 className="text-base font-medium tracking-[-0.01em] md:text-lg">
+                            <h3 className="relative inline-block text-base font-medium tracking-[-0.01em] md:text-lg">
                               {e.title}
+                              <span
+                                aria-hidden
+                                className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[#75A7DF] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                              />
                             </h3>
                             <span className="text-[0.7rem] font-medium tracking-[0.14em] text-primary/80 uppercase">
                               {e.meta}
