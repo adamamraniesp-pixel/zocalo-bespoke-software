@@ -1,13 +1,17 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Reveal, StaggerWords } from "./motion";
+import { DrawIn, Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
   GlyphAi,
   GlyphAnswering,
+  GlyphBuild,
+  GlyphDesign,
+  GlyphDiscover,
+  GlyphScale,
   GlyphBespoke,
   GlyphCrm,
   GlyphIntegration,
