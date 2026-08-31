@@ -378,7 +378,11 @@ export function WhyZocalo() {
 
         <div className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
           {reasons.map((r, i) => (
-            <Reveal key={r.title} delay={i * 60}>
+            <Reveal
+              key={r.title}
+              delay={i * 60}
+              className={i === reasons.length - 1 ? "sm:col-span-2" : undefined}
+            >
               <div className="h-full bg-background p-8 transition-colors duration-500 hover:bg-card">
                 <r.icon className="size-5 text-primary" />
                 <h3 className="mt-6 text-base font-medium tracking-[-0.01em]">{r.title}</h3>
