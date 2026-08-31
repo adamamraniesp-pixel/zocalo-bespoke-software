@@ -13,10 +13,17 @@ const links = [
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
+  const { inFinalCta } = useHeaderTheme();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const listRef = useRef<HTMLUListElement | null>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
   const cta = useMagnetic(0.22, 5);
+
+  const headerBg = inFinalCta
+    ? "border-transparent bg-transparent"
+    : scrolled
+      ? "border-b border-border bg-background/85 backdrop-blur-xl"
+      : "border-b border-transparent";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
