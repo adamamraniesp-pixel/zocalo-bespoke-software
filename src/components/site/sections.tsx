@@ -870,8 +870,9 @@ const stats = [
 /** Credibility band — large numerals, short labels. Homepage social proof. */
 export function StatsBand() {
   return (
-    <section className="section border-t border-border">
-      <div className="container-x">
+    <section className="section relative overflow-hidden border-t border-border">
+      <GlowDotsBackdrop />
+      <div className="container-x relative z-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <Reveal>
             <p className="eyebrow">By the numbers</p>
