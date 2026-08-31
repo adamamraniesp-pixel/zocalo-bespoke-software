@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { HeroSystemGraphic } from "./HeroSystemGraphic";
 import { SectionFloaters } from "./SectionFloaters";
 
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
