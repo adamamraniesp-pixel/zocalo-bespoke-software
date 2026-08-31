@@ -1036,10 +1036,11 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border px-6 py-12 md:px-10">
       <div className="container-x flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-        <Link to="/" aria-label="Zocalo home">
-          <span className="float-soft inline-block">
-            <ZocaloLogo size={30} />
+        <Link to="/" aria-label="Zocalo home" className="inline-flex items-center gap-2.5">
+          <span className="float-soft inline-flex">
+            <img src={navMark.url} alt="" aria-hidden className="h-10 w-10 object-contain" />
           </span>
+          <span className="text-[1.15rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
         </Link>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Zocalo. Bespoke software engineering.
