@@ -7,9 +7,9 @@ import { useReducedMotion } from "./motion";
 function parse(value: string) {
   const m = value.match(/^([^\d]*)([\d.,]+)(.*)$/);
   if (!m) return { prefix: value, target: 0, suffix: "", decimals: 0 };
-  const raw = m[2].replace(/,/g, "");
-  const decimals = raw.includes(".") ? raw.split(".")[1].length : 0;
-  return { prefix: m[1], target: Number(raw), suffix: m[3], decimals };
+  const raw = (m[2] ?? "0").replace(/,/g, "");
+  const decimals = raw.includes(".") ? (raw.split(".")[1] ?? "").length : 0;
+  return { prefix: m[1] ?? "", target: Number(raw), suffix: m[3] ?? "", decimals };
 }
 
 /** Counts up from 0 to the numeric part of `value` when scrolled into view. */
