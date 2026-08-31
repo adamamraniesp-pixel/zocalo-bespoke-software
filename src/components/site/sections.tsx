@@ -291,73 +291,8 @@ export function Services({
 
 /* -------------------------------- PROBLEM --------------------------------- */
 
-const pains = [
-  "Missed calls after hours",
-  "Manual admin and re-entry",
-  "Disconnected tools",
-  "Repetitive work",
-  "Lost opportunities",
-];
+export { Problem } from "./ProblemSection";
 
-const painAccents = [
-  "var(--primary)",
-  "var(--amber)",
-  "var(--teal)",
-  "var(--gold)",
-  "var(--secondary)",
-];
-
-export function Problem() {
-  return (
-    <section className="section border-t border-border">
-      <div className="container-x grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
-        <div>
-          <Reveal>
-            <p className="eyebrow">The Problem</p>
-          </Reveal>
-          <Reveal delay={50}>
-            <h2 className="mt-6 text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-              Growth stalls in the gaps between your tools
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="mt-8 text-base leading-[1.75] text-muted-foreground">
-              Most businesses don't lose margin to strategy—they lose it to friction. Work handed
-              between inboxes, spreadsheets, and subscriptions no one owns.
-            </p>
-          </Reveal>
-        </div>
-
-        <div>
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {pains.map((p, i) => (
-              <Reveal key={p} delay={i * 80} distance={12} as="li">
-                <div
-                  className="group flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out hover:-translate-y-[3px] hover:border-[color-mix(in_oklab,var(--pain-accent)_50%,transparent)] hover:bg-card/40 hover:shadow-[0_14px_36px_-22px_color-mix(in_oklab,var(--pain-accent)_55%,transparent)]"
-                  style={{ ["--pain-accent" as never]: painAccents[i % painAccents.length] }}
-                >
-                  <span
-                    className="origin-left font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55 transition-[transform,color] duration-300 ease-out group-hover:scale-105 group-hover:text-[color-mix(in_oklab,var(--pain-accent)_80%,white)]"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[0.975rem] leading-[1.6] text-foreground/90">{p}</span>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-
-          <Reveal delay={240}>
-            <p className="mt-12 border-t border-border pt-8 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl">
-              We build software that eliminates those bottlenecks
-            </p>
-          </Reveal>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 /* ------------------------------ WHAT WE BUILD ----------------------------- */
 
