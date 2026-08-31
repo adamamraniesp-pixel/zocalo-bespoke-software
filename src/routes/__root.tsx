@@ -139,17 +139,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
-        <ScrollProgress />
-        <SiteNav />
-        <main>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <PageTransition routeKey={routeKey}>
-            <Outlet />
-          </PageTransition>
-        </main>
-        <SiteFooter />
-      </div>
+      <HeaderThemeProvider>
+        <div className="min-h-screen bg-background">
+          <ScrollProgress />
+          <SiteNav />
+          <main>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <PageTransition routeKey={routeKey}>
+              <Outlet />
+            </PageTransition>
+          </main>
+          <SiteFooter />
+        </div>
+      </HeaderThemeProvider>
     </QueryClientProvider>
   );
 }
