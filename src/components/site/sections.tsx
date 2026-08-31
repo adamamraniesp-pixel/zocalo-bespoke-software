@@ -881,23 +881,35 @@ export function StatsBand() {
           </Reveal>
         </div>
 
-        <dl className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
+        <motion.dl
+          className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10"
+          initial={{ opacity: 0, y: 34 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+        >
           {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 90} distance={14}>
-              <div className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
-                <dt className="sr-only">{s.label}</dt>
-                <dd>
-                  <span className="block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl">
-                    {s.value}
-                  </span>
-                  <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
-                    {s.label}
-                  </span>
-                </dd>
-              </div>
-            </Reveal>
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.75, delay: 0.12 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
+            >
+              <dt className="sr-only">{s.label}</dt>
+              <dd>
+                <CountUp
+                  value={s.value}
+                  className="stat-glow block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl"
+                />
+                <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
+                  {s.label}
+                </span>
+              </dd>
+            </motion.div>
           ))}
-        </dl>
+        </motion.dl>
 
         <Reveal delay={380}>
           <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
