@@ -705,22 +705,51 @@ function BedrockPanel() {
           <span className="text-cream/60">not a subscription</span>
         </blockquote>
 
-        {/* Cut-away foundation layers */}
-        <div aria-hidden className="mt-10 flex flex-col items-center gap-2">
+        {/* Cut-away foundation layers — stack up from the base, then breathe */}
+        <motion.div
+          aria-hidden
+          className="mt-10 flex flex-col items-center gap-2"
+          animate={reduced ? {} : { y: [0, -6, 0], scale: [1, 1.012, 1] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        >
           {layers.map((l, i) => (
-            <div
+            <motion.div
               key={l.width}
-              className="bedrock-layer h-7 rounded-md border md:h-9"
+              className="h-7 rounded-md border md:h-9"
               style={{
                 width: l.width,
                 borderColor: `color-mix(in oklab, ${l.accent} 55%, transparent)`,
                 background: `linear-gradient(90deg, color-mix(in oklab, ${l.accent} 30%, transparent), transparent)`,
-                ["--layer-delay" as never]: `${(layers.length - 1 - i) * 110}ms`,
-                boxShadow: `0 10px 30px -18px color-mix(in oklab, ${l.accent} 60%, transparent)`,
+              }}
+              initial={{ opacity: 0, y: 34, scale: 0.94 }}
+              animate={
+                stacked
+                  ? {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      boxShadow: [
+                        `0 10px 30px -18px color-mix(in oklab, ${l.accent} 40%, transparent)`,
+                        `0 14px 44px -16px color-mix(in oklab, ${l.accent} 85%, transparent)`,
+                        `0 10px 30px -18px color-mix(in oklab, ${l.accent} 40%, transparent)`,
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 0.75,
+                delay: (layers.length - 1 - i) * 0.13,
+                ease: [0.16, 1, 0.3, 1],
+                boxShadow: {
+                  duration: 4.5,
+                  delay: (layers.length - 1 - i) * 0.13,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             />
           ))}
-        </div>
+        </motion.div>
 
         <Reveal delay={700} distance={15}>
           <p className="mt-10 max-w-md text-lg leading-[1.75] tracking-[0.005em] text-cream/80 md:text-xl">
