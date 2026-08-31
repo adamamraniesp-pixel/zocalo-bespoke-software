@@ -14,7 +14,7 @@ type Props = {
 const variants: Record<string, string> = {
   primary:
     "bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 text-sm font-medium rounded-md",
-  gold: "border border-gold/60 text-gold hover:bg-gold hover:text-gold-foreground px-7 py-3.5 text-sm font-medium rounded-md",
+  gold: "bg-gold text-gold-foreground hover:bg-gold/90 px-7 py-3.5 text-sm font-medium rounded-md shadow-[0_10px_28px_-16px_color-mix(in_oklab,var(--gold)_70%,transparent)]",
   ghost: "text-muted-foreground hover:text-foreground text-sm",
 };
 
