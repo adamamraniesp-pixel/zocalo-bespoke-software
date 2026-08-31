@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { SectionFloaters } from "./SectionFloaters";
 import { HeroSystemGraphic } from "./HeroSystemGraphic";
 
 import { ZocaloLogo } from "./ZocaloLogo";
@@ -255,7 +257,10 @@ export function Services({
   const items = condensed ? services.slice(0, 3) : services;
 
   return (
-    <section className={`relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
+    <section
+      className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}
+    >
+      <SectionFloaters variant="b" />
       <div className="container-x relative">
         {heading ? (
           <>
@@ -291,73 +296,8 @@ export function Services({
 
 /* -------------------------------- PROBLEM --------------------------------- */
 
-const pains = [
-  "Missed calls after hours",
-  "Manual admin and re-entry",
-  "Disconnected tools",
-  "Repetitive work",
-  "Lost opportunities",
-];
+export { Problem } from "./ProblemSection";
 
-const painAccents = [
-  "var(--primary)",
-  "var(--amber)",
-  "var(--teal)",
-  "var(--gold)",
-  "var(--secondary)",
-];
-
-export function Problem() {
-  return (
-    <section className="section border-t border-border">
-      <div className="container-x grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
-        <div>
-          <Reveal>
-            <p className="eyebrow">The Problem</p>
-          </Reveal>
-          <Reveal delay={50}>
-            <h2 className="mt-6 text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-              Growth stalls in the gaps between your tools
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="mt-8 text-base leading-[1.75] text-muted-foreground">
-              Most businesses don't lose margin to strategy—they lose it to friction. Work handed
-              between inboxes, spreadsheets, and subscriptions no one owns.
-            </p>
-          </Reveal>
-        </div>
-
-        <div>
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {pains.map((p, i) => (
-              <Reveal key={p} delay={i * 80} distance={12} as="li">
-                <div
-                  className="group flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out hover:-translate-y-[3px] hover:border-[color-mix(in_oklab,var(--pain-accent)_50%,transparent)] hover:bg-card/40 hover:shadow-[0_14px_36px_-22px_color-mix(in_oklab,var(--pain-accent)_55%,transparent)]"
-                  style={{ ["--pain-accent" as never]: painAccents[i % painAccents.length] }}
-                >
-                  <span
-                    className="origin-left font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55 transition-[transform,color] duration-300 ease-out group-hover:scale-105 group-hover:text-[color-mix(in_oklab,var(--pain-accent)_80%,white)]"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[0.975rem] leading-[1.6] text-foreground/90">{p}</span>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-
-          <Reveal delay={240}>
-            <p className="mt-12 border-t border-border pt-8 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl">
-              We build software that eliminates those bottlenecks
-            </p>
-          </Reveal>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 /* ------------------------------ WHAT WE BUILD ----------------------------- */
 
@@ -450,8 +390,11 @@ export function WhatWeBuild({
   const shown = condensed ? useCases.slice(0, 3) : useCases;
 
   return (
-    <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
-      <div className="container-x">
+    <section
+      className={`section relative overflow-hidden ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}
+    >
+      <SectionFloaters variant="c" />
+      <div className="container-x relative">
         {heading ? (
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -501,14 +444,14 @@ const steps = [
     n: "01",
     title: "Discover",
     body: "We map how your business runs today—people, handoffs, systems, and cost of friction.",
-    accent: "text-primary",
+    accent: "text-secondary",
     Glyph: GlyphDiscover,
   },
   {
     n: "02",
     title: "Design",
     body: "Architecture, data model, and interface designed around the workflow you actually use.",
-    accent: "text-cream",
+    accent: "text-primary",
     Glyph: GlyphDesign,
   },
   {
@@ -522,7 +465,7 @@ const steps = [
     n: "04",
     title: "Scale",
     body: "Monitoring, iteration, and expansion as the system becomes core infrastructure.",
-    accent: "text-primary",
+    accent: "text-secondary",
     Glyph: GlyphScale,
   },
 ];
@@ -582,7 +525,7 @@ function ProcessStep({
           </div>
           <DrawIn
             delay={80}
-            className={`w-full max-w-[13rem] shrink-0 ${step.accent} opacity-70 transition-opacity duration-300 ease-out hover:opacity-100`}
+            className={`w-full max-w-[13rem] shrink-0 ${step.accent} [perspective:800px] transition-transform duration-500 ease-out hover:[transform:rotateX(6deg)_rotateY(-8deg)_scale(1.04)]`}
           >
             <step.Glyph className="w-full" />
           </DrawIn>
@@ -602,8 +545,11 @@ export function Process({
   const { ref, progress } = useElementProgress<HTMLOListElement>();
 
   return (
-    <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
-      <div className="container-x">
+    <section
+      className={`section relative overflow-hidden ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}
+    >
+      <SectionFloaters variant="a" />
+      <div className="container-x relative">
         {heading ? (
           <>
             <Reveal>
@@ -926,32 +872,19 @@ export function FinalCta() {
 
 /* --------------------------------- FOOTER --------------------------------- */
 
-const footerLinks: { to: Path; label: string }[] = [
-  { to: "/services", label: "Services" },
-  { to: "/what-we-build", label: "What We Build" },
-  { to: "/process", label: "Process" },
-  { to: "/why-zocalo", label: "Why Zocalo" },
-  { to: "/contact", label: "Contact" },
-];
-
 export function SiteFooter() {
   return (
     <footer className="border-t border-border px-6 py-12 md:px-10">
-      <div className="container-x flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
+      <div className="container-x flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
         <Link to="/" aria-label="Zocalo home">
-          <ZocaloLogo size={26} />
+          <motion.span
+            className="inline-block"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ZocaloLogo size={30} />
+          </motion.span>
         </Link>
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
-          {footerLinks.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="text-xs text-muted-foreground transition-colors duration-200 ease-out hover:text-foreground"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Zocalo. Bespoke software engineering.
         </p>
