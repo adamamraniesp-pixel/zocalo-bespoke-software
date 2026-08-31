@@ -72,9 +72,9 @@ function FieldShell({
         {label}
       </label>
       <motion.div
-        whileHover={{ y: -1 }}
-        transition={{ type: "spring", stiffness: 320, damping: 24 }}
-        className="focus-pulse relative mt-3 rounded-md transition-shadow duration-300 ease-out group-hover:shadow-[0_0_0_1px_color-mix(in_oklab,var(--primary)_45%,transparent)]"
+        whileHover={{ y: -2 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className="focus-pulse relative mt-3 rounded-md transition-shadow duration-500 ease-out group-hover:shadow-[0_0_0_1px_#75A7DF,0_0_18px_-2px_color-mix(in_oklab,#75A7DF_55%,transparent)] group-focus-within:shadow-[0_0_0_1px_#75A7DF,0_0_22px_-2px_color-mix(in_oklab,#75A7DF_60%,transparent)]"
       >
         {children}
         <span
