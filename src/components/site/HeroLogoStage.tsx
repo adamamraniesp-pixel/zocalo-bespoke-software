@@ -125,12 +125,14 @@ export function HeroLogoStage({ className }: { className?: string }) {
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformStyle: "preserve-3d", perspective: 1000 }}
         >
-          <img
-            src={logoAsset.url}
-            alt="Zocalo"
-            className="h-auto w-[62%] max-w-[340px] min-w-[200px] select-none"
-            draggable={false}
-          />
+          <div className="rounded-2xl bg-white p-6 shadow-[0_20px_60px_-20px_rgba(42,91,132,0.18)] md:p-8">
+            <img
+              src={logoAsset.url}
+              alt="Zocalo"
+              className="h-auto w-[58%] max-w-[380px] min-w-[220px] select-none"
+              draggable={false}
+            />
+          </div>
         </motion.div>
       </div>
     </div>
