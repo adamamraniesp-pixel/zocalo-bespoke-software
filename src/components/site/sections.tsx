@@ -8,7 +8,8 @@ import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } fr
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { SectionFloaters } from "./SectionFloaters";
-import { HeroSystemGraphic } from "./HeroSystemGraphic";
+import { HeroLogoStage } from "./HeroLogoStage";
+import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
 
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
@@ -114,9 +115,9 @@ export function Hero() {
           </Reveal>
         </div>
 
-        {/* Self-drawing system schematic */}
+        {/* Brand mark, floating in 3D amid drifting geometry */}
         <div className="hidden lg:block">
-          <HeroSystemGraphic className="h-auto w-full" />
+          <HeroLogoStage />
         </div>
       </div>
 
@@ -128,8 +129,9 @@ export function Hero() {
 
 export function TrustStatement() {
   return (
-    <section className="section border-y border-border">
-      <div className="container-x">
+    <section className="section relative overflow-hidden border-y border-border">
+      <WaveBackdrop />
+      <div className="container-x relative z-10">
         <Reveal>
           <p className="max-w-4xl text-2xl leading-[1.45] font-light tracking-[-0.02em] text-balance md:text-[2.1rem]">
             No templates. No unnecessary subscriptions.{" "}
@@ -471,6 +473,36 @@ const steps = [
 ];
 
 /**
+ * Process illustration: draws itself in on scroll, breathes with a slow float
+ * and tilts in 3D on hover — the same treatment for every step.
+ */
+function ProcessGlyph({ step, index }: { step: (typeof steps)[number]; index: number }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      className={`w-full max-w-[17rem] shrink-0 md:max-w-[18rem] ${step.accent}`}
+      style={{ transformPerspective: 900 }}
+      initial={{ opacity: 0, y: 26, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={reduced ? {} : { rotateX: 6, rotateY: -8, scale: 1.05 }}
+    >
+      <motion.div
+        animate={reduced ? {} : { y: [0, -8, 0] }}
+        transition={{ duration: 6 + index, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <DrawIn delay={120 + index * 60}>
+          <step.Glyph className="w-full" />
+        </DrawIn>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+
+/**
  * One timeline step. `active` is driven by the section's scroll progress, so the
  * step animates in exactly as the rail fill reaches its marker.
  */
@@ -523,12 +555,7 @@ function ProcessStep({
               {step.body}
             </p>
           </div>
-          <DrawIn
-            delay={80}
-            className={`w-full max-w-[17rem] shrink-0 md:max-w-[18rem] ${step.accent} [perspective:800px] transition-transform duration-500 ease-out hover:[transform:rotateX(6deg)_rotateY(-8deg)_scale(1.04)]`}
-          >
-            <step.Glyph className="w-full" />
-          </DrawIn>
+          <ProcessGlyph step={step} index={index} />
         </div>
       </div>
     </li>
@@ -630,6 +657,7 @@ const reasons = [
 function BedrockPanel() {
   const ref = useRef<HTMLDivElement | null>(null);
   const [stacked, setStacked] = useState(false);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const el = ref.current;
@@ -678,22 +706,51 @@ function BedrockPanel() {
           <span className="text-cream/60">not a subscription</span>
         </blockquote>
 
-        {/* Cut-away foundation layers */}
-        <div aria-hidden className="mt-10 flex flex-col items-center gap-2">
+        {/* Cut-away foundation layers — stack up from the base, then breathe */}
+        <motion.div
+          aria-hidden
+          className="mt-10 flex flex-col items-center gap-2"
+          animate={reduced ? {} : { y: [0, -6, 0], scale: [1, 1.012, 1] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        >
           {layers.map((l, i) => (
-            <div
+            <motion.div
               key={l.width}
-              className="bedrock-layer h-7 rounded-md border md:h-9"
+              className="h-7 rounded-md border md:h-9"
               style={{
                 width: l.width,
                 borderColor: `color-mix(in oklab, ${l.accent} 55%, transparent)`,
                 background: `linear-gradient(90deg, color-mix(in oklab, ${l.accent} 30%, transparent), transparent)`,
-                ["--layer-delay" as never]: `${(layers.length - 1 - i) * 110}ms`,
-                boxShadow: `0 10px 30px -18px color-mix(in oklab, ${l.accent} 60%, transparent)`,
+              }}
+              initial={{ opacity: 0, y: 34, scale: 0.94 }}
+              animate={
+                stacked
+                  ? {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      boxShadow: [
+                        `0 10px 30px -18px color-mix(in oklab, ${l.accent} 40%, transparent)`,
+                        `0 14px 44px -16px color-mix(in oklab, ${l.accent} 85%, transparent)`,
+                        `0 10px 30px -18px color-mix(in oklab, ${l.accent} 40%, transparent)`,
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 0.75,
+                delay: (layers.length - 1 - i) * 0.13,
+                ease: [0.16, 1, 0.3, 1],
+                boxShadow: {
+                  duration: 4.5,
+                  delay: (layers.length - 1 - i) * 0.13,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             />
           ))}
-        </div>
+        </motion.div>
 
         <Reveal delay={700} distance={15}>
           <p className="mt-10 max-w-md text-lg leading-[1.75] tracking-[0.005em] text-cream/80 md:text-xl">
@@ -813,8 +870,9 @@ const stats = [
 /** Credibility band — large numerals, short labels. Homepage social proof. */
 export function StatsBand() {
   return (
-    <section className="section border-t border-border">
-      <div className="container-x">
+    <section className="section relative overflow-hidden border-t border-border">
+      <GlowDotsBackdrop />
+      <div className="container-x relative z-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <Reveal>
             <p className="eyebrow">By the numbers</p>
