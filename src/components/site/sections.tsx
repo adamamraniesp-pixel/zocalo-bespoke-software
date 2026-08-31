@@ -805,14 +805,91 @@ export function WhyZocalo({
   );
 }
 
+/* --------------------------- STATS / CREDIBILITY -------------------------- */
+
+/*
+ * [PLACEHOLDER] Swap these figures for real numbers when available.
+ * Keep the shape: value + unit + label.
+ */
+const stats = [
+  { value: "$250K+", label: "in software delivered" },
+  { value: "6", label: "disciplines under one roof" },
+  { value: "100%", label: "custom-built, zero templates" },
+  { value: "10+", label: "years of engineering experience" },
+];
+
+/** Credibility band — large numerals, short labels. Homepage social proof. */
+export function StatsBand() {
+  return (
+    <section className="section border-t border-border">
+      <div className="container-x">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <Reveal>
+            <p className="eyebrow">By the numbers</p>
+          </Reveal>
+          <Reveal delay={60}>
+            <p className="max-w-sm text-sm leading-[1.7] text-muted-foreground">
+              Engineering measured in systems that stayed in production — not decks.
+            </p>
+          </Reveal>
+        </div>
+
+        <dl className="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 90} distance={14}>
+              <div className="group border-t border-border pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span className="block origin-left text-5xl leading-[0.95] font-light tracking-display text-foreground transition-transform duration-500 ease-out group-hover:scale-[1.04] md:text-6xl">
+                    {s.value}
+                  </span>
+                  <span className="mt-5 block max-w-[13rem] text-xs leading-[1.6] tracking-[0.16em] uppercase text-muted-foreground">
+                    {s.label}
+                  </span>
+                </dd>
+              </div>
+            </Reveal>
+          ))}
+        </dl>
+
+        <Reveal delay={380}>
+          <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
+            Clients stay because the system keeps earning its place.{" "}
+            <span className="text-muted-foreground">
+              {/* [PLACEHOLDER] retention figure */}
+              Retention across engagements: 100%.
+            </span>
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------- FINAL CTA -------------------------------- */
 
 export function FinalCta() {
   return (
-    <section className="section border-t border-border">
-      <div className="container-x text-center">
+    <section className="section relative overflow-hidden border-t border-border">
+      {/* continuously animated field behind the closing conversion point */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="cta-field absolute -inset-24 opacity-70" />
+        <div className="cta-grid absolute inset-0 opacity-[0.35]" />
+        <div
+          className="absolute inset-x-0 top-0 h-32"
+          style={{ background: "linear-gradient(to bottom, var(--background), transparent)" }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-32"
+          style={{ background: "linear-gradient(to top, var(--background), transparent)" }}
+        />
+      </div>
+
+      <div className="container-x relative text-center">
         <StaggerWords
           text="Ready to Build Software That Fits Your Business?"
+          stagger={75}
+          scale
           className="mx-auto max-w-3xl text-3xl leading-[1.1] font-medium tracking-display text-balance md:text-[3.25rem]"
         />
         <Reveal delay={140}>
@@ -822,15 +899,18 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={220}>
           <div className="mt-11 flex justify-center">
-            <MagneticCta to="/contact" variant="gold" glow>
-              Let's Build It
-            </MagneticCta>
+            <div className="halo-ring shimmer-sweep relative overflow-hidden rounded-md">
+              <MagneticCta to="/contact" variant="gold">
+                Let's Build It
+              </MagneticCta>
+            </div>
           </div>
         </Reveal>
       </div>
     </section>
   );
 }
+
 
 /* --------------------------------- FOOTER --------------------------------- */
 
