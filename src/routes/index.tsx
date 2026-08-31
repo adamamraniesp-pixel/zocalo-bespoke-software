@@ -3,11 +3,8 @@ import {
   FinalCta,
   Hero,
   Problem,
-  Process,
-  Services,
+  SectionTeaser,
   TrustStatement,
-  WhatWeBuild,
-  WhyZocalo,
 } from "@/components/site/sections";
 
 const title = "Zocalo — Bespoke Software Built Around Your Business";
@@ -33,11 +30,35 @@ function Index() {
     <>
       <Hero />
       <TrustStatement />
-      <Services condensed />
+      <SectionTeaser
+        eyebrow="Services"
+        title="Six disciplines, one engineering standard."
+        body="Bespoke software, CRM systems, AI automation, internal platforms, websites, and integrations — built to fit your operation, not the other way around."
+        to="/services"
+        label="View all services"
+      />
       <Problem />
-      <WhatWeBuild condensed />
-      <Process condensed />
-      <WhyZocalo condensed />
+      <SectionTeaser
+        eyebrow="What we build"
+        title="Systems shaped by the industries that run on them."
+        body="HVAC, real estate, healthcare, and professional services teams use Zocalo systems to remove manual work from their day."
+        to="/what-we-build"
+        label="See what we build"
+      />
+      <SectionTeaser
+        eyebrow="Process"
+        title="Discover, design, build, scale."
+        body="A deliberate four-stage engagement — deep operational discovery first, working software fast, then scale without a rebuild."
+        to="/process"
+        label="Explore the process"
+      />
+      <SectionTeaser
+        eyebrow="Why Zocalo"
+        title="Custom-first, built to last, partnered long-term."
+        body="No templates and no unnecessary subscriptions — scalable architecture and a team that stays with the system after launch."
+        to="/why-zocalo"
+        label="Why Zocalo"
+      />
       <FinalCta />
     </>
   );
