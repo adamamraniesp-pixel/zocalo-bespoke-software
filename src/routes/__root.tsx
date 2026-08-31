@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteNav } from "../components/site/SiteNav";
+import { HeaderThemeProvider } from "../components/site/HeaderTheme";
 import { SiteFooter } from "../components/site/sections";
 import { PageTransition, ScrollProgress } from "../components/site/motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -138,17 +139,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
-        <ScrollProgress />
-        <SiteNav />
-        <main>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <PageTransition routeKey={routeKey}>
-            <Outlet />
-          </PageTransition>
-        </main>
-        <SiteFooter />
-      </div>
+      <HeaderThemeProvider>
+        <div className="min-h-screen bg-background">
+          <ScrollProgress />
+          <SiteNav />
+          <main>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <PageTransition routeKey={routeKey}>
+              <Outlet />
+            </PageTransition>
+          </main>
+          <SiteFooter />
+        </div>
+      </HeaderThemeProvider>
     </QueryClientProvider>
   );
 }

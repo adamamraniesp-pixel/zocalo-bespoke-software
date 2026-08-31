@@ -598,6 +598,27 @@
   animation: cta-drift 26s ease-in-out infinite;
 }
 
+/* Header blend that mirrors the final CTA field when the section is in view */
+.final-cta-header-bg {
+  background:
+    radial-gradient(
+      50% 55% at 20% 30%,
+      color-mix(in oklab, var(--primary) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 50% at 82% 66%,
+      color-mix(in oklab, var(--gold) 14%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      40% 45% at 50% 100%,
+      color-mix(in oklab, var(--teal) 14%, transparent),
+      transparent 72%
+    );
+  background-size: 180% 180%;
+}
+
 @keyframes cta-drift {
   0%,
   100% {

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
+import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { HeroSystemGraphic } from "./HeroSystemGraphic";
@@ -931,9 +932,21 @@ export function StatsBand() {
 export function FinalCta() {
   const reduced = useReducedMotion();
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const finalCtaRef = useRef<HTMLElement | null>(null);
+  const { setInFinalCta } = useHeaderTheme();
+
+  const { scrollYProgress } = useScroll({
+    target: finalCtaRef,
+    offset: ["start end", "end start"],
+  });
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setInFinalCta(v > 0 && v < 1);
+  });
 
   return (
     <section
+      ref={finalCtaRef}
+      id="final-cta"
       className="section relative overflow-hidden border-t border-border"
       onMouseMove={(e) => {
         if (reduced) return;
