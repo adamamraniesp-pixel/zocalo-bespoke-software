@@ -517,62 +517,68 @@ const steps = [
   },
 ];
 
-/** Editorial process block. `scale` drives the asymmetric large/small rhythm. */
+/**
+ * One timeline step. `active` is driven by the section's scroll progress, so the
+ * step animates in exactly as the rail fill reaches its marker.
+ */
 function ProcessStep({
   step,
   index,
-  prominent,
+  active,
 }: {
   step: (typeof steps)[number];
   index: number;
-  prominent: boolean;
+  active: boolean;
 }) {
   return (
-    <Reveal delay={index * 60} as="li" className={prominent ? "md:col-span-7" : "md:col-span-5"}>
-      <article
-        className={`group relative flex flex-col overflow-hidden border-t border-border transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-border-strong hover:bg-card/40 ${
-          prominent ? "gap-10 px-1 pt-9 pb-14 md:px-8 md:pt-12 md:pb-16" : "gap-8 px-1 pt-8 pb-12 md:px-8 md:pt-10 md:pb-14"
-        }`}
-      >
-        <div>
-          <div className="flex items-baseline gap-5">
-            <span
-              className={`origin-left font-light tracking-display transition-transform duration-500 ease-out group-hover:scale-105 ${step.accent} ${
-                prominent ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
-              }`}
-            >
-              {step.n}
-            </span>
-            <span
-              aria-hidden
-              className="h-px flex-1 origin-left scale-x-100 bg-border transition-colors duration-300 ease-out group-hover:bg-primary/50"
-            />
-          </div>
-          <h3
-            className={`mt-8 font-medium tracking-display ${
-              prominent ? "text-2xl md:text-[2.4rem]" : "text-xl md:text-[1.75rem]"
-            }`}
-          >
-            {step.title}
-          </h3>
-          <p
-            className={`mt-5 text-sm leading-[1.8] text-muted-foreground ${
-              prominent ? "max-w-md md:text-base" : "max-w-sm"
-            }`}
-          >
-            {step.body}
-          </p>
-        </div>
-        <DrawIn
-          delay={index * 120}
-          className={`${step.accent} opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 ${
-            prominent ? "w-full max-w-[16rem] self-end" : "w-full max-w-[11rem]"
+    <li className="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-6 pb-16 last:pb-0 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-12 md:pb-24">
+      {/* marker sitting on the rail */}
+      <div className="relative">
+        <span
+          aria-hidden
+          className={`absolute top-2 left-[0.4rem] size-3 rounded-full border transition-[background-color,border-color,box-shadow,transform] duration-500 ease-out md:left-[0.65rem] ${
+            active ? "scale-110 border-transparent" : "border-border-strong bg-background"
           }`}
+          style={
+            active
+              ? {
+                  backgroundColor: "currentColor",
+                  boxShadow: "0 0 0 5px color-mix(in oklab, currentColor 16%, transparent)",
+                }
+              : undefined
+          }
+        />
+        <span
+          className={`block pl-9 font-light tracking-display transition-[opacity,transform] duration-700 ease-out md:pl-12 ${step.accent} ${
+            active ? "translate-y-0 opacity-100" : "translate-y-2 opacity-30"
+          } text-3xl md:text-5xl`}
         >
-          <step.Glyph className="w-full" />
-        </DrawIn>
-      </article>
-    </Reveal>
+          {step.n}
+        </span>
+      </div>
+
+      <div
+        className={`group transition-[opacity,transform] duration-700 ease-out ${
+          active ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        }`}
+        style={{ transitionDelay: `${index * 40}ms` }}
+      >
+        <div className="flex flex-col gap-8 border-t border-border pt-8 md:flex-row md:items-start md:justify-between md:gap-14">
+          <div>
+            <h3 className="text-2xl font-medium tracking-display md:text-[2.2rem]">{step.title}</h3>
+            <p className="mt-5 max-w-md text-sm leading-[1.8] text-muted-foreground md:text-base">
+              {step.body}
+            </p>
+          </div>
+          <DrawIn
+            delay={80}
+            className={`w-full max-w-[13rem] shrink-0 ${step.accent} opacity-70 transition-opacity duration-300 ease-out hover:opacity-100`}
+          >
+            <step.Glyph className="w-full" />
+          </DrawIn>
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -583,6 +589,8 @@ export function Process({
   condensed?: boolean;
   heading?: boolean;
 }) {
+  const { ref, progress } = useElementProgress<HTMLOListElement>();
+
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
       <div className="container-x">
@@ -593,15 +601,31 @@ export function Process({
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Discover → Design → Build → Scale.
+                Discover → Design → Build → Scale
               </h2>
             </Reveal>
           </>
         ) : null}
 
-        <ol className="mt-6 grid grid-cols-1 gap-x-14 md:grid-cols-12">
+        <ol ref={ref} className="relative mt-14">
+          {/* rail + scroll-driven fill */}
+          <div
+            aria-hidden
+            className="absolute top-2 bottom-2 left-[0.95rem] w-px bg-border md:left-[1.2rem]"
+          >
+            <div
+              className="proc-rail-fill h-full w-px bg-primary"
+              style={{ ["--proc-progress" as never]: progress }}
+            />
+          </div>
+
           {steps.map((s, i) => (
-            <ProcessStep key={s.n} step={s} index={i} prominent={i === 0 || i === 3} />
+            <ProcessStep
+              key={s.n}
+              step={s}
+              index={i}
+              active={progress >= (i + 0.35) / steps.length}
+            />
           ))}
         </ol>
 
@@ -616,6 +640,7 @@ export function Process({
     </section>
   );
 }
+
 
 /* ------------------------------- WHY ZOCALO ------------------------------- */
 
