@@ -130,46 +130,99 @@ export function TrustStatement() {
 
 /* -------------------------------- SERVICES -------------------------------- */
 
-const services = [
+type Service = {
+  n: string;
+  title: string;
+  body: string;
+  accent: string;
+  Glyph: (props: { className?: string; style?: CSSProperties }) => ReactElement;
+};
+
+const services: Service[] = [
   {
     n: "01",
     title: "Bespoke Software Development",
     body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
+    accent: "var(--primary)",
     Glyph: GlyphBespoke,
   },
   {
     n: "02",
     title: "CRM Systems",
     body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
+    accent: "var(--secondary)",
     Glyph: GlyphCrm,
   },
   {
     n: "03",
     title: "AI Automation",
     body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
+    accent: "var(--amber)",
     Glyph: GlyphAi,
   },
   {
     n: "04",
     title: "Internal Platforms",
     body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
+    accent: "var(--teal)",
     Glyph: GlyphPlatform,
   },
   {
     n: "05",
     title: "Websites",
     body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
+    accent: "var(--gold)",
     Glyph: GlyphWebsite,
   },
   {
     n: "06",
     title: "Integrations",
     body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
+    accent: "var(--primary)",
     Glyph: GlyphIntegration,
   },
 ];
 
 export const serviceNames = services.map((s) => s.title);
+
+function ServiceCard({ service }: { service: Service }) {
+  return (
+    <article
+      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_50%,transparent)] md:p-12"
+      style={{ ["--service-accent" as never]: service.accent }}
+    >
+      <div>
+        <span className="font-mono text-sm tracking-[0.22em]" style={{ color: service.accent }}>
+          {service.n}
+        </span>
+        <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
+          {service.title}
+        </h3>
+        <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
+          {service.body}
+        </p>
+      </div>
+      <DrawIn className="w-full" delay={80}>
+        <service.Glyph
+          className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
+          style={{ color: service.accent }}
+        />
+      </DrawIn>
+    </article>
+  );
+}
+
+/** Slow, always-on data flow living in the gap between two service blocks. */
+function ServiceConnector() {
+  return (
+    <div aria-hidden className="relative mx-auto h-full w-px">
+      <div className="connector-rail absolute inset-y-6 left-1/2 w-px -translate-x-1/2 opacity-60" />
+      <div className="absolute inset-y-6 left-1/2 w-px">
+        <div className="connector-orb absolute top-0 left-1/2 h-2 w-2 rounded-full bg-primary shadow-[0_0_16px_4px_color-mix(in_oklab,var(--primary)_45%,transparent)]" />
+      </div>
+    </div>
+  );
+}
 
 export function Services({
   condensed = false,
@@ -179,6 +232,10 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
+  const rows: Service[][] = [];
+  for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
+
+
 
 
   return (
