@@ -7,6 +7,8 @@ type RevealProps = {
   as?: ElementType;
 };
 
+const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+
 export function Reveal({ children, delay = 0, className, as }: RevealProps) {
   const Tag = (as ?? "div") as ElementType;
   const ref = useRef<HTMLElement | null>(null);
@@ -15,6 +17,10 @@ export function Reveal({ children, delay = 0, className, as }: RevealProps) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShown(true);
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -24,7 +30,7 @@ export function Reveal({ children, delay = 0, className, as }: RevealProps) {
           }
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -33,8 +39,13 @@ export function Reveal({ children, delay = 0, className, as }: RevealProps) {
   return (
     <Tag
       ref={ref}
-      className={`reveal ${shown ? "reveal-in" : ""} ${className ?? ""}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={className}
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : "translateY(14px)",
+        transition: `opacity 700ms ${EASE} ${delay}ms, transform 700ms ${EASE} ${delay}ms`,
+        willChange: "opacity, transform",
+      }}
     >
       {children}
     </Tag>
