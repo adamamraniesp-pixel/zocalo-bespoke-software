@@ -334,9 +334,14 @@ export function Problem() {
         <div>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {pains.map((p, i) => (
-              <Reveal key={p} delay={i * 40} as="li">
-                <div className="flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7">
-                  <span className="font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55">
+              <Reveal key={p} delay={i * 80} distance={12} as="li">
+                <div
+                  className="group flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out hover:-translate-y-[3px] hover:border-[color-mix(in_oklab,var(--pain-accent)_50%,transparent)] hover:bg-card/40 hover:shadow-[0_14px_36px_-22px_color-mix(in_oklab,var(--pain-accent)_55%,transparent)]"
+                  style={{ ["--pain-accent" as never]: painAccents[i % painAccents.length] }}
+                >
+                  <span
+                    className="origin-left font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55 transition-[transform,color] duration-300 ease-out group-hover:scale-105 group-hover:text-[color-mix(in_oklab,var(--pain-accent)_80%,white)]"
+                  >
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[0.975rem] leading-[1.6] text-foreground/90">{p}</span>
