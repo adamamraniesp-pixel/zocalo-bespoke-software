@@ -240,8 +240,8 @@ export function Services({
 
 
   return (
-    <section className={heading ? "section" : "section pt-0 md:pt-0"}>
-      <div className="container-x">
+    <section className={`services-field relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
+      <div className="container-x relative">
         {heading ? (
           <>
             <Reveal>
@@ -256,30 +256,32 @@ export function Services({
         ) : null}
 
         {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
-        <div className="mt-12 flex flex-col gap-10 md:gap-14">
-          {rows.map((row) => (
-            <div
-              key={row.map((r) => r.n).join("-")}
-              className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-0"
-            >
-              {row.map((s, i) => (
-                <Reveal
-                  key={s.title}
-                  delay={i * 150}
-                  distance={15}
-                  className={`h-full ${i === 0 ? "lg:pr-0" : ""}`}
-                >
-                  <ServiceCard service={s} />
+        <div className="mt-12 flex flex-col gap-12 md:gap-16">
+          {rows.map((row) => {
+            const linked = row.some((s) => s.n === "03");
+            return (
+              <div
+                key={row.map((r) => r.n).join("-")}
+                className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_2.5rem_1fr] lg:gap-0 xl:grid-cols-[1fr_3.75rem_1fr]"
+              >
+                <Reveal distance={15} className="h-full lg:col-start-1">
+                  <ServiceCard service={row[0]} />
                 </Reveal>
-              ))}
-              {row.length === 2 ? (
-                <div className="hidden lg:order-2 lg:block lg:w-14 xl:w-16">
-                  {row.some((s) => s.n === "03") ? <ServiceConnector /> : null}
+
+                <div className="hidden lg:col-start-2 lg:block">
+                  {linked ? <ServiceConnector /> : null}
                 </div>
-              ) : null}
-            </div>
-          ))}
+
+                {row[1] ? (
+                  <Reveal delay={150} distance={15} className="h-full lg:col-start-3">
+                    <ServiceCard service={row[1]} />
+                  </Reveal>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
+
 
 
 
