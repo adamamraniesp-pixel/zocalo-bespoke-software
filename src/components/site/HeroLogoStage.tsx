@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { ZocaloMark } from "./ZocaloLogo";
 import { useReducedMotion } from "./motion";
+import logoAsset from "@/assets/zocalo-logo-hero.png.asset.json";
 
 type Shape = {
   cls: string;
@@ -72,8 +72,9 @@ const shapes: Shape[] = [
 ];
 
 /**
- * Hero centrepiece: the Zocalo mark floating with a gentle 3D tilt, ringed by
- * small geometric shapes drifting at different speeds. Decoration sits at z-0.
+ * Hero centrepiece: the uploaded Zocalo mark rendered crisply as a flat
+ * <img>, floating gently with Framer Motion. Small geometric shapes drift
+ * behind it at z-0.
  */
 export function HeroLogoStage({ className }: { className?: string }) {
   const reduced = useReducedMotion();
@@ -90,7 +91,7 @@ export function HeroLogoStage({ className }: { className?: string }) {
         }}
       />
 
-      {/* drifting geometry */}
+      {/* drifting geometry — firmly behind the logo */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         {shapes.map((s, i) => (
           <motion.svg
@@ -113,23 +114,25 @@ export function HeroLogoStage({ className }: { className?: string }) {
         ))}
       </div>
 
-      {/* the mark */}
-      <motion.div
-        className="absolute inset-0 z-10 flex items-center justify-center"
-        style={{ perspective: 1000 }}
-      >
+      {/* the uploaded mark — crisp, flat, animated */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
         <motion.div
           animate={
             reduced
               ? {}
-              : { y: [0, -18, 0], rotateY: [-9, 9, -9], rotateX: [5, -5, 5] }
+              : { y: [0, -18, 0], rotateY: [-9, 9, -9] }
           }
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformStyle: "preserve-3d" }}
+          style={{ transformStyle: "preserve-3d", perspective: 1000 }}
         >
-          <ZocaloMark size={300} className="h-auto w-[62%] max-w-[340px] min-w-[200px]" />
+          <img
+            src={logoAsset.url}
+            alt="Zocalo"
+            className="h-auto w-[72%] max-w-[420px] min-w-[280px] select-none drop-shadow-[0_24px_50px_rgba(42,91,132,0.16)]"
+            draggable={false}
+          />
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
