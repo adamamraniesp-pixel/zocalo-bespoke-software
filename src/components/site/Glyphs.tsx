@@ -80,3 +80,92 @@ export function GlyphPlinth({ className }: GlyphProps) {
     </svg>
   );
 }
+
+/* ------------------------------ SERVICE GLYPHS ---------------------------- */
+
+/** Nested blueprint frames converging on a core — bespoke engineering. */
+export function GlyphBespoke({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <rect x="8" y="8" width="80" height="48" rx="2" {...stroke} opacity="0.28" />
+      <rect x="20" y="17" width="56" height="30" rx="2" {...stroke} opacity="0.55" />
+      <rect x="34" y="25" width="28" height="14" rx="2" {...stroke} />
+      <path d="M8 32h12M76 32h12M48 8v9M48 47v9" {...stroke} opacity="0.4" />
+      <circle cx="48" cy="32" r="2.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Node-and-stage relationship graph — CRM systems. */
+export function GlyphCrm({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <path d="M14 32h20M46 32h18M46 18h18M46 46h18" {...stroke} opacity="0.5" />
+      <path d="M34 32c6 0 6-14 12-14M34 32c6 0 6 14 12 14" {...stroke} opacity="0.7" />
+      <circle cx="10" cy="32" r="4" {...stroke} />
+      <circle cx="68" cy="18" r="3" fill="currentColor" opacity="0.85" />
+      <circle cx="68" cy="32" r="3" fill="currentColor" opacity="0.55" />
+      <circle cx="68" cy="46" r="3" fill="currentColor" opacity="0.3" />
+      <path d="M74 18h14M74 32h10M74 46h6" {...stroke} opacity="0.3" />
+    </svg>
+  );
+}
+
+/** Decision diamond with automated branches — AI automation. */
+export function GlyphAi({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <path d="M6 32h18" {...stroke} opacity="0.6" />
+      <path d="M38 32l12-12 12 12-12 12z" {...stroke} />
+      <path d="M24 32h14" {...stroke} />
+      <path d="M62 32h10c6 0 6-14 12-14" {...stroke} opacity="0.7" />
+      <path d="M62 32h10c6 0 6 14 12 14" {...stroke} opacity="0.4" />
+      <circle cx="50" cy="32" r="2.5" fill="currentColor" />
+      <circle cx="88" cy="18" r="2.5" fill="currentColor" opacity="0.8" />
+      <circle cx="88" cy="46" r="2.5" {...stroke} opacity="0.5" />
+    </svg>
+  );
+}
+
+/** Modular panel arrangement — internal platforms. */
+export function GlyphPlatform({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <rect x="8" y="10" width="34" height="20" rx="2" {...stroke} />
+      <rect x="48" y="10" width="40" height="12" rx="2" {...stroke} opacity="0.55" />
+      <rect x="48" y="26" width="40" height="28" rx="2" {...stroke} opacity="0.35" />
+      <rect x="8" y="34" width="34" height="20" rx="2" {...stroke} opacity="0.7" />
+      <path d="M14 18h14M14 42h20M54 34h26M54 42h18" {...stroke} opacity="0.45" />
+    </svg>
+  );
+}
+
+/** Browser frame with performance meter — websites. */
+export function GlyphWebsite({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <rect x="8" y="10" width="80" height="44" rx="3" {...stroke} opacity="0.6" />
+      <path d="M8 20h80" {...stroke} opacity="0.6" />
+      <circle cx="15" cy="15" r="1.5" fill="currentColor" opacity="0.7" />
+      <path d="M18 44a22 22 0 0 1 44 0" {...stroke} />
+      <path d="M40 44l14-11" {...stroke} />
+      <circle cx="40" cy="44" r="2.5" fill="currentColor" />
+      <path d="M70 44V30M78 44v-8" {...stroke} opacity="0.4" />
+    </svg>
+  );
+}
+
+/** Cross-connected endpoints — integrations. */
+export function GlyphIntegration({ className }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 96 64" className={`${base} ${className ?? ""}`} aria-hidden>
+      <circle cx="16" cy="16" r="5" {...stroke} />
+      <circle cx="16" cy="48" r="5" {...stroke} opacity="0.6" />
+      <circle cx="80" cy="16" r="5" {...stroke} opacity="0.6" />
+      <circle cx="80" cy="48" r="5" {...stroke} />
+      <path d="M21 16h20M55 16h20M21 48h20M55 48h20" {...stroke} opacity="0.4" />
+      <path d="M41 16c8 0 6 32 14 32M41 48c8 0 6-32 14-32" {...stroke} opacity="0.55" />
+      <circle cx="48" cy="32" r="3" fill="currentColor" />
+    </svg>
+  );
+}
