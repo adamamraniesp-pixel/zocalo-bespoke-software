@@ -266,3 +266,83 @@
     transition: none;
   }
 }
+
+/* -------- Living connector between the AI / Platforms service blocks ------- */
+.connector-rail {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--primary) 55%, transparent) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 100% 10px;
+  background-repeat: repeat-y;
+}
+
+.connector-orb {
+  animation: connector-travel 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes connector-travel {
+  0% {
+    transform: translate(-50%, 0) scale(0.85);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-50%, 100%) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(0.85);
+    opacity: 0.25;
+  }
+}
+
+/* --------------------- Bedrock diagram (why-zocalo) ----------------------- */
+.bedrock-layer {
+  opacity: 0;
+  transform: translateY(18px) scale(0.97);
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--layer-delay, 0ms);
+}
+
+[data-stacked="true"] .bedrock-layer {
+  opacity: 1;
+  transform: none;
+}
+
+.motes {
+  background-image:
+    radial-gradient(color-mix(in oklab, var(--cream) 55%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in oklab, var(--gold) 45%, transparent) 1px, transparent 1px);
+  background-size:
+    62px 62px,
+    97px 97px;
+  animation: motes-drift 42s linear infinite;
+}
+
+@keyframes motes-drift {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      62px -62px,
+      -97px 97px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector-orb,
+  .motes {
+    animation: none;
+  }
+  .bedrock-layer {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
