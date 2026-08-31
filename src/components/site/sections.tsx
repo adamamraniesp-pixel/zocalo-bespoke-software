@@ -655,6 +655,7 @@ export function WhyZocalo({
 }) {
   const shown = condensed ? reasons.slice(0, 3) : reasons;
 
+
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
       <div className="container-x">
