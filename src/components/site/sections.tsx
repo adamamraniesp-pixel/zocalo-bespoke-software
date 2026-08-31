@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, ReactElement, ReactNode } from "react";
+
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords } from "./motion";
@@ -18,7 +20,6 @@ import {
   GlyphOnboarding,
   GlyphPipeline,
   GlyphPlatform,
-  GlyphPlinth,
   GlyphWebsite,
   GlyphWorkflow,
 } from "./Glyphs";
@@ -130,46 +131,99 @@ export function TrustStatement() {
 
 /* -------------------------------- SERVICES -------------------------------- */
 
-const services = [
+type Service = {
+  n: string;
+  title: string;
+  body: string;
+  accent: string;
+  Glyph: (props: { className?: string; style?: CSSProperties }) => ReactElement;
+};
+
+const services: Service[] = [
   {
     n: "01",
     title: "Bespoke Software Development",
     body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
+    accent: "var(--primary)",
     Glyph: GlyphBespoke,
   },
   {
     n: "02",
     title: "CRM Systems",
     body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
+    accent: "var(--secondary)",
     Glyph: GlyphCrm,
   },
   {
     n: "03",
     title: "AI Automation",
     body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
+    accent: "var(--amber)",
     Glyph: GlyphAi,
   },
   {
     n: "04",
     title: "Internal Platforms",
     body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
+    accent: "var(--teal)",
     Glyph: GlyphPlatform,
   },
   {
     n: "05",
     title: "Websites",
     body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
+    accent: "var(--gold)",
     Glyph: GlyphWebsite,
   },
   {
     n: "06",
     title: "Integrations",
     body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
+    accent: "var(--primary)",
     Glyph: GlyphIntegration,
   },
 ];
 
 export const serviceNames = services.map((s) => s.title);
+
+function ServiceCard({ service }: { service: Service }) {
+  return (
+    <article
+      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-border bg-card/40 p-8 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--service-accent)_55%,transparent)] hover:bg-card/60 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--service-accent)_50%,transparent)] md:p-12"
+      style={{ ["--service-accent" as never]: service.accent }}
+    >
+      <div>
+        <span className="font-mono text-sm tracking-[0.22em]" style={{ color: service.accent }}>
+          {service.n}
+        </span>
+        <h3 className="mt-6 max-w-lg text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.3rem]">
+          {service.title}
+        </h3>
+        <p className="mt-6 max-w-lg text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
+          {service.body}
+        </p>
+      </div>
+      <DrawIn className="w-full" delay={80}>
+        <service.Glyph
+          className="h-40 w-full opacity-75 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-52"
+          style={{ color: service.accent }}
+        />
+      </DrawIn>
+    </article>
+  );
+}
+
+/** Slow, always-on data flow living in the gap between two service blocks. */
+function ServiceConnector() {
+  return (
+    <div aria-hidden className="relative mx-auto h-full w-px">
+      <div className="connector-rail absolute inset-y-6 left-1/2 w-px -translate-x-1/2 opacity-60" />
+      <div className="absolute inset-y-6 left-1/2 w-px">
+        <div className="connector-orb absolute top-0 left-1/2 h-2 w-2 rounded-full bg-primary shadow-[0_0_16px_4px_color-mix(in_oklab,var(--primary)_45%,transparent)]" />
+      </div>
+    </div>
+  );
+}
 
 export function Services({
   condensed = false,
@@ -179,11 +233,15 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
+  const rows: Service[][] = [];
+  for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
+
+
 
 
   return (
-    <section className={heading ? "section" : "section pt-0 md:pt-0"}>
-      <div className="container-x">
+    <section className={`services-field relative ${heading ? "section" : "section pt-0 md:pt-0"}`}>
+      <div className="container-x relative">
         {heading ? (
           <>
             <Reveal>
@@ -197,46 +255,37 @@ export function Services({
           </>
         ) : null}
 
-        {/* Every service is a hero-scale block; sizing alternates for rhythm */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-12">
-          {items.map((s, i) => {
-            const wide = i === 0 || i === 3;
+        {/* Hero-scale blocks; each pair is its own row so cards breathe apart */}
+        <div className="mt-12 flex flex-col gap-12 md:gap-16">
+          {rows.map((row) => {
+            const linked = row.some((s) => s.n === "03");
+            const [first, second] = row;
+            if (!first) return null;
             return (
-              <Reveal
-                key={s.title}
-                delay={(i % 2) * 70}
-                className={wide ? "md:col-span-7" : "md:col-span-5"}
+              <div
+                key={row.map((r) => r.n).join("-")}
+                className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_2.5rem_1fr] lg:gap-0 xl:grid-cols-[1fr_3.75rem_1fr]"
               >
-                <article
-                  className={`group flex h-full flex-col justify-between gap-10 border-t border-border py-12 transition-colors duration-300 ease-out hover:bg-card/40 md:py-16 ${
-                    wide ? "md:pr-16" : "md:border-l md:pl-16"
-                  }`}
-                >
-                  <div>
-                    <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
-                      {s.n}
-                    </span>
-                    <h3
-                      className={`mt-6 max-w-lg font-medium tracking-display ${
-                        wide
-                          ? "text-[1.9rem] leading-[1.12] md:text-[2.6rem]"
-                          : "text-[1.6rem] leading-[1.14] md:text-[2.1rem]"
-                      }`}
-                    >
-                      {s.title}
-                    </h3>
-                    <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
-                      {s.body}
-                    </p>
-                  </div>
-                  <DrawIn className={wide ? "w-full max-w-md" : "w-full max-w-sm"}>
-                    <s.Glyph className="w-full opacity-70 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-                  </DrawIn>
-                </article>
-              </Reveal>
+                <Reveal distance={15} className="h-full lg:col-start-1">
+                  <ServiceCard service={first} />
+                </Reveal>
+
+                <div className="hidden lg:col-start-2 lg:block">
+                  {linked ? <ServiceConnector /> : null}
+                </div>
+
+                {second ? (
+                  <Reveal delay={150} distance={15} className="h-full lg:col-start-3">
+                    <ServiceCard service={second} />
+                  </Reveal>
+                ) : null}
+              </div>
             );
           })}
         </div>
+
+
+
 
 
         {condensed ? (
@@ -602,6 +651,90 @@ const reasons = [
   },
 ];
 
+/**
+ * Architectural bedrock centrepiece: staggered foundation layers that stack up
+ * on scroll, with a slow drifting mote field for a sense of life.
+ */
+function BedrockPanel() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [stacked, setStacked] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setStacked(true);
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Narrow at the top, widest at the base — a plinth in cut-away section.
+  const layers = [
+    { width: "58%", accent: "var(--primary)" },
+    { width: "70%", accent: "var(--teal)" },
+    { width: "82%", accent: "var(--cream)" },
+    { width: "92%", accent: "var(--gold)" },
+    { width: "100%", accent: "var(--amber)" },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      data-stacked={stacked ? "true" : "false"}
+      className="relative overflow-hidden rounded-2xl border border-border-strong p-9 md:p-12 lg:sticky lg:top-28"
+      style={{
+        backgroundImage:
+          "linear-gradient(160deg, var(--indigo) 0%, var(--slateblue) 55%, color-mix(in oklab, var(--gold) 55%, var(--slateblue)) 100%)",
+      }}
+    >
+      <div aria-hidden className="motes pointer-events-none absolute inset-0 opacity-25" />
+
+      <div className="relative">
+        <p className="eyebrow text-cream/70">The name</p>
+        <blockquote className="mt-6 text-[2.1rem] leading-[1.08] font-light tracking-[-0.03em] text-cream text-balance md:text-[3rem]">
+          A foundation,
+          <br />
+          <span className="text-cream/60">not a subscription.</span>
+        </blockquote>
+
+        {/* Cut-away foundation layers */}
+        <div aria-hidden className="mt-10 flex flex-col items-center gap-2">
+          {layers.map((l, i) => (
+            <div
+              key={l.width}
+              className="bedrock-layer h-7 rounded-md border md:h-9"
+              style={{
+                width: l.width,
+                borderColor: `color-mix(in oklab, ${l.accent} 55%, transparent)`,
+                background: `linear-gradient(90deg, color-mix(in oklab, ${l.accent} 30%, transparent), transparent)`,
+                ["--layer-delay" as never]: `${(layers.length - 1 - i) * 110}ms`,
+                boxShadow: `0 10px 30px -18px color-mix(in oklab, ${l.accent} 60%, transparent)`,
+              }}
+            />
+          ))}
+        </div>
+
+        <Reveal delay={700} distance={15}>
+          <p className="mt-10 max-w-md text-lg leading-[1.75] tracking-[0.005em] text-cream/80 md:text-xl">
+            Zocalo means the base a structure is built on. We engineer the layer your business stands
+            on for the next decade.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  );
+}
+
+
 export function WhyZocalo({
   condensed = false,
   heading = true,
@@ -611,46 +744,27 @@ export function WhyZocalo({
 }) {
   const shown = condensed ? reasons.slice(0, 3) : reasons;
 
+
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
       <div className="container-x">
-        <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-24">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            {heading ? (
-              <Reveal>
-                <p className="eyebrow">Why Zocalo</p>
-              </Reveal>
-            ) : null}
-            <Reveal delay={50}>
-              <blockquote className="mt-7 border-l border-gold/60 pl-6 text-2xl leading-[1.3] font-light tracking-[-0.025em] text-balance md:text-[2.4rem]">
-                A foundation,
-                <br />
-                <span className="text-muted-foreground">not a subscription.</span>
-              </blockquote>
-            </Reveal>
-            <Reveal delay={110}>
-              <p className="mt-8 max-w-md text-base leading-[1.75] text-muted-foreground">
-                Zocalo means the base a structure is built on. We engineer the layer your business
-                stands on for the next decade.
-              </p>
-            </Reveal>
-            <Reveal delay={160}>
-              <GlyphPlinth className="mt-12 w-56 opacity-70" />
-            </Reveal>
-          </div>
+        {heading ? (
+          <Reveal>
+            <p className="eyebrow mb-12">Why Zocalo</p>
+          </Reveal>
+        ) : null}
 
+        <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <ol className="counter-rhythm">
             {shown.map((r, i) => (
-              <Reveal key={r.title} delay={i * 55} as="li">
-                <div className="group grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-9 first:border-t md:gap-8">
+              <Reveal key={r.title} delay={i * 150} distance={15} as="li">
+                <div className="group grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-8 first:border-t md:gap-8">
                   <span className="pt-1 text-2xl leading-none font-light tracking-display text-muted-foreground/40 transition-colors duration-200 ease-out group-hover:text-gold md:text-[2rem]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="text-lg font-medium tracking-[-0.02em] transition-transform duration-200 ease-out group-hover:translate-x-1 md:text-xl">
-                      {r.title}
-                    </h3>
-                    <p className="mt-3 max-w-lg text-sm leading-[1.75] text-muted-foreground">
+                    <h3 className="text-lg font-medium tracking-[-0.02em] md:text-xl">{r.title}</h3>
+                    <p className="mt-3 max-w-lg text-sm leading-[1.8] tracking-[0.005em] text-muted-foreground">
                       {r.body}
                     </p>
                   </div>
@@ -658,7 +772,10 @@ export function WhyZocalo({
               </Reveal>
             ))}
           </ol>
+
+          <BedrockPanel />
         </div>
+
 
         {condensed ? (
           <Reveal delay={220}>
