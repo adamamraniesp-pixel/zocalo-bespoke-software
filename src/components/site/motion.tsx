@@ -233,3 +233,51 @@ export function PageTransition({ routeKey, children }: { routeKey: string; child
     </div>
   );
 }
+
+/* ---------------------------- SVG draw-in reveal --------------------------- */
+
+/**
+ * Wraps an inline SVG and triggers a stroke-dashoffset draw-in the first time
+ * it scrolls into view. Honours prefers-reduced-motion via CSS.
+ */
+export function DrawIn({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [drawn, setDrawn] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setDrawn(true);
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`draw-svg ${className ?? ""}`}
+      data-drawn={drawn ? "true" : "false"}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}

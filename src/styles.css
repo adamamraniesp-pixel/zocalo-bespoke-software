@@ -243,3 +243,22 @@
     scroll-behavior: auto;
   }
 }
+
+/* Line-diagram draw-in reveal (stroke-dashoffset) */
+.draw-svg svg :is(path, circle, rect, line, polyline) {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.draw-svg[data-drawn="true"] svg :is(path, circle, rect, line, polyline) {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-svg svg :is(path, circle, rect, line, polyline) {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
