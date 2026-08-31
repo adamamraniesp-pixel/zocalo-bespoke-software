@@ -657,6 +657,7 @@ const reasons = [
 function BedrockPanel() {
   const ref = useRef<HTMLDivElement | null>(null);
   const [stacked, setStacked] = useState(false);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const el = ref.current;
