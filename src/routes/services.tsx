@@ -24,7 +24,7 @@ function ServicesPage() {
     <>
       <PageHeader
         eyebrow="Services"
-        title="Engineering across the full operational stack."
+        title="Engineering across the full operational stack"
         body="Six disciplines, one standard: software designed from first principles around the way your business actually runs."
       />
       <Services heading={false} />

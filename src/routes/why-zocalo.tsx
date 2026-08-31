@@ -24,7 +24,7 @@ function WhyZocaloPage() {
     <>
       <PageHeader
         eyebrow="Why Zocalo"
-        title="We engineer the layer your business stands on."
+        title="We engineer the layer your business stands on"
         body="Not a product you rent. Infrastructure you own, built to hold up as the operation grows."
       />
       <WhyZocalo heading={false} />

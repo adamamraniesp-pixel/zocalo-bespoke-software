@@ -24,7 +24,7 @@ function ProcessPage() {
     <>
       <PageHeader
         eyebrow="Process"
-        title="Four phases, one accountable team."
+        title="Four phases, one accountable team"
         body="No discovery theatre and no black-box delivery. You see the system take shape from the first increment."
       />
       <Process heading={false} />

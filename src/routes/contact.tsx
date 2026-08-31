@@ -138,7 +138,7 @@ function ContactPage() {
     <>
       <PageHeader
         eyebrow="Contact"
-        title="Let's map what should be engineered."
+        title="Let's map what should be engineered"
         body="Tell us how your business runs. We'll show you what should be engineered."
       />
 
