@@ -233,6 +233,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
+
+
   .dot-drift,
   .glow-pulse {
     animation: none;
