@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
+import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { HeroSystemGraphic } from "./HeroSystemGraphic";
