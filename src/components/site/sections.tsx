@@ -85,7 +85,7 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center overflow-hidden px-6 pt-32 pb-24 md:px-10 md:pt-40"
     >
       <HeroBackdrop />
-      <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div className="container-x relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div>
           <Reveal>
             <p className="eyebrow">Bespoke Software Engineering</p>
@@ -261,7 +261,7 @@ export function Services({
       className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}
     >
       <SectionFloaters variant="b" />
-      <div className="container-x relative">
+      <div className="container-x relative z-10">
         {heading ? (
           <>
             <Reveal>
@@ -394,7 +394,7 @@ export function WhatWeBuild({
       className={`section relative overflow-hidden ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}
     >
       <SectionFloaters variant="c" />
-      <div className="container-x relative">
+      <div className="container-x relative z-10">
         {heading ? (
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -525,7 +525,7 @@ function ProcessStep({
           </div>
           <DrawIn
             delay={80}
-            className={`w-full max-w-[13rem] shrink-0 ${step.accent} [perspective:800px] transition-transform duration-500 ease-out hover:[transform:rotateX(6deg)_rotateY(-8deg)_scale(1.04)]`}
+            className={`w-full max-w-[17rem] shrink-0 md:max-w-[18rem] ${step.accent} [perspective:800px] transition-transform duration-500 ease-out hover:[transform:rotateX(6deg)_rotateY(-8deg)_scale(1.04)]`}
           >
             <step.Glyph className="w-full" />
           </DrawIn>
@@ -549,7 +549,7 @@ export function Process({
       className={`section relative overflow-hidden ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}
     >
       <SectionFloaters variant="a" />
-      <div className="container-x relative">
+      <div className="container-x relative z-10">
         {heading ? (
           <>
             <Reveal>
@@ -877,13 +877,9 @@ export function SiteFooter() {
     <footer className="border-t border-border px-6 py-12 md:px-10">
       <div className="container-x flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
         <Link to="/" aria-label="Zocalo home">
-          <motion.span
-            className="inline-block"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <span className="float-soft inline-block">
             <ZocaloLogo size={30} />
-          </motion.span>
+          </span>
         </Link>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Zocalo. Bespoke software engineering.
