@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ZocaloMark } from "./ZocaloLogo";
+import navMark from "@/assets/zocalo-mark.png.asset.json";
 import { EASE, useMagnetic } from "./motion";
 
 const links = [
