@@ -85,7 +85,7 @@ export function HeroSystemGraphic({ className }: { className?: string }) {
       <motion.div
         animate={
           reduced
-            ? undefined
+            ? { rotateX: 0, rotateY: 0, y: 0 }
             : {
                 rotateX: tilt.x,
                 rotateY: tilt.y,
