@@ -283,11 +283,11 @@ export function Problem() {
         </div>
 
         <div>
-          <ul className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {pains.map((p, i) => (
-              <Reveal key={p} delay={i * 40} as="li" className="bg-background">
-                <div className="flex h-full items-start gap-5 border-l-2 border-l-border/80 bg-card/25 px-6 py-7">
-                  <span className="font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/60">
+              <Reveal key={p} delay={i * 40} as="li">
+                <div className="flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7">
+                  <span className="font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[0.975rem] leading-[1.6] text-foreground/90">{p}</span>
@@ -295,6 +295,7 @@ export function Problem() {
               </Reveal>
             ))}
           </ul>
+
           <Reveal delay={240}>
             <p className="mt-12 border-t border-border pt-8 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl">
               We build software that eliminates those bottlenecks.
