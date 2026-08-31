@@ -52,12 +52,15 @@ export function SiteNav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled
-          ? "border-b border-border bg-background/85 backdrop-blur-xl"
-          : "border-b border-transparent"
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-[border-color,background-color] duration-500 ${headerBg}`}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 transition-opacity duration-500"
+        style={{ opacity: inFinalCta ? 1 : 0 }}
+      >
+        <div className="final-cta-header-bg absolute inset-0 backdrop-blur-xl" />
+      </div>
       <nav
         aria-label="Primary"
         className="container-x flex h-16 items-center justify-between px-6 md:h-[4.5rem] md:px-10"
