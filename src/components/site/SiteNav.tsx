@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import navMark from "@/assets/zocalo-mark.png.asset.json";
 import { EASE, useMagnetic } from "./motion";
+import { useHeaderTheme } from "./HeaderTheme";
 
 const links = [
   { to: "/services", label: "Services" },
