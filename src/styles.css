@@ -252,6 +252,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .glyph-draw svg path,
+  .glyph-draw svg circle,
+  .glyph-draw svg rect,
+  .glyph-draw svg line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
 
   .dot-drift,
   .glow-pulse {
