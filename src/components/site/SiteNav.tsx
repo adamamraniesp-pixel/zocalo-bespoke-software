@@ -55,7 +55,7 @@ export function SiteNav() {
         className="container-x flex h-16 items-center justify-between px-6 md:h-[4.5rem] md:px-10"
       >
         <Link to="/" className="inline-flex items-center gap-2.5 rounded-sm" aria-label="Zocalo home">
-          <ZocaloMark size={44} className="shrink-0" title="" />
+          <img src={navMark.url} alt="" aria-hidden className="h-10 w-10 object-contain" />
           <span className="text-[1.25rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
         </Link>
 
