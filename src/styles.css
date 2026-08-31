@@ -63,70 +63,66 @@
 :root {
   --radius: 0.375rem;
 
-  /* #0B1420 */
-  --background: oklch(0.189 0.028 255.9);
-  /* near-white on dark */
-  --foreground: oklch(0.97 0.004 250);
+  /* #F8FAFC soft off-white */
+  --background: oklch(0.984 0.003 247.9);
+  /* #2A5B84 deep steel blue — headings and primary text */
+  --foreground: oklch(0.457 0.086 246.4);
 
-  --surface: oklch(0.225 0.028 253);
-  --card: oklch(0.215 0.027 253);
-  --card-foreground: oklch(0.97 0.004 250);
-  --popover: oklch(0.215 0.027 253);
-  --popover-foreground: oklch(0.97 0.004 250);
+  /* #EAF2FB very light blue tint */
+  --surface: oklch(0.958 0.015 251.2);
+  --card: oklch(0.958 0.015 251.2);
+  --card-foreground: oklch(0.457 0.086 246.4);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.457 0.086 246.4);
 
-  /* accent blue #85B7EB */
-  --primary: oklch(0.764 0.092 250.1);
-  --primary-foreground: oklch(0.189 0.028 255.9);
+  /* accent blue #75A7DF — links, secondary buttons, logo Z */
+  --primary: oklch(0.715 0.098 252);
+  --primary-foreground: oklch(1 0 0);
 
-  /* secondary blue #1D4E7A */
-  --secondary: oklch(0.414 0.091 248.9);
-  --secondary-foreground: oklch(0.97 0.004 250);
+  /* deep steel blue #2A5B84 — logo ring */
+  --secondary: oklch(0.457 0.086 246.4);
+  --secondary-foreground: oklch(1 0 0);
 
-  --muted: oklch(0.245 0.024 253);
-  /* muted text #B4B2A9 */
-  --muted-foreground: oklch(0.763 0.013 96.5);
+  --muted: oklch(0.958 0.015 251.2);
+  /* #4B5563 secondary text */
+  --muted-foreground: oklch(0.446 0.026 256.8);
 
-  --accent: oklch(0.764 0.092 250.1);
-  --accent-foreground: oklch(0.189 0.028 255.9);
+  --accent: oklch(0.715 0.098 252);
+  --accent-foreground: oklch(1 0 0);
 
-  /* gold #BA7517 */
-  --gold: oklch(0.622 0.130 67.2);
-  --gold-foreground: oklch(0.189 0.028 255.9);
+  /* orange #D9842B — primary CTA only */
+  --gold: oklch(0.69 0.143 61.7);
+  --gold-foreground: oklch(1 0 0);
 
-  /* secondary accent palette — sparse, per-item accents */
-  /* amber #F59E0B */
-  --amber: oklch(0.769 0.164 70.1);
-  /* emerald #10B981 */
-  --emerald: oklch(0.696 0.149 162.5);
-  /* teal / cyan #06B6D4 */
-  --teal: oklch(0.715 0.135 215.2);
-  /* indigo #4C1D95 */
-  --indigo: oklch(0.354 0.174 296.3);
-  /* slate-blue #1E293B */
-  --slateblue: oklch(0.279 0.032 256.8);
+  /* secondary accent palette — sparse, per-item accents (light-mode tuned) */
+  --amber: oklch(0.69 0.143 61.7);
+  --emerald: oklch(0.58 0.114 162.5);
+  --teal: oklch(0.6 0.104 215.2);
+  --indigo: oklch(0.928 0.024 250.1);
+  --slateblue: oklch(0.958 0.015 251.2);
 
-  /* navy #042C53 */
-  --navy: oklch(0.291 0.083 252.4);
+  /* deep steel blue for headings on tinted surfaces */
+  --navy: oklch(0.382 0.07 245.9);
 
-  /* cream #F1EFE8 */
-  --cream: oklch(0.952 0.010 93.6);
+  --cream: oklch(0.457 0.086 246.4);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --destructive-foreground: oklch(1 0 0);
 
-  --border: oklch(1 0 0 / 10%);
-  --border-strong: oklch(1 0 0 / 18%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.414 0.091 248.9);
+  /* #D3DEE9 soft grey-blue */
+  --border: oklch(0.896 0.019 248);
+  --border-strong: oklch(0.855 0.026 248);
+  --input: oklch(0.896 0.019 248);
+  --ring: oklch(0.715 0.098 252);
 
-  --sidebar: oklch(0.215 0.027 253);
-  --sidebar-foreground: oklch(0.97 0.004 250);
-  --sidebar-primary: oklch(0.764 0.092 250.1);
-  --sidebar-primary-foreground: oklch(0.189 0.028 255.9);
-  --sidebar-accent: oklch(0.245 0.024 253);
-  --sidebar-accent-foreground: oklch(0.97 0.004 250);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.414 0.091 248.9);
+  --sidebar: oklch(0.958 0.015 251.2);
+  --sidebar-foreground: oklch(0.457 0.086 246.4);
+  --sidebar-primary: oklch(0.715 0.098 252);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.928 0.024 250.1);
+  --sidebar-accent-foreground: oklch(0.457 0.086 246.4);
+  --sidebar-border: oklch(0.896 0.019 248);
+  --sidebar-ring: oklch(0.715 0.098 252);
 }
 
 @layer base {
@@ -378,12 +374,12 @@
   background:
     radial-gradient(
       70% 45% at 12% 8%,
-      color-mix(in oklab, var(--secondary) 26%, transparent),
+      color-mix(in oklab, var(--primary) 16%, transparent),
       transparent 70%
     ),
     radial-gradient(
       60% 40% at 88% 42%,
-      color-mix(in oklab, var(--amber) 12%, transparent),
+      color-mix(in oklab, var(--amber) 8%, transparent),
       transparent 72%
     ),
     radial-gradient(
