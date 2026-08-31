@@ -458,9 +458,7 @@ export function WhatWeBuild({
   condensed?: boolean;
   heading?: boolean;
 }) {
-  const lead = useCases[0]!;
-  const rest = useCases.slice(1);
-  const shown = condensed ? rest.slice(0, 2) : rest;
+  const shown = condensed ? useCases.slice(0, 3) : useCases;
 
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
@@ -485,58 +483,15 @@ export function WhatWeBuild({
           </div>
         ) : null}
 
-        {/* Editorial lead case — wide, asymmetric */}
-        <Reveal delay={80}>
-          <article className="group mt-4 grid grid-cols-1 items-end gap-10 border-t border-border pt-10 md:grid-cols-[1.25fr_0.75fr] md:gap-16">
-            <div>
-              <span className="eyebrow text-primary/80">{lead.sector}</span>
-              <h3 className="mt-5 max-w-lg text-[1.75rem] leading-[1.15] font-medium tracking-display md:text-[2.4rem]">
-                {lead.title}
-              </h3>
-              <p className="mt-6 max-w-xl text-base leading-[1.75] text-muted-foreground">
-                {lead.body}
-              </p>
-              <div className="mt-9 flex items-baseline gap-5">
-                <span className="text-5xl leading-none font-light tracking-display text-primary md:text-6xl">
-                  {lead.metric}
-                </span>
-                <span className="text-xs tracking-[0.16em] uppercase text-muted-foreground">
-                  {lead.metricLabel}
-                </span>
-              </div>
-            </div>
-            <lead.Glyph className="w-full max-w-sm opacity-80 transition-opacity duration-200 ease-out group-hover:opacity-100" />
-          </article>
-        </Reveal>
-
-        {/* Remaining cases — staggered offsets, alternating rhythm */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2">
+        {/* Equal-weight hero blocks, alternating diagram side */}
+        <div className="mt-12 flex flex-col gap-10 md:gap-14">
           {shown.map((u, i) => (
-            <Reveal key={u.title} delay={i * 60}>
-              <article
-                className={`group flex h-full flex-col justify-between gap-10 border-t border-border py-12 transition-colors duration-200 ease-out md:py-16 ${
-                  i % 2 === 0 ? "md:pr-14" : "md:border-l md:pl-14"
-                }`}
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-6">
-                    <span className="eyebrow text-primary/80">{u.sector}</span>
-                    <span className="text-3xl leading-none font-light tracking-display text-muted-foreground/50 transition-colors duration-200 ease-out group-hover:text-primary">
-                      {u.metric}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 text-xl leading-[1.2] font-medium tracking-[-0.02em] md:text-[1.6rem]">
-                    {u.title}
-                  </h3>
-                  <p className="mt-4 max-w-md text-sm leading-[1.75] text-muted-foreground">
-                    {u.body}
-                  </p>
-                </div>
-                <u.Glyph className="h-16 w-40 opacity-55 transition-opacity duration-200 ease-out group-hover:opacity-100" />
-              </article>
+            <Reveal key={u.title} delay={i * 80} distance={16}>
+              <UseCaseBlock useCase={u} flip={i % 2 === 1} />
             </Reveal>
           ))}
         </div>
+
 
         {condensed ? (
           <Reveal delay={200}>
