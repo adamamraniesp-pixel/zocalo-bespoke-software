@@ -21,7 +21,14 @@ export function GlyphAnswering({ className, style }: GlyphProps) {
       <path d="M60 22a14 14 0 0 1 0 20" {...stroke} opacity="0.75" />
       <path d="M70 15a24 24 0 0 1 0 34" {...stroke} opacity="0.45" />
       <path d="M80 8a34 34 0 0 1 0 48" {...stroke} opacity="0.2" />
+      {/* idle: signal rings expanding on a loop */}
+      <g className="idle-pulse">
+        <circle cx="52" cy="32" r="10" {...stroke} />
+        <circle cx="52" cy="32" r="18" {...stroke} />
+        <circle cx="52" cy="32" r="26" {...stroke} />
+      </g>
       <circle cx="52" cy="32" r="2" fill="currentColor" />
+
     </svg>
   );
 }
@@ -37,6 +44,19 @@ export function GlyphPipeline({ className, style }: GlyphProps) {
       <rect x="38" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.45" />
       <rect x="64" y="18" width="12" height="7" rx="1.5" fill="currentColor" opacity="0.8" />
       <path d="M84 32h6M86 28l4 4-4 4" {...stroke} />
+      {/* idle: card travelling across the pipeline stages */}
+      <rect
+        className="idle-packet"
+        x="12"
+        y="40"
+        width="12"
+        height="7"
+        rx="1.5"
+        fill="currentColor"
+        opacity="0.9"
+        style={{ ["--packet-distance" as never]: "52px" }}
+      />
+
     </svg>
   );
 }
