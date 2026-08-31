@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useReducedMotion } from "./motion";
-import logoAsset from "@/assets/zocalo-logo-hero.png.asset.json";
+import logoAsset from "@/assets/zocalo-logo.png.asset.json";
 
 type Shape = {
   cls: string;
@@ -128,9 +128,10 @@ export function HeroLogoStage({ className }: { className?: string }) {
           <img
             src={logoAsset.url}
             alt="Zocalo"
-            className="h-auto w-[72%] max-w-[420px] min-w-[280px] select-none drop-shadow-[0_24px_50px_rgba(42,91,132,0.16)]"
+            className="h-auto w-[92%] max-w-[500px] min-w-[320px] mix-blend-multiply select-none"
             draggable={false}
           />
+
         </motion.div>
       </div>
     </div>
