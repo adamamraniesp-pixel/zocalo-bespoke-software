@@ -20,7 +20,6 @@ import {
   GlyphOnboarding,
   GlyphPipeline,
   GlyphPlatform,
-  GlyphPlinth,
   GlyphWebsite,
   GlyphWorkflow,
 } from "./Glyphs";
