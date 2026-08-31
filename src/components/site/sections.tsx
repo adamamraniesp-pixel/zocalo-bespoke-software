@@ -199,68 +199,47 @@ export function Services({
           </>
         ) : null}
 
-        {/* Lead + secondary — asymmetric feature row */}
+        {/* Every service is a hero-scale block; sizing alternates for rhythm */}
         <div className="mt-4 grid grid-cols-1 md:grid-cols-12">
-          <Reveal className="md:col-span-7">
-            <article className="group flex h-full flex-col justify-between gap-12 border-t border-border py-12 md:py-16 md:pr-16">
-              <div>
-                <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
-                  {lead.n}
-                </span>
-                <h3 className="mt-6 max-w-lg text-[1.9rem] leading-[1.12] font-medium tracking-display md:text-[2.75rem]">
-                  {lead.title}
-                </h3>
-                <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
-                  {lead.body}
-                </p>
-              </div>
-              <lead.Glyph className="w-full max-w-xs opacity-80 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-            </article>
-          </Reveal>
-
-          {second ? (
-            <Reveal delay={80} className="md:col-span-5">
-              <article className="group flex h-full flex-col justify-between gap-10 border-t border-border py-12 md:border-l md:py-16 md:pl-16">
-                <div>
-                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
-                    {second.n}
-                  </span>
-                  <h3 className="mt-6 text-xl leading-[1.18] font-medium tracking-[-0.02em] md:text-[1.8rem]">
-                    {second.title}
-                  </h3>
-                  <p className="mt-4 max-w-sm text-sm leading-[1.75] text-muted-foreground">
-                    {second.body}
-                  </p>
-                </div>
-                <second.Glyph className="h-16 w-40 opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-              </article>
-            </Reveal>
-          ) : null}
-        </div>
-
-        {/* Remaining services — tighter rhythm, staggered borders */}
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {rest.map((s, i) => (
-            <Reveal key={s.title} delay={i * 60}>
-              <article
-                className={`group flex h-full items-start justify-between gap-8 border-t border-border py-10 transition-colors duration-300 ease-out hover:bg-card/50 md:py-12 ${
-                  i % 2 === 0 ? "md:pr-14" : "md:border-l md:pl-14"
-                }`}
+          {items.map((s, i) => {
+            const wide = i === 0 || i === 3;
+            return (
+              <Reveal
+                key={s.title}
+                delay={(i % 2) * 70}
+                className={wide ? "md:col-span-7" : "md:col-span-5"}
               >
-                <div>
-                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">{s.n}</span>
-                  <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] md:text-xl">
-                    {s.title}
-                  </h3>
-                  <p className="mt-3 max-w-sm text-sm leading-[1.7] text-muted-foreground">
-                    {s.body}
-                  </p>
-                </div>
-                <s.Glyph className="mt-1 hidden h-12 w-28 shrink-0 opacity-45 transition-opacity duration-300 ease-out group-hover:opacity-90 sm:block" />
-              </article>
-            </Reveal>
-          ))}
+                <article
+                  className={`group flex h-full flex-col justify-between gap-10 border-t border-border py-12 transition-colors duration-300 ease-out hover:bg-card/40 md:py-16 ${
+                    wide ? "md:pr-16" : "md:border-l md:pl-16"
+                  }`}
+                >
+                  <div>
+                    <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
+                      {s.n}
+                    </span>
+                    <h3
+                      className={`mt-6 max-w-lg font-medium tracking-display ${
+                        wide
+                          ? "text-[1.9rem] leading-[1.12] md:text-[2.6rem]"
+                          : "text-[1.6rem] leading-[1.14] md:text-[2.1rem]"
+                      }`}
+                    >
+                      {s.title}
+                    </h3>
+                    <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
+                      {s.body}
+                    </p>
+                  </div>
+                  <DrawIn className={wide ? "w-full max-w-md" : "w-full max-w-sm"}>
+                    <s.Glyph className="w-full opacity-70 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                  </DrawIn>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
+
 
         {condensed ? (
           <Reveal delay={200}>
