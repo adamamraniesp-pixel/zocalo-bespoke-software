@@ -4,7 +4,7 @@ import type { CSSProperties, ReactElement, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { DrawIn, Reveal, StaggerWords, useElementProgress } from "./motion";
+import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { SectionFloaters } from "./SectionFloaters";
@@ -861,12 +861,57 @@ export function StatsBand() {
 /* ------------------------------- FINAL CTA -------------------------------- */
 
 export function FinalCta() {
+  const reduced = useReducedMotion();
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
   return (
-    <section className="section relative overflow-hidden border-t border-border">
+    <section
+      className="section relative overflow-hidden border-t border-border"
+      onMouseMove={(e) => {
+        if (reduced) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        setPos({
+          x: (e.clientX - r.left) / r.width - 0.5,
+          y: (e.clientY - r.top) / r.height - 0.5,
+        });
+      }}
+      onMouseLeave={() => setPos({ x: 0, y: 0 })}
+    >
       {/* continuously animated field behind the closing conversion point */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div className="cta-field absolute -inset-24 opacity-70" />
         <div className="cta-grid absolute inset-0 opacity-[0.35]" />
+
+        {/* soft mouse-reactive radial glows in brand blue + gold */}
+        <div
+          className="absolute -inset-32"
+          style={{
+            background:
+              "radial-gradient(40% 46% at 30% 32%, color-mix(in oklab, var(--primary) 24%, transparent), transparent 70%), radial-gradient(34% 40% at 72% 68%, color-mix(in oklab, var(--gold) 14%, transparent), transparent 72%)",
+            transform: `translate3d(${pos.x * -26}px, ${pos.y * -18}px, 0)`,
+            transition: "transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        />
+
+        {/* slowly rotating geometric frames */}
+        <motion.svg
+          viewBox="0 0 200 200"
+          className="absolute top-1/2 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 text-primary opacity-[0.12]"
+          animate={reduced ? {} : { rotate: 360 }}
+          transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+        >
+          <rect x="34" y="34" width="132" height="132" fill="none" stroke="currentColor" strokeWidth="0.5" />
+          <circle cx="100" cy="100" r="82" fill="none" stroke="currentColor" strokeWidth="0.5" />
+        </motion.svg>
+        <motion.svg
+          viewBox="0 0 200 200"
+          className="absolute top-1/2 left-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 text-gold opacity-[0.14]"
+          animate={reduced ? {} : { rotate: -360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        >
+          <rect x="46" y="46" width="108" height="108" rx="14" fill="none" stroke="currentColor" strokeWidth="0.6" />
+        </motion.svg>
+
         <div
           className="absolute inset-x-0 top-0 h-32"
           style={{ background: "linear-gradient(to bottom, var(--background), transparent)" }}
@@ -877,29 +922,40 @@ export function FinalCta() {
         />
       </div>
 
-      <div className="container-x relative text-center">
-        <StaggerWords
-          text="Ready to Build Software That Fits Your Business?"
-          stagger={75}
-          scale
-          className="mx-auto max-w-3xl text-3xl leading-[1.1] font-medium tracking-display text-balance md:text-[3.25rem]"
-        />
+      <div className="container-x relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <StaggerWords
+            text="Ready to Build Software That Fits Your Business?"
+            stagger={75}
+            scale
+            className="mx-auto max-w-3xl text-3xl leading-[1.1] font-medium tracking-display text-balance md:text-[3.25rem]"
+          />
+        </motion.div>
         <Reveal delay={140}>
           <p className="mx-auto mt-7 max-w-xl text-base leading-[1.75] text-muted-foreground">
             Tell us how your business runs. We'll show you what should be engineered.
           </p>
         </Reveal>
-        <Reveal delay={220}>
-          <div className="mt-11 flex justify-center">
-            <div className="halo-ring relative rounded-md">
-              <div className="shimmer-sweep relative overflow-hidden rounded-md">
-                <MagneticCta to="/contact" variant="gold">
-                  Let's Build It
-                </MagneticCta>
-              </div>
+        <motion.div
+          className="mt-11 flex justify-center"
+          initial={{ opacity: 0, x: -48 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.65, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="halo-ring relative rounded-md">
+            <div className="shimmer-sweep relative overflow-hidden rounded-md">
+              <MagneticCta to="/contact" variant="gold">
+                Let's Build It
+              </MagneticCta>
             </div>
           </div>
-        </Reveal>
+        </motion.div>
       </div>
     </section>
   );
