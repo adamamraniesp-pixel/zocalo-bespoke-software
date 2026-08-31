@@ -708,6 +708,7 @@ export function SectionTeaser({
   to,
   label = "Learn more",
   first = false,
+  visual,
 }: {
   eyebrow: string;
   title: string;
@@ -715,10 +716,15 @@ export function SectionTeaser({
   to: Path;
   label?: string;
   first?: boolean;
+  visual?: ReactNode;
 }) {
   return (
-    <section className={`section${first ? "" : " border-t border-border"}`}>
-      <div className="container-x grid gap-8 md:grid-cols-12 md:items-end">
+    <section
+      className={`section group/teaser transition-colors duration-500 ease-out hover:bg-card/40${
+        first ? "" : " border-t border-border"
+      }`}
+    >
+      <div className="container-x grid gap-8 md:grid-cols-12 md:items-start">
         <div className="md:col-span-4">
           <Reveal>
             <p className="eyebrow">{eyebrow}</p>
@@ -733,6 +739,7 @@ export function SectionTeaser({
           <Reveal delay={120}>
             <p className="mt-6 max-w-xl text-base leading-[1.75] text-muted-foreground">{body}</p>
           </Reveal>
+          {visual ? <div className="mt-10">{visual}</div> : null}
           <Reveal delay={180}>
             <div className="mt-8">
               <LearnMore to={to} label={label} />
@@ -741,5 +748,96 @@ export function SectionTeaser({
         </div>
       </div>
     </section>
+  );
+}
+
+/* --------------------------- TEASER VISUALS ------------------------------- */
+
+/** Fading horizontal pill list of service names. */
+export function ServicesTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <div className="relative -mx-1 overflow-hidden">
+        <ul className="flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {serviceNames.map((name, i) => (
+            <li
+              key={name}
+              className="shrink-0 rounded-full border border-border px-4 py-2 text-xs whitespace-nowrap text-muted-foreground transition-all duration-300 ease-out group-hover/teaser:border-primary/40 group-hover/teaser:text-foreground"
+              style={{ transitionDelay: `${i * 40}ms` }}
+            >
+              {name}
+            </li>
+          ))}
+        </ul>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent"
+        />
+      </div>
+    </Reveal>
+  );
+}
+
+/** Two asymmetric mini cards previewing sectors. */
+export function WhatWeBuildTeaserVisual() {
+  const preview = useCases.slice(0, 2);
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {preview.map((u, i) => (
+        <Reveal key={u.title} delay={150 + i * 60}>
+          <article
+            className={`flex h-full items-start justify-between gap-4 border-t border-border pt-5 transition-transform duration-300 ease-out group-hover/teaser:-translate-y-1 ${
+              i === 1 ? "sm:mt-10" : ""
+            }`}
+          >
+            <div>
+              <span className="eyebrow text-primary/80">{u.sector}</span>
+              <h3 className="mt-3 text-base font-medium tracking-[-0.01em]">{u.title}</h3>
+            </div>
+            <u.Glyph className="h-10 w-20 shrink-0 opacity-50 transition-opacity duration-300 ease-out group-hover/teaser:opacity-90" />
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+/** Condensed four-dot process timeline. */
+export function ProcessTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <div className="relative flex items-center">
+        <span aria-hidden className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border" />
+        <ol className="relative flex w-full items-center justify-between">
+          {steps.map((s, i) => (
+            <li key={s.n} className="flex flex-col items-center gap-3">
+              <span
+                aria-hidden
+                className="size-2.5 rounded-full bg-border transition-colors duration-300 ease-out group-hover/teaser:bg-primary"
+                style={{ transitionDelay: `${i * 70}ms` }}
+              />
+              <span className="font-mono text-[0.7rem] tracking-[0.16em] text-muted-foreground">
+                {s.n}
+              </span>
+              <span className="text-xs text-muted-foreground">{s.title}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Reveal>
+  );
+}
+
+/** Large pull-quote lifted from the Why section. */
+export function WhyTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <blockquote className="border-l border-gold/60 pl-6 text-xl leading-[1.3] font-light tracking-[-0.025em] text-balance transition-colors duration-300 ease-out md:text-[1.9rem]">
+        A foundation,{" "}
+        <span className="text-muted-foreground group-hover/teaser:text-foreground">
+          not a subscription.
+        </span>
+      </blockquote>
+    </Reveal>
   );
 }
