@@ -658,43 +658,23 @@ export function WhyZocalo({
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
       <div className="container-x">
-        <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-24">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            {heading ? (
-              <Reveal>
-                <p className="eyebrow">Why Zocalo</p>
-              </Reveal>
-            ) : null}
-            <Reveal delay={50}>
-              <blockquote className="mt-7 border-l border-gold/60 pl-6 text-2xl leading-[1.3] font-light tracking-[-0.025em] text-balance md:text-[2.4rem]">
-                A foundation,
-                <br />
-                <span className="text-muted-foreground">not a subscription.</span>
-              </blockquote>
-            </Reveal>
-            <Reveal delay={110}>
-              <p className="mt-8 max-w-md text-base leading-[1.75] text-muted-foreground">
-                Zocalo means the base a structure is built on. We engineer the layer your business
-                stands on for the next decade.
-              </p>
-            </Reveal>
-            <Reveal delay={160}>
-              <GlyphPlinth className="mt-12 w-56 opacity-70" />
-            </Reveal>
-          </div>
+        {heading ? (
+          <Reveal>
+            <p className="eyebrow mb-12">Why Zocalo</p>
+          </Reveal>
+        ) : null}
 
+        <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <ol className="counter-rhythm">
             {shown.map((r, i) => (
-              <Reveal key={r.title} delay={i * 55} as="li">
-                <div className="group grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-9 first:border-t md:gap-8">
+              <Reveal key={r.title} delay={i * 150} distance={15} as="li">
+                <div className="group grid grid-cols-[3.25rem_1fr] items-start gap-4 border-b border-border py-8 first:border-t md:gap-8">
                   <span className="pt-1 text-2xl leading-none font-light tracking-display text-muted-foreground/40 transition-colors duration-200 ease-out group-hover:text-gold md:text-[2rem]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="text-lg font-medium tracking-[-0.02em] transition-transform duration-200 ease-out group-hover:translate-x-1 md:text-xl">
-                      {r.title}
-                    </h3>
-                    <p className="mt-3 max-w-lg text-sm leading-[1.75] text-muted-foreground">
+                    <h3 className="text-lg font-medium tracking-[-0.02em] md:text-xl">{r.title}</h3>
+                    <p className="mt-3 max-w-lg text-sm leading-[1.8] tracking-[0.005em] text-muted-foreground">
                       {r.body}
                     </p>
                   </div>
@@ -702,7 +682,10 @@ export function WhyZocalo({
               </Reveal>
             ))}
           </ol>
+
+          <BedrockPanel />
         </div>
+
 
         {condensed ? (
           <Reveal delay={220}>
