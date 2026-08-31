@@ -39,6 +39,9 @@
   --color-slateblue: var(--slateblue);
   --color-navy: var(--navy);
   --color-cream: var(--cream);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-dot: var(--brand-dot);
 
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
