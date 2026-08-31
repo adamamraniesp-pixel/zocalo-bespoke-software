@@ -267,16 +267,16 @@ export function Services({
                 className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_2.5rem_1fr] lg:gap-0 xl:grid-cols-[1fr_3.75rem_1fr]"
               >
                 <Reveal distance={15} className="h-full lg:col-start-1">
-                  <ServiceCard service={row[0]} />
+                  <ServiceCard service={first} />
                 </Reveal>
 
                 <div className="hidden lg:col-start-2 lg:block">
                   {linked ? <ServiceConnector /> : null}
                 </div>
 
-                {row[1] ? (
+                {second ? (
                   <Reveal delay={150} distance={15} className="h-full lg:col-start-3">
-                    <ServiceCard service={row[1]} />
+                    <ServiceCard service={second} />
                   </Reveal>
                 ) : null}
               </div>
