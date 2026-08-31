@@ -1,14 +1,21 @@
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Bot, Cpu, Globe, LayoutGrid, Link2, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
+  GlyphAi,
   GlyphAnswering,
+  GlyphBespoke,
+  GlyphCrm,
+  GlyphIntegration,
   GlyphOnboarding,
   GlyphPipeline,
+  GlyphPlatform,
   GlyphPlinth,
+  GlyphWebsite,
   GlyphWorkflow,
 } from "./Glyphs";
 
