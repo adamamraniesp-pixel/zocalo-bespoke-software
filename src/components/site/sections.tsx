@@ -333,7 +333,7 @@ const useCases = [
     sector: "Professional Services",
     title: "Client onboarding systems",
     body: "Engagement letters, data collection, and kickoff orchestrated end to end, with every handoff visible and nothing waiting on a reminder someone forgot to send.",
-    metric: "04",
+    metric: "03",
     metricLabel: "steps, automated",
     accent: "var(--primary)",
     Glyph: GlyphOnboarding,
