@@ -705,7 +705,7 @@ function BedrockPanel() {
       className="relative overflow-hidden rounded-2xl border border-border-strong p-9 md:p-12 lg:sticky lg:top-28"
       style={{
         backgroundImage:
-          "linear-gradient(160deg, var(--indigo) 0%, var(--slateblue) 55%, color-mix(in oklab, var(--gold) 55%, var(--slateblue)) 100%)",
+          "linear-gradient(160deg, var(--indigo) 0%, var(--surface) 55%, color-mix(in oklab, var(--gold) 10%, var(--surface)) 100%)",
       }}
     >
       <div aria-hidden className="motes pointer-events-none absolute inset-0 opacity-25" />
