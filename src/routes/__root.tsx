@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteNav } from "../components/site/SiteNav";
-import { HomeFooter } from "../components/site/home";
+import { SiteFooter } from "../components/site/sections";
 import { PageTransition, ScrollProgress } from "../components/site/motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -147,7 +147,7 @@ function RootComponent() {
             <Outlet />
           </PageTransition>
         </main>
-        <HomeFooter />
+        <SiteFooter />
       </div>
     </QueryClientProvider>
   );
