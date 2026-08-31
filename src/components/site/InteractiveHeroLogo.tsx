@@ -89,8 +89,8 @@ function Mark({ pointer }: { pointer: React.RefObject<{ x: number; y: number }> 
     <group ref={group}>
       <group ref={spin}>
         {/* rear ring */}
-        <mesh position={[px(25), py(41.5), -0.34]} castShadow>
-          <torusGeometry args={[1.31, 0.3, 14, 72]} />
+        <mesh position={[px(23.5), py(41), -0.5]} castShadow>
+          <torusGeometry args={[1.45, 0.3, 14, 72]} />
           <meshStandardMaterial color={NAVY} roughness={0.42} metalness={0.15} />
         </mesh>
 
