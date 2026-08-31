@@ -13,7 +13,7 @@ import { SectionFloaters } from "./SectionFloaters";
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
 import { CountUp } from "./CountUp";
 
-import { ZocaloLogo } from "./ZocaloLogo";
+import navMark from "@/assets/zocalo-mark.png.asset.json";
 import {
   GlyphAi,
   GlyphAnswering,
