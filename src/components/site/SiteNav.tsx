@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ZocaloLogo } from "./ZocaloLogo";
+import navLogo from "@/assets/zocalo-logo.png.asset.json";
 import { EASE, useMagnetic } from "./motion";
 
 const links = [
@@ -54,9 +54,16 @@ export function SiteNav() {
         aria-label="Primary"
         className="container-x flex h-16 items-center justify-between px-6 md:h-[4.5rem] md:px-10"
       >
-        <Link to="/" className="rounded-sm" aria-label="Zocalo home">
-          <ZocaloLogo />
+        <Link to="/" className="inline-flex items-center gap-2.5 rounded-sm" aria-label="Zocalo home">
+          <img
+            src={navLogo.url}
+            alt=""
+            aria-hidden
+            className="h-11 w-11 object-contain mix-blend-multiply"
+          />
+          <span className="text-[1.25rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
         </Link>
+
 
         <ul ref={listRef} className="relative hidden items-center gap-9 md:flex">
           {links.map((l) => {
