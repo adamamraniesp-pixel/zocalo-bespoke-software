@@ -275,7 +275,7 @@ export function DrawIn({
       ref={ref}
       className={`draw-svg ${className ?? ""}`}
       data-drawn={drawn ? "true" : "false"}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ ["--draw-delay" as never]: `${delay}ms` }}
     >
       {children}
     </div>
