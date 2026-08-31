@@ -864,7 +864,7 @@ export function StatsBand() {
 
         <Reveal delay={380}>
           <p className="mt-16 max-w-3xl border-t border-border pt-10 text-xl leading-[1.4] font-light tracking-[-0.02em] text-balance md:text-2xl">
-            Clients stay because the system keeps earning its place{" "}
+            Clients stay because the system keeps earning its place.{" "}
             <span className="text-muted-foreground">
               {/* [PLACEHOLDER] retention figure */}
               Retention across engagements: 100%.
@@ -1097,7 +1097,7 @@ export function WhyTeaserVisual() {
       <blockquote className="border-l border-gold/60 pl-6 text-xl leading-[1.3] font-light tracking-[-0.025em] text-balance transition-colors duration-300 ease-out md:text-[1.9rem]">
         A foundation,{" "}
         <span className="text-muted-foreground group-hover/teaser:text-foreground">
-          not a subscription.
+          not a subscription
         </span>
       </blockquote>
     </Reveal>
