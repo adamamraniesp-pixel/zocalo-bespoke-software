@@ -806,25 +806,26 @@ export function WhatWeBuildTeaserVisual() {
 export function ProcessTeaserVisual() {
   return (
     <Reveal delay={150}>
-      <div className="relative flex items-center">
-        <span aria-hidden className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border" />
-        <ol className="relative flex w-full items-center justify-between">
-          {steps.map((s, i) => (
-            <li key={s.n} className="flex flex-col items-center gap-3">
+      <ol className="flex w-full items-start justify-between">
+        {steps.map((s, i) => (
+          <li key={s.n} className="relative flex flex-1 flex-col items-start gap-3">
+            <div className="relative flex w-full items-center">
               <span
                 aria-hidden
-                className="size-2.5 rounded-full bg-border transition-colors duration-300 ease-out group-hover/teaser:bg-primary"
+                className="size-2.5 shrink-0 rounded-full bg-border transition-colors duration-300 ease-out group-hover/teaser:bg-primary"
                 style={{ transitionDelay: `${i * 70}ms` }}
               />
-              <span className="font-mono text-[0.7rem] tracking-[0.16em] text-muted-foreground">
-                {s.n}
-              </span>
-              <span className="text-xs text-muted-foreground">{s.title}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
+              {i < steps.length - 1 ? (
+                <span aria-hidden className="h-px flex-1 bg-border" />
+              ) : null}
+            </div>
+            <span className="font-mono text-[0.7rem] tracking-[0.16em] text-primary/70">{s.n}</span>
+            <span className="text-xs text-muted-foreground">{s.title}</span>
+          </li>
+        ))}
+      </ol>
     </Reveal>
+
   );
 }
 
