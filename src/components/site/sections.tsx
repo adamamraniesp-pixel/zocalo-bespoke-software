@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { HeroSystemGraphic } from "./HeroSystemGraphic";
 import { SectionFloaters } from "./SectionFloaters";
 
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
@@ -86,7 +87,7 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center overflow-hidden px-6 pt-32 pb-24 md:px-10 md:pt-40"
     >
       <HeroBackdrop />
-      <div className="container-x relative z-10 grid items-center gap-14">
+      <div className="container-x relative z-10 grid items-center gap-14 lg:grid-cols-[55%_45%]">
         <div className="max-w-3xl">
           <Reveal>
             <p className="eyebrow">Bespoke Software Engineering</p>
@@ -114,9 +115,9 @@ export function Hero() {
             </div>
           </Reveal>
         </div>
+
+        <HeroSystemGraphic className="w-full max-w-[560px] justify-self-center lg:justify-self-end" />
       </div>
-
-
     </section>
   );
 }
