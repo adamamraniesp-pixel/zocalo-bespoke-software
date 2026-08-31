@@ -11,6 +11,7 @@ import { HeroSystemGraphic } from "./HeroSystemGraphic";
 import { SectionFloaters } from "./SectionFloaters";
 
 import { GlowDotsBackdrop, WaveBackdrop } from "./AmbientBackdrops";
+import { CountUp } from "./CountUp";
 
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
