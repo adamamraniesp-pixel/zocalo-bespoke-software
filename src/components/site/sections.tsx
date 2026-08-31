@@ -1,7 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
-import { Link } from "@tanstack/react-router";
+import { ClientOnly, Link } from "@tanstack/react-router";
+
+const LazyHeroLogo = lazy(() =>
+  import("./InteractiveHeroLogo").then((m) => ({ default: m.InteractiveHeroLogo })),
+);
+
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
