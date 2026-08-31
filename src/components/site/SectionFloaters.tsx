@@ -1,9 +1,10 @@
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "./motion";
 
 type Variant = "a" | "b" | "c";
 
-const shapes: Record<Variant, { cls: string; svg: JSX.Element }[]> = {
+const shapes: Record<Variant, { cls: string; svg: ReactNode }[]> = {
   a: [
     {
       cls: "right-[5%] top-6 h-32 w-32 text-primary md:h-48 md:w-48",
