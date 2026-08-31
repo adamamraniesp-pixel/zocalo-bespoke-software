@@ -310,6 +310,14 @@ const pains = [
   "Lost opportunities",
 ];
 
+const painAccents = [
+  "var(--primary)",
+  "var(--amber)",
+  "var(--teal)",
+  "var(--gold)",
+  "var(--secondary)",
+];
+
 export function Problem() {
   return (
     <section className="section border-t border-border">
@@ -334,9 +342,14 @@ export function Problem() {
         <div>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {pains.map((p, i) => (
-              <Reveal key={p} delay={i * 40} as="li">
-                <div className="flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7">
-                  <span className="font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55">
+              <Reveal key={p} delay={i * 80} distance={12} as="li">
+                <div
+                  className="group flex h-full items-start gap-5 border border-border border-l-2 border-l-primary/35 bg-card/25 px-6 py-7 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out hover:-translate-y-[3px] hover:border-[color-mix(in_oklab,var(--pain-accent)_50%,transparent)] hover:bg-card/40 hover:shadow-[0_14px_36px_-22px_color-mix(in_oklab,var(--pain-accent)_55%,transparent)]"
+                  style={{ ["--pain-accent" as never]: painAccents[i % painAccents.length] }}
+                >
+                  <span
+                    className="origin-left font-mono text-sm leading-none tracking-[0.12em] text-muted-foreground/55 transition-[transform,color] duration-300 ease-out group-hover:scale-105 group-hover:text-[color-mix(in_oklab,var(--pain-accent)_80%,white)]"
+                  >
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[0.975rem] leading-[1.6] text-foreground/90">{p}</span>
@@ -366,33 +379,77 @@ const useCases = [
     body: "Every call captured, qualified, and dispatched—overnight and on weekends. The phone stops being a leak in the funnel.",
     metric: "24/7",
     metricLabel: "call coverage",
+    accent: "var(--gold)",
     Glyph: GlyphAnswering,
   },
   {
     sector: "Real Estate",
     title: "Custom CRM",
-    body: "Listings, buyers, and follow-up sequences in one pipeline built for your desk.",
+    body: "Listings, buyers, and follow-up sequences in one pipeline built for your desk—valuations, viewings, and offers tracked in the same system your team already lives in.",
     metric: "01",
     metricLabel: "single pipeline",
+    accent: "var(--teal)",
     Glyph: GlyphPipeline,
   },
   {
     sector: "Healthcare",
     title: "Patient workflow automation",
-    body: "Intake, reminders, and records movement automated within compliance boundaries.",
+    body: "Intake, reminders, and records movement automated within compliance boundaries—so clinical time goes to patients instead of paperwork and re-entry.",
     metric: "0",
     metricLabel: "manual re-entry",
+    accent: "var(--emerald)",
     Glyph: GlyphWorkflow,
   },
   {
     sector: "Professional Services",
     title: "Client onboarding systems",
-    body: "Engagement letters, data collection, and kickoff orchestrated end to end.",
+    body: "Engagement letters, data collection, and kickoff orchestrated end to end, with every handoff visible and nothing waiting on a reminder someone forgot to send.",
     metric: "04",
     metricLabel: "steps, automated",
+    accent: "var(--primary)",
     Glyph: GlyphOnboarding,
   },
 ];
+
+type UseCase = (typeof useCases)[number];
+
+/** Hero-scale sector block. Every case gets identical weight and padding. */
+function UseCaseBlock({ useCase, flip }: { useCase: UseCase; flip: boolean }) {
+  return (
+    <article
+      className="group grid grid-cols-1 items-center gap-10 rounded-xl border border-border bg-card/30 p-8 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--case-accent)_50%,transparent)] hover:bg-card/50 hover:shadow-[0_18px_48px_-24px_color-mix(in_oklab,var(--case-accent)_50%,transparent)] md:grid-cols-[1.15fr_0.85fr] md:gap-16 md:p-12 lg:p-14"
+      style={{ ["--case-accent" as never]: useCase.accent }}
+    >
+      <div className={flip ? "md:order-2" : undefined}>
+        <span className="eyebrow" style={{ color: useCase.accent }}>
+          {useCase.sector}
+        </span>
+        <h3 className="mt-5 max-w-lg text-[1.75rem] leading-[1.15] font-medium tracking-display md:text-[2.4rem]">
+          {useCase.title}
+        </h3>
+        <p className="mt-6 max-w-xl text-base leading-[1.8] text-muted-foreground">{useCase.body}</p>
+        <div className="mt-9 flex items-baseline gap-5">
+          <span
+            className="origin-left text-5xl leading-none font-light tracking-display transition-transform duration-500 ease-out group-hover:scale-105 md:text-6xl"
+            style={{ color: useCase.accent }}
+          >
+            {useCase.metric}
+          </span>
+          <span className="text-xs tracking-[0.16em] uppercase text-muted-foreground">
+            {useCase.metricLabel}
+          </span>
+        </div>
+      </div>
+      <DrawIn className={`w-full ${flip ? "md:order-1" : ""}`} delay={80}>
+        <useCase.Glyph
+          className="h-44 w-full opacity-80 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-56"
+          style={{ color: useCase.accent }}
+        />
+      </DrawIn>
+    </article>
+  );
+}
+
 
 export function WhatWeBuild({
   condensed = false,
@@ -401,9 +458,7 @@ export function WhatWeBuild({
   condensed?: boolean;
   heading?: boolean;
 }) {
-  const lead = useCases[0]!;
-  const rest = useCases.slice(1);
-  const shown = condensed ? rest.slice(0, 2) : rest;
+  const shown = condensed ? useCases.slice(0, 3) : useCases;
 
   return (
     <section className={`section ${heading ? "border-t border-border" : "pt-0 md:pt-0"}`}>
@@ -428,58 +483,15 @@ export function WhatWeBuild({
           </div>
         ) : null}
 
-        {/* Editorial lead case — wide, asymmetric */}
-        <Reveal delay={80}>
-          <article className="group mt-4 grid grid-cols-1 items-end gap-10 border-t border-border pt-10 md:grid-cols-[1.25fr_0.75fr] md:gap-16">
-            <div>
-              <span className="eyebrow text-primary/80">{lead.sector}</span>
-              <h3 className="mt-5 max-w-lg text-[1.75rem] leading-[1.15] font-medium tracking-display md:text-[2.4rem]">
-                {lead.title}
-              </h3>
-              <p className="mt-6 max-w-xl text-base leading-[1.75] text-muted-foreground">
-                {lead.body}
-              </p>
-              <div className="mt-9 flex items-baseline gap-5">
-                <span className="text-5xl leading-none font-light tracking-display text-primary md:text-6xl">
-                  {lead.metric}
-                </span>
-                <span className="text-xs tracking-[0.16em] uppercase text-muted-foreground">
-                  {lead.metricLabel}
-                </span>
-              </div>
-            </div>
-            <lead.Glyph className="w-full max-w-sm opacity-80 transition-opacity duration-200 ease-out group-hover:opacity-100" />
-          </article>
-        </Reveal>
-
-        {/* Remaining cases — staggered offsets, alternating rhythm */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2">
+        {/* Equal-weight hero blocks, alternating diagram side */}
+        <div className="mt-12 flex flex-col gap-10 md:gap-14">
           {shown.map((u, i) => (
-            <Reveal key={u.title} delay={i * 60}>
-              <article
-                className={`group flex h-full flex-col justify-between gap-10 border-t border-border py-12 transition-colors duration-200 ease-out md:py-16 ${
-                  i % 2 === 0 ? "md:pr-14" : "md:border-l md:pl-14"
-                }`}
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-6">
-                    <span className="eyebrow text-primary/80">{u.sector}</span>
-                    <span className="text-3xl leading-none font-light tracking-display text-muted-foreground/50 transition-colors duration-200 ease-out group-hover:text-primary">
-                      {u.metric}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 text-xl leading-[1.2] font-medium tracking-[-0.02em] md:text-[1.6rem]">
-                    {u.title}
-                  </h3>
-                  <p className="mt-4 max-w-md text-sm leading-[1.75] text-muted-foreground">
-                    {u.body}
-                  </p>
-                </div>
-                <u.Glyph className="h-16 w-40 opacity-55 transition-opacity duration-200 ease-out group-hover:opacity-100" />
-              </article>
+            <Reveal key={u.title} delay={i * 80} distance={16}>
+              <UseCaseBlock useCase={u} flip={i % 2 === 1} />
             </Reveal>
           ))}
         </div>
+
 
         {condensed ? (
           <Reveal delay={200}>
