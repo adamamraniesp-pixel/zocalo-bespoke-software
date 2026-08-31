@@ -513,8 +513,8 @@ function ProcessStep({
   return (
     <Reveal delay={index * 60} as="li" className={prominent ? "md:col-span-7" : "md:col-span-5"}>
       <article
-        className={`group relative flex h-full flex-col justify-between overflow-hidden border-t border-border transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-border-strong hover:bg-card/40 ${
-          prominent ? "gap-12 px-1 pt-9 pb-14 md:gap-16 md:px-8 md:pt-12 md:pb-20" : "gap-10 px-1 pt-8 pb-12 md:px-8 md:pt-10 md:pb-16"
+        className={`group relative flex flex-col overflow-hidden border-t border-border transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1 hover:border-border-strong hover:bg-card/40 ${
+          prominent ? "gap-10 px-1 pt-9 pb-14 md:px-8 md:pt-12 md:pb-16" : "gap-8 px-1 pt-8 pb-12 md:px-8 md:pt-10 md:pb-14"
         }`}
       >
         <div>
