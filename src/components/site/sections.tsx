@@ -179,9 +179,7 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
-  const lead = items[0]!;
-  const second = items[1];
-  const rest = items.slice(2);
+
 
   return (
     <section className={heading ? "section" : "section pt-0 md:pt-0"}>
