@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "./motion";
-import markAsset from "@/assets/zocalo-mark.png.asset.json";
 
 /**
  * Slow-drifting dot grid + soft mesh behind hero copy.
@@ -115,42 +114,6 @@ export function HeroBackdrop() {
           <path d="M50 8 92 82H8Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
         </svg>
 
-        {/* Subtle Zocalo mark constellation on the right — small, faded, background only */}
-        <div className="absolute top-[30%] right-[8%] hidden h-44 w-44 md:block lg:top-[28%] lg:right-[12%]">
-          <img
-            src={markAsset.url}
-            alt=""
-            aria-hidden
-            draggable={false}
-            className="absolute inset-0 m-auto h-36 w-36 select-none object-contain opacity-[0.16] float-slower lg:h-44 lg:w-44"
-          />
-          <svg
-            className="float-slow absolute -top-2 -right-2 h-10 w-10 text-primary opacity-[0.14]"
-            viewBox="0 0 100 100"
-            aria-hidden
-          >
-            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="1" />
-          </svg>
-          <svg
-            className="spin-slow absolute -bottom-3 -left-3 h-12 w-12 text-secondary opacity-[0.13]"
-            viewBox="0 0 100 100"
-            aria-hidden
-          >
-            <path
-              d="M50 10 86 32v36L50 90 14 68V32Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-            />
-          </svg>
-          <svg
-            className="float-slower absolute top-[18%] -left-5 h-10 w-10 text-gold opacity-[0.13]"
-            viewBox="0 0 100 100"
-            aria-hidden
-          >
-            <path d="M50 12 88 84H12Z" fill="none" stroke="currentColor" strokeWidth="1" />
-          </svg>
-        </div>
       </div>
 
       <div
