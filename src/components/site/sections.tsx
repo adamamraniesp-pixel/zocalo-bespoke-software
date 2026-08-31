@@ -1,12 +1,7 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
-import { ClientOnly, Link } from "@tanstack/react-router";
-
-const LazyHeroLogo = lazy(() =>
-  import("./InteractiveHeroLogo").then((m) => ({ default: m.InteractiveHeroLogo })),
-);
-
+import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
@@ -86,48 +81,34 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center overflow-hidden px-6 pt-32 pb-24 md:px-10 md:pt-40"
     >
       <HeroBackdrop />
-      <div className="container-x relative grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
-        <div>
-          <Reveal>
-            <p className="eyebrow">Bespoke Software Engineering</p>
-          </Reveal>
-          <Reveal delay={60}>
-            <h1 className="mt-7 max-w-4xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
-              Software Built Around Your Business.
-            </h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-8 max-w-2xl text-base leading-[1.75] text-muted-foreground md:text-lg">
-              We design and build bespoke software—from CRMs and AI systems to internal platforms,
-              automation, and high-performance websites—built around the way your business actually
-              works.
-            </p>
-          </Reveal>
-          <Reveal delay={180}>
-            <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <MagneticCta to="/contact">Book a Consultation</MagneticCta>
-              <MagneticCta to="/what-we-build" variant="ghost">
-                View Our Work
-              </MagneticCta>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Interactive 3D brand mark — desktop only */}
-        <div className="hidden lg:block">
-          <Reveal delay={220}>
-            <ClientOnly fallback={null}>
-              <Suspense fallback={null}>
-                <LazyHeroLogo />
-              </Suspense>
-            </ClientOnly>
-          </Reveal>
-        </div>
+      <div className="container-x relative">
+        <Reveal>
+          <p className="eyebrow">Bespoke Software Engineering</p>
+        </Reveal>
+        <Reveal delay={60}>
+          <h1 className="mt-7 max-w-4xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
+            Software Built Around Your Business.
+          </h1>
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="mt-8 max-w-2xl text-base leading-[1.75] text-muted-foreground md:text-lg">
+            We design and build bespoke software—from CRMs and AI systems to internal platforms,
+            automation, and high-performance websites—built around the way your business actually
+            works.
+          </p>
+        </Reveal>
+        <Reveal delay={180}>
+          <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <MagneticCta to="/contact">Book a Consultation</MagneticCta>
+            <MagneticCta to="/what-we-build" variant="ghost">
+              View Our Work
+            </MagneticCta>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
-
 
 /* ------------------------------ TRUST STATEMENT --------------------------- */
 
