@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteNav } from "../components/site/SiteNav";
+import { HeaderThemeProvider } from "../components/site/HeaderTheme";
 import { SiteFooter } from "../components/site/sections";
 import { PageTransition, ScrollProgress } from "../components/site/motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
