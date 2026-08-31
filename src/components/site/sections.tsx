@@ -1,14 +1,21 @@
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Bot, Cpu, Globe, LayoutGrid, Link2, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Reveal, StaggerWords } from "./motion";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ZocaloLogo } from "./ZocaloLogo";
 import {
+  GlyphAi,
   GlyphAnswering,
+  GlyphBespoke,
+  GlyphCrm,
+  GlyphIntegration,
   GlyphOnboarding,
   GlyphPipeline,
+  GlyphPlatform,
   GlyphPlinth,
+  GlyphWebsite,
   GlyphWorkflow,
 } from "./Glyphs";
 
@@ -121,52 +128,44 @@ export function TrustStatement() {
 
 const services = [
   {
-    icon: Cpu,
+    n: "01",
     title: "Bespoke Software Development",
     body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
+    Glyph: GlyphBespoke,
   },
   {
-    icon: Users,
+    n: "02",
     title: "CRM Systems",
     body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
+    Glyph: GlyphCrm,
   },
   {
-    icon: Bot,
+    n: "03",
     title: "AI Automation",
     body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
+    Glyph: GlyphAi,
   },
   {
-    icon: LayoutGrid,
+    n: "04",
     title: "Internal Platforms",
     body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
+    Glyph: GlyphPlatform,
   },
   {
-    icon: Globe,
+    n: "05",
     title: "Websites",
     body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
+    Glyph: GlyphWebsite,
   },
   {
-    icon: Link2,
+    n: "06",
     title: "Integrations",
     body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
+    Glyph: GlyphIntegration,
   },
 ];
 
-function ServicesGrid({ items = services }: { items?: typeof services }) {
-  return (
-    <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((s, i) => (
-        <Reveal key={s.title} delay={i * 50}>
-          <article className="group h-full border-r border-b border-border p-8 transition-colors duration-200 ease-out hover:bg-card md:p-10">
-            <s.icon className="size-5 text-primary transition-transform duration-200 ease-out group-hover:-translate-y-0.5" />
-            <h3 className="mt-7 text-base font-medium tracking-[-0.01em]">{s.title}</h3>
-            <p className="mt-3 text-sm leading-[1.7] text-muted-foreground">{s.body}</p>
-          </article>
-        </Reveal>
-      ))}
-    </div>
-  );
-}
+export const serviceNames = services.map((s) => s.title);
 
 export function Services({
   condensed = false,
@@ -175,6 +174,11 @@ export function Services({
   condensed?: boolean;
   heading?: boolean;
 }) {
+  const items = condensed ? services.slice(0, 3) : services;
+  const lead = items[0]!;
+  const second = items[1];
+  const rest = items.slice(2);
+
   return (
     <section className={heading ? "section" : "section pt-0 md:pt-0"}>
       <div className="container-x">
@@ -191,11 +195,72 @@ export function Services({
           </>
         ) : null}
 
-        <ServicesGrid items={condensed ? services.slice(0, 3) : services} />
+        {/* Lead + secondary — asymmetric feature row */}
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-12">
+          <Reveal className="md:col-span-7">
+            <article className="group flex h-full flex-col justify-between gap-12 border-t border-border py-12 md:py-16 md:pr-16">
+              <div>
+                <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
+                  {lead.n}
+                </span>
+                <h3 className="mt-6 max-w-lg text-[1.9rem] leading-[1.12] font-medium tracking-display md:text-[2.75rem]">
+                  {lead.title}
+                </h3>
+                <p className="mt-6 max-w-lg text-base leading-[1.75] text-muted-foreground">
+                  {lead.body}
+                </p>
+              </div>
+              <lead.Glyph className="w-full max-w-xs opacity-80 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+            </article>
+          </Reveal>
+
+          {second ? (
+            <Reveal delay={80} className="md:col-span-5">
+              <article className="group flex h-full flex-col justify-between gap-10 border-t border-border py-12 md:border-l md:py-16 md:pl-16">
+                <div>
+                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">
+                    {second.n}
+                  </span>
+                  <h3 className="mt-6 text-xl leading-[1.18] font-medium tracking-[-0.02em] md:text-[1.8rem]">
+                    {second.title}
+                  </h3>
+                  <p className="mt-4 max-w-sm text-sm leading-[1.75] text-muted-foreground">
+                    {second.body}
+                  </p>
+                </div>
+                <second.Glyph className="h-16 w-40 opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+              </article>
+            </Reveal>
+          ) : null}
+        </div>
+
+        {/* Remaining services — tighter rhythm, staggered borders */}
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {rest.map((s, i) => (
+            <Reveal key={s.title} delay={i * 60}>
+              <article
+                className={`group flex h-full items-start justify-between gap-8 border-t border-border py-10 transition-colors duration-300 ease-out hover:bg-card/50 md:py-12 ${
+                  i % 2 === 0 ? "md:pr-14" : "md:border-l md:pl-14"
+                }`}
+              >
+                <div>
+                  <span className="font-mono text-xs tracking-[0.18em] text-primary/70">{s.n}</span>
+                  <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] md:text-xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm leading-[1.7] text-muted-foreground">
+                    {s.body}
+                  </p>
+                </div>
+                <s.Glyph className="mt-1 hidden h-12 w-28 shrink-0 opacity-45 transition-opacity duration-300 ease-out group-hover:opacity-90 sm:block" />
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
         {condensed ? (
           <Reveal delay={200}>
-            <div className="mt-12">
+            <div className="mt-12 border-t border-border pt-10">
               <LearnMore to="/services" label="All services" />
             </div>
           </Reveal>
@@ -643,6 +708,7 @@ export function SectionTeaser({
   to,
   label = "Learn more",
   first = false,
+  visual,
 }: {
   eyebrow: string;
   title: string;
@@ -650,10 +716,15 @@ export function SectionTeaser({
   to: Path;
   label?: string;
   first?: boolean;
+  visual?: ReactNode;
 }) {
   return (
-    <section className={`section${first ? "" : " border-t border-border"}`}>
-      <div className="container-x grid gap-8 md:grid-cols-12 md:items-end">
+    <section
+      className={`section group/teaser transition-colors duration-500 ease-out hover:bg-card/40${
+        first ? "" : " border-t border-border"
+      }`}
+    >
+      <div className="container-x grid gap-8 md:grid-cols-12 md:items-start">
         <div className="md:col-span-4">
           <Reveal>
             <p className="eyebrow">{eyebrow}</p>
@@ -668,6 +739,7 @@ export function SectionTeaser({
           <Reveal delay={120}>
             <p className="mt-6 max-w-xl text-base leading-[1.75] text-muted-foreground">{body}</p>
           </Reveal>
+          {visual ? <div className="mt-10">{visual}</div> : null}
           <Reveal delay={180}>
             <div className="mt-8">
               <LearnMore to={to} label={label} />
@@ -676,5 +748,97 @@ export function SectionTeaser({
         </div>
       </div>
     </section>
+  );
+}
+
+/* --------------------------- TEASER VISUALS ------------------------------- */
+
+/** Fading horizontal pill list of service names. */
+export function ServicesTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <div className="relative -mx-1 overflow-hidden">
+        <ul className="flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {serviceNames.map((name, i) => (
+            <li
+              key={name}
+              className="shrink-0 rounded-full border border-border px-4 py-2 text-xs whitespace-nowrap text-muted-foreground transition-all duration-300 ease-out group-hover/teaser:border-primary/40 group-hover/teaser:text-foreground"
+              style={{ transitionDelay: `${i * 40}ms` }}
+            >
+              {name}
+            </li>
+          ))}
+        </ul>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent"
+        />
+      </div>
+    </Reveal>
+  );
+}
+
+/** Two asymmetric mini cards previewing sectors. */
+export function WhatWeBuildTeaserVisual() {
+  const preview = useCases.slice(0, 2);
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {preview.map((u, i) => (
+        <Reveal key={u.title} delay={150 + i * 60}>
+          <article
+            className={`flex h-full items-start justify-between gap-4 border-t border-border pt-5 transition-transform duration-300 ease-out group-hover/teaser:-translate-y-1 ${
+              i === 1 ? "sm:mt-10" : ""
+            }`}
+          >
+            <div>
+              <span className="eyebrow text-primary/80">{u.sector}</span>
+              <h3 className="mt-3 text-base font-medium tracking-[-0.01em]">{u.title}</h3>
+            </div>
+            <u.Glyph className="h-10 w-20 shrink-0 opacity-50 transition-opacity duration-300 ease-out group-hover/teaser:opacity-90" />
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+/** Condensed four-dot process timeline. */
+export function ProcessTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <ol className="flex w-full items-start justify-between">
+        {steps.map((s, i) => (
+          <li key={s.n} className="relative flex flex-1 flex-col items-start gap-3">
+            <div className="relative flex w-full items-center">
+              <span
+                aria-hidden
+                className="size-2.5 shrink-0 rounded-full bg-border transition-colors duration-300 ease-out group-hover/teaser:bg-primary"
+                style={{ transitionDelay: `${i * 70}ms` }}
+              />
+              {i < steps.length - 1 ? (
+                <span aria-hidden className="h-px flex-1 bg-border" />
+              ) : null}
+            </div>
+            <span className="font-mono text-[0.7rem] tracking-[0.16em] text-primary/70">{s.n}</span>
+            <span className="text-xs text-muted-foreground">{s.title}</span>
+          </li>
+        ))}
+      </ol>
+    </Reveal>
+
+  );
+}
+
+/** Large pull-quote lifted from the Why section. */
+export function WhyTeaserVisual() {
+  return (
+    <Reveal delay={150}>
+      <blockquote className="border-l border-gold/60 pl-6 text-xl leading-[1.3] font-light tracking-[-0.025em] text-balance transition-colors duration-300 ease-out md:text-[1.9rem]">
+        A foundation,{" "}
+        <span className="text-muted-foreground group-hover/teaser:text-foreground">
+          not a subscription.
+        </span>
+      </blockquote>
+    </Reveal>
   );
 }
