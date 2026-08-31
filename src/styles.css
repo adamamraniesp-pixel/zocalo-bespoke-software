@@ -92,8 +92,19 @@
   --gold: oklch(0.622 0.130 67.2);
   --gold-foreground: oklch(0.189 0.028 255.9);
 
+  /* secondary accent palette — sparse, per-item accents */
+  /* amber #F59E0B */
+  --amber: oklch(0.769 0.164 70.1);
+  /* teal / cyan #06B6D4 */
+  --teal: oklch(0.715 0.135 215.2);
+  /* indigo #4C1D95 */
+  --indigo: oklch(0.354 0.174 296.3);
+  /* slate-blue #1E293B */
+  --slateblue: oklch(0.279 0.032 256.8);
+
   /* navy #042C53 */
   --navy: oklch(0.291 0.083 252.4);
+
   /* cream #F1EFE8 */
   --cream: oklch(0.952 0.010 93.6);
 
