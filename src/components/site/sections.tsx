@@ -114,9 +114,9 @@ export function Hero() {
           </Reveal>
         </div>
 
-        {/* Self-drawing system schematic */}
+        {/* Brand mark, floating in 3D amid drifting geometry */}
         <div className="hidden lg:block">
-          <HeroSystemGraphic className="h-auto w-full" />
+          <HeroLogoStage />
         </div>
       </div>
 
@@ -128,8 +128,9 @@ export function Hero() {
 
 export function TrustStatement() {
   return (
-    <section className="section border-y border-border">
-      <div className="container-x">
+    <section className="section relative overflow-hidden border-y border-border">
+      <WaveBackdrop />
+      <div className="container-x relative z-10">
         <Reveal>
           <p className="max-w-4xl text-2xl leading-[1.45] font-light tracking-[-0.02em] text-balance md:text-[2.1rem]">
             No templates. No unnecessary subscriptions.{" "}
