@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import { Link } from "@tanstack/react-router";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { ArrowRight, Check } from "lucide-react";
 import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
@@ -151,6 +151,8 @@ type Service = {
   title: string;
   body: string;
   accent: string;
+  duration: string;
+  included: string[];
   Glyph: (props: { className?: string; style?: CSSProperties }) => ReactElement;
 };
 
@@ -160,6 +162,13 @@ const services: Service[] = [
     title: "Bespoke Software Development",
     body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
     accent: "var(--primary)",
+    duration: "8-16 weeks",
+    included: [
+      "Operational discovery and process mapping",
+      "Architecture and data model design",
+      "Staged delivery with fortnightly demos",
+      "Documentation and handover",
+    ],
     Glyph: GlyphBespoke,
   },
   {
@@ -167,6 +176,13 @@ const services: Service[] = [
     title: "CRM Systems",
     body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
     accent: "var(--secondary)",
+    duration: "4-8 weeks",
+    included: [
+      "Custom pipeline design",
+      "Data migration from existing tools",
+      "Team training",
+      "30-day post-launch support",
+    ],
     Glyph: GlyphCrm,
   },
   {
@@ -174,6 +190,13 @@ const services: Service[] = [
     title: "AI Automation",
     body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
     accent: "var(--amber)",
+    duration: "3-6 weeks",
+    included: [
+      "Call and message capture with transcription",
+      "Qualification and routing rules",
+      "Escalation paths to a human",
+      "Accuracy review in the first 30 days",
+    ],
     Glyph: GlyphAi,
   },
   {
@@ -181,6 +204,13 @@ const services: Service[] = [
     title: "Internal Platforms",
     body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
     accent: "var(--teal)",
+    duration: "6-12 weeks",
+    included: [
+      "Role-based access and approvals",
+      "Scheduling and workload views",
+      "Reporting dashboards",
+      "Spreadsheet consolidation",
+    ],
     Glyph: GlyphPlatform,
   },
   {
@@ -188,6 +218,13 @@ const services: Service[] = [
     title: "Websites",
     body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
     accent: "var(--gold)",
+    duration: "3-5 weeks",
+    included: [
+      "Design system and copy structure",
+      "Core Web Vitals performance budget",
+      "Technical SEO and analytics",
+      "CMS or direct-edit handover",
+    ],
     Glyph: GlyphWebsite,
   },
   {
@@ -195,6 +232,13 @@ const services: Service[] = [
     title: "Integrations",
     body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
     accent: "var(--primary)",
+    duration: "2-6 weeks",
+    included: [
+      "System and API audit",
+      "Sync and reconciliation logic",
+      "Failure alerting and retries",
+      "Runbook for your team",
+    ],
     Glyph: GlyphIntegration,
   },
 ];
@@ -202,49 +246,63 @@ const services: Service[] = [
 export const serviceNames = services.map((s) => s.title);
 
 /**
- * Services identity: a full-width vertical stacked list. Each service is one
- * hairline-separated row — numeral rail, copy column, diagram parked to the
- * side. Deliberately *not* a card grid, so it reads differently from
- * /what-we-build.
+ * Services identity: a master-detail selector. The six capabilities live in a
+ * rail on the left; selecting one crossfades its scope panel on the right.
+ * Deliberately a different interaction model from /what-we-build's
+ * case-study blocks.
  */
-function ServiceRow({ service, index }: { service: Service; index: number }) {
+function ServiceDetail({ service }: { service: Service }) {
   return (
-    <Reveal delay={index * 70} distance={14} as="li">
-      <article
-        className="group relative grid grid-cols-1 items-center gap-8 border-t border-border py-12 transition-[background-color,padding] duration-300 ease-out hover:bg-card/40 md:grid-cols-[6rem_minmax(0,1fr)_16rem] md:gap-12 md:py-16 lg:grid-cols-[7rem_minmax(0,1fr)_20rem]"
-        style={{ ["--service-accent" as never]: service.accent }}
-      >
-        {/* accent edge that grows on hover */}
-        <span
-          aria-hidden
-          className="absolute top-0 left-0 h-px w-0 origin-left transition-[width] duration-500 ease-out group-hover:w-full"
-          style={{ background: service.accent }}
-        />
-
-        <span
-          className="font-mono text-sm tracking-[0.22em] transition-transform duration-500 ease-out group-hover:translate-x-1 md:text-base"
-          style={{ color: service.accent }}
-        >
-          {service.n}
-        </span>
-
-        <div>
-          <h3 className="text-[1.65rem] leading-[1.14] font-medium tracking-display md:text-[2.15rem]">
-            {service.title}
-          </h3>
-          <p className="mt-5 max-w-xl text-base leading-[1.85] tracking-[0.005em] text-muted-foreground">
-            {service.body}
-          </p>
+    <motion.div
+      key={service.n}
+      initial={{ opacity: 0, x: 18 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -14 }}
+      transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+      style={{ ["--service-accent" as never]: service.accent }}
+      className="grid gap-10 md:grid-cols-[minmax(0,1fr)_14rem] md:gap-12"
+    >
+      <div>
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-xs tracking-[0.22em]" style={{ color: service.accent }}>
+            {service.n}
+          </span>
+          <span className="h-px w-10" style={{ background: service.accent }} />
+          <span className="text-[0.7rem] font-medium tracking-[0.16em] text-muted-foreground uppercase">
+            Typical engagement · {service.duration}
+          </span>
         </div>
 
-        <DrawIn className="w-full md:justify-self-end" delay={60}>
-          <service.Glyph
-            className="h-28 w-full opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100 md:h-32"
-            style={{ color: service.accent }}
-          />
-        </DrawIn>
-      </article>
-    </Reveal>
+        <h3 className="mt-6 text-[1.75rem] leading-[1.14] font-medium tracking-display md:text-[2.25rem]">
+          {service.title}
+        </h3>
+        <p className="mt-5 max-w-xl text-base leading-[1.85] text-muted-foreground">
+          {service.body}
+        </p>
+
+        <p className="mt-10 text-[0.7rem] font-medium tracking-[0.18em] text-muted-foreground uppercase">
+          What's included
+        </p>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+          {service.included.map((item, i) => (
+            <motion.li
+              key={item}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.12 + i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-start gap-3 text-sm leading-[1.7] text-foreground/85"
+            >
+              <Check className="mt-[0.2rem] size-4 shrink-0" style={{ color: service.accent }} />
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+      <DrawIn className="w-full md:justify-self-end" delay={40}>
+        <service.Glyph className="h-32 w-full md:h-40" style={{ color: service.accent }} />
+      </DrawIn>
+    </motion.div>
   );
 }
 
@@ -256,11 +314,11 @@ export function Services({
   heading?: boolean;
 }) {
   const items = condensed ? services.slice(0, 3) : services;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = (items[activeIndex] ?? items[0])!;
 
   return (
-    <section
-      className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}
-    >
+    <section className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}>
       <SectionFloaters variant="b" />
       <div className="container-x relative z-10">
         {heading ? (
@@ -276,11 +334,62 @@ export function Services({
           </>
         ) : null}
 
-        <ol className="mt-4 border-b border-border">
-          {items.map((s, i) => (
-            <ServiceRow key={s.n} service={s} index={i} />
-          ))}
-        </ol>
+        <Reveal delay={80}>
+          <div className="mt-12 grid gap-0 overflow-hidden rounded-lg border border-border bg-card/40 lg:grid-cols-[20rem_minmax(0,1fr)]">
+            {/* Selector rail */}
+            <div
+              role="tablist"
+              aria-label="Services"
+              aria-orientation="vertical"
+              className="flex overflow-x-auto border-b border-border lg:flex-col lg:overflow-visible lg:border-r lg:border-b-0"
+            >
+              {items.map((s, i) => {
+                const isActive = i === activeIndex;
+                return (
+                  <button
+                    key={s.n}
+                    role="tab"
+                    type="button"
+                    aria-selected={isActive}
+                    onClick={() => setActiveIndex(i)}
+                    onMouseEnter={() => setActiveIndex(i)}
+                    onFocus={() => setActiveIndex(i)}
+                    className={`group relative flex shrink-0 items-center gap-4 px-6 py-5 text-left transition-colors duration-300 ease-out lg:shrink lg:border-b lg:border-border lg:last:border-b-0 ${
+                      isActive
+                        ? "bg-background/70 text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <span
+                      aria-hidden
+                      className="absolute inset-y-0 left-0 w-[2px] origin-top transition-transform duration-400 ease-out"
+                      style={{
+                        background: s.accent,
+                        transform: `scaleY(${isActive ? 1 : 0})`,
+                      }}
+                    />
+                    <span
+                      className="font-mono text-[0.7rem] tracking-[0.2em]"
+                      style={{ color: isActive ? s.accent : undefined }}
+                    >
+                      {s.n}
+                    </span>
+                    <span className="text-sm font-medium tracking-[-0.005em] whitespace-nowrap lg:whitespace-normal">
+                      {s.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Detail panel */}
+            <div className="relative min-h-[26rem] p-8 md:p-12">
+              <AnimatePresence mode="wait" initial={false}>
+                <ServiceDetail key={active.n} service={active} />
+              </AnimatePresence>
+            </div>
+          </div>
+        </Reveal>
 
         {condensed ? (
           <Reveal delay={200}>

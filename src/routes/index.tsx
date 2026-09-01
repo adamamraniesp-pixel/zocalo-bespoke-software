@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FinalCta, Hero, Problem, StatsBand, TrustStatement } from "@/components/site/sections";
+import { LiveDemo } from "@/components/site/LiveDemo";
 
 const title = "Zocalo — Bespoke Software Built Around Your Business";
 const description =
@@ -28,6 +29,7 @@ function Index() {
           pages in the nav own that content. */}
       <StatsBand />
       <Problem />
+      <LiveDemo />
       <FinalCta />
     </>
   );
