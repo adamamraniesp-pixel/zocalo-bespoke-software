@@ -49,7 +49,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page didn't load
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -83,13 +85,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Zocalo — Bespoke Software Engineering" },
       {
         name: "description",
-        content: "Zocalo builds bespoke software engineered around how your business actually operates.",
+        content:
+          "Zocalo builds bespoke software engineered around how your business actually operates.",
       },
       { name: "author", content: "Zocalo" },
       { property: "og:title", content: "Zocalo — Bespoke Software Engineering" },
       {
         property: "og:description",
-        content: "Zocalo builds bespoke software engineered around how your business actually operates.",
+        content:
+          "Zocalo builds bespoke software engineered around how your business actually operates.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -100,10 +104,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
       },
       {
         rel: "stylesheet",
@@ -124,14 +124,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        {/* CSS variable for monospace font */}
-        <style>
-          {`
-            :root {
-              --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-            }
-          `}
-        </style>
       </head>
       <body>
         {children}
