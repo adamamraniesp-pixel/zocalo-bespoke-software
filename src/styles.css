@@ -842,3 +842,13 @@
     animation: none;
   }
 }
+
+/* Interactive demo mockup chrome — dark surface against the light theme. */
+.demo-chrome {
+  background:
+    radial-gradient(60% 70% at 12% 0%, color-mix(in oklab, var(--primary) 24%, transparent), transparent 70%),
+    linear-gradient(180deg, oklch(0.24 0.035 250), oklch(0.19 0.03 250));
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 10%, transparent) inset,
+    0 30px 70px -40px color-mix(in oklab, var(--primary) 60%, transparent);
+}

@@ -315,7 +315,7 @@ export function Services({
 }) {
   const items = condensed ? services.slice(0, 3) : services;
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = items[activeIndex] ?? items[0];
+  const active = (items[activeIndex] ?? items[0])!;
 
   return (
     <section className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}>
