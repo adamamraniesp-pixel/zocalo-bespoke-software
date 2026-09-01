@@ -126,29 +126,31 @@ export function SectionFloaters({ variant = "a" }: { variant?: Variant }) {
   const reduced = useReducedMotion();
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[42%] overflow-hidden"
-      style={{
-        maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
-      }}
+    return (
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[42%] overflow-hidden"
+    style={{
+      maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
+      WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)"
+    }}
+  >
+    <motion.svg
+      viewBox="0 0 400 200"
+      className="absolute inset-0 w-full h-full opacity-40"
+      animate={{ y: [0, -12, 0] }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      {shapes[variant].map((s, i) => (
-        <motion.svg
-          key={i}
-          viewBox="0 0 100 100"
-          className={`absolute opacity-[0.14] ${s.cls}`}
-          animate={
-            reduced
-              ? {}
-              : { y: [0, i % 2 === 0 ? -14 : 12, 0], rotate: [0, i % 2 === 0 ? 6 : -8, 0] }
-          }
-          transition={{ duration: 16 + i * 5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {s.svg}
-        </motion.svg>
-      ))}
-    </div>
-  );
+      <path d="M50 100 L150 50 L250 100 L150 150 Z" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4"/>
+      <path d="M150 50 L350 40 L250 100" stroke="rgba(59,130,246,0.2)" strokeWidth="1"/>
+      <circle cx="50" cy="100" r="4" fill="#3b82f6" className="animate-pulse"/>
+      <circle cx="150" cy="50" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '0.5s' }}/>
+      <circle cx="250" cy="100" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '1s' }}/>
+      <circle cx="150" cy="150" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '1.5s' }}/>
+    </motion.svg>
+  </div>
+);
 }
+

@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-} from "react";
+import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 
 interface HeaderThemeCtx {
   inFinalCta: boolean;
@@ -16,11 +9,7 @@ const HeaderThemeContext = createContext<HeaderThemeCtx | null>(null);
 
 export function HeaderThemeProvider({ children }: { children: ReactNode }) {
   const [inFinalCta, setInFinalCta] = useState(false);
-  return (
-    <HeaderThemeContext.Provider value={{ inFinalCta, setInFinalCta }}>
-      {children}
-    </HeaderThemeContext.Provider>
-  );
+  return <HeaderThemeContext.Provider value={{ inFinalCta, setInFinalCta }}>{children}</HeaderThemeContext.Provider>;
 }
 
 export function useHeaderTheme() {

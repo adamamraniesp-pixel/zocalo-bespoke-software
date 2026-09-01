@@ -17,11 +17,9 @@ type Props = {
  * arrow that slides on hover, and a gold hairline that draws in underneath.
  */
 const variants: Record<string, string> = {
-  primary:
-    "bg-gradient-to-b from-primary to-[color-mix(in_oklab,var(--primary)_80%,black)] text-primary-foreground shadow-[inset_0_1px_0_color-mix(in_oklab,white_38%,transparent),0_1px_2px_color-mix(in_oklab,var(--primary)_28%,transparent),0_10px_26px_-14px_color-mix(in_oklab,var(--primary)_70%,transparent)] hover:shadow-[inset_0_1px_0_color-mix(in_oklab,white_46%,transparent),0_2px_4px_color-mix(in_oklab,var(--primary)_30%,transparent),0_20px_46px_-14px_color-mix(in_oklab,var(--primary)_78%,transparent),0_0_0_1px_color-mix(in_oklab,var(--primary)_45%,transparent)]",
-  gold: "bg-gradient-to-b from-gold to-[color-mix(in_oklab,var(--gold)_78%,black)] text-gold-foreground shadow-[inset_0_1px_0_color-mix(in_oklab,white_40%,transparent),0_1px_2px_color-mix(in_oklab,var(--gold)_28%,transparent),0_12px_30px_-16px_color-mix(in_oklab,var(--gold)_72%,transparent)] hover:shadow-[inset_0_1px_0_color-mix(in_oklab,white_50%,transparent),0_2px_4px_color-mix(in_oklab,var(--gold)_32%,transparent),0_22px_50px_-14px_color-mix(in_oklab,var(--gold)_80%,transparent)]",
-  ghost:
-    "border border-border bg-background/60 text-foreground backdrop-blur shadow-[inset_0_1px_0_color-mix(in_oklab,white_60%,transparent)] hover:border-primary hover:shadow-[inset_0_1px_0_color-mix(in_oklab,white_70%,transparent),0_16px_40px_-18px_color-mix(in_oklab,var(--primary)_58%,transparent)]",
+  primary: "bg-blue-600 text-white border border-white/20 hover:shadow-[0_8px_30px_rgb(59,130,246,0.4)]",
+  gold: "bg-amber-500 text-white border border-white/20 hover:shadow-[0_8px_30px_rgb(245,158,11,0.4)]",
+  ghost: "bg-transparent text-white border border-white/20 hover:bg-white/10",
 };
 
 const sizes: Record<string, string> = {
@@ -29,14 +27,7 @@ const sizes: Record<string, string> = {
   compact: "px-6 py-2.5 text-sm",
 };
 
-export function MagneticCta({
-  to,
-  children,
-  variant = "primary",
-  size = "default",
-  glow,
-  className,
-}: Props) {
+export function MagneticCta({ to, children, variant = "primary", size = "default", glow, className }: Props) {
   const magnetic = useMagnetic(0.26, 7);
   const arrowGold = variant !== "gold";
 

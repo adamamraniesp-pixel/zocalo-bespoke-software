@@ -1,71 +1,110 @@
 import { motion } from "framer-motion";
 import { useReducedMotion } from "./motion";
 
-/* ------------------------------- Content ---------------------------------- */
+const EASE = [0.16, 1, 0.3, 1] as const;
 
-const pains = [
+const problemItems = [
   {
-    n: "01",
-    title: "Missed calls after hours",
-    body: "Demand arrives when nobody is at the desk.",
+    id: "01",
+    title: "Disconnected Systems",
+    description: "CRMs, calendars, and email don't talk to each other.",
+    icon: (
+      <svg className="w-8 h-8 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+    large: true,
   },
   {
-    n: "02",
-    title: "Manual admin and re-entry",
-    body: "The same record typed into three different tools.",
+    id: "02",
+    title: "Manual Entry",
+    description: "Copy‑paste errors waste hours.",
+    icon: (
+      <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+    large: false,
   },
   {
-    n: "03",
-    title: "Disconnected tools",
-    body: "Subscriptions that never learned to talk to each other.",
+    id: "03",
+    title: "Data Silos",
+    description: "Information trapped in separate tools.",
+    icon: (
+      <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+        />
+      </svg>
+    ),
+    large: false,
   },
   {
-    n: "04",
-    title: "Repetitive work",
-    body: "Skilled people spending their day on mechanical steps.",
+    id: "04",
+    title: "Delayed Responses",
+    description: "Leads wait hours for follow‑up.",
+    icon: (
+      <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+    large: false,
   },
   {
-    n: "05",
-    title: "Lost opportunities",
-    body: "Follow-up that depends on someone remembering.",
+    id: "05",
+    title: "Missed Opportunities",
+    description: "No system to track intent signals.",
+    icon: (
+      <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+        />
+      </svg>
+    ),
+    large: false,
   },
 ];
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-/* -------------------------------- Card ------------------------------------ */
-
-function PainCard({ pain, index }: { pain: (typeof pains)[number]; index: number }) {
+function ProblemCard({ item, index }: { item: (typeof problemItems)[0]; index: number }) {
   const reduced = useReducedMotion();
 
   return (
-    <motion.li
-      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 10 }}
+    <motion.div
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.7, delay: index * 0.08, ease: EASE }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.07, ease: EASE }}
+      className={`bg-white/5 rounded-2xl border border-white/10 flex flex-col ${
+        item.large ? "md:col-span-2 p-6" : "p-4"
+      }`}
     >
-      <div className="group relative h-full rounded-xl border border-border bg-card/60 px-6 py-7 transition-[border-color,box-shadow] duration-500 ease-out hover:border-primary/40 md:px-7 md:py-8">
-        <div className="flex items-start gap-4">
-          <span
-            aria-hidden
-            className="mt-2.5 h-6 w-px rounded-full transition-all duration-500 ease-out group-hover:h-8 group-hover:opacity-80"
-            style={{
-              background: "color-mix(in oklab, var(--primary) 45%, transparent)",
-              boxShadow: "0 0 10px color-mix(in oklab, var(--primary) 35%, transparent)",
-            }}
-          />
-          <h3 className="max-w-[16rem] text-[1.05rem] leading-[1.4] font-medium tracking-[-0.01em] text-foreground md:text-lg">
-            {pain.title}
-          </h3>
+      <div className={item.large ? "flex items-start gap-4" : "flex flex-col items-start gap-2"}>
+        {item.icon}
+        <div>
+          <h4 className={`font-bold text-white ${item.large ? "text-lg" : "text-sm"}`}>{item.title}</h4>
+          <p className={`text-white/60 ${item.large ? "text-sm" : "text-xs"}`}>{item.description}</p>
         </div>
-        <p className="mt-3.5 text-sm leading-[1.7] text-muted-foreground">{pain.body}</p>
       </div>
-    </motion.li>
+    </motion.div>
   );
 }
-
-/* -------------------------------- Section --------------------------------- */
 
 export function Problem() {
   const fade = { duration: 0.65, ease: EASE };
@@ -90,7 +129,7 @@ export function Problem() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ ...fade, delay: 0.08 }}
           >
-            Growth stalls in the gaps between your tools
+            Your tools are disconnected
           </motion.h2>
           <motion.p
             className="mt-7 text-base leading-[1.75] text-muted-foreground"
@@ -99,26 +138,22 @@ export function Problem() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ ...fade, delay: 0.16 }}
           >
-            Most businesses don't lose margin to strategy—they lose it to friction. Work handed
-            between inboxes, spreadsheets, and subscriptions no one owns.
+            Most agencies run on a patchwork of CRMs, calendars, and spreadsheets. Nothing talks to each other — so
+            leads slip through the cracks.
           </motion.p>
         </div>
 
-        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {pains.map((p, i) => (
-            <PainCard key={p.n} pain={p} index={i} />
-          ))}
-        </ul>
+        {/* Dashed connector line */}
+        <div className="relative h-0.5 w-full max-w-3xl mx-auto mt-12 mb-8">
+          <hr className="border-t border-dashed border-white/20" />
+        </div>
 
-        <motion.p
-          className="mt-14 text-xl leading-[1.4] font-medium tracking-[-0.02em] text-balance md:text-2xl"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.7 }}
-          transition={{ ...fade, delay: 0.1 }}
-        >
-          We build software that eliminates those bottlenecks
-        </motion.p>
+        {/* Card grid – 5 columns with first item spanning 2 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 items-stretch mt-6">
+          {problemItems.map((item, index) => (
+            <ProblemCard key={item.id} item={item} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );

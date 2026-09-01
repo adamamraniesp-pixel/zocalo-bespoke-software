@@ -6,10 +6,12 @@ import { Reveal, useReducedMotion } from "./motion";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const transcript = [
-  { who: "Caller", line: "Hi — our heating packed in and it's freezing." },
-  { who: "Zocalo AI", line: "I can help. Is this a residential or commercial property?" },
-  { who: "Caller", line: "Residential. 14 Ardmore Road." },
-  { who: "Zocalo AI", line: "Booked as an urgent no-heat call. An engineer will confirm by 8am." },
+  { time: "10:32:15", text: "🔹 Lead captured: John Doe" },
+  { time: "10:32:22", text: "📞 Phone verified: +1 555-0142" },
+  { time: "10:32:30", text: "📋 Service: Roofing estimate" },
+  { time: "10:32:45", text: "📂 Case ID: #R-2026-0842" },
+  { time: "10:33:02", text: "✅ AI qualification: High intent" },
+  { time: "10:33:18", text: "📤 Pushed to CRM: Salesforce" },
 ];
 
 /** Timeline (ms from start) for each stage of the sequence. */
@@ -62,9 +64,7 @@ export function LiveDemo() {
     at(T.ring, () => setStage((s) => ({ ...s, ringing: true })));
     at(T.answer, () => setStage((s) => ({ ...s, ringing: false, answered: true })));
     transcript.forEach((_, i) => {
-      at(T.transcriptStart + i * T.transcriptStep, () =>
-        setStage((s) => ({ ...s, lines: i + 1 })),
-      );
+      at(T.transcriptStart + i * T.transcriptStep, () => setStage((s) => ({ ...s, lines: i + 1 })));
     });
     at(T.card, () => setStage((s) => ({ ...s, card: true })));
     at(T.logged, () => setStage((s) => ({ ...s, logged: true })));
@@ -89,14 +89,14 @@ export function LiveDemo() {
           </div>
           <Reveal delay={100}>
             <p className="max-w-xs text-sm leading-[1.7] text-muted-foreground">
-              A simplified view of a system running in production: call answered, transcribed,
-              qualified, and logged—without anyone picking up.
+              A simplified view of a system running in production: call answered, transcribed, qualified, and
+              logged—without anyone picking up.
             </p>
           </Reveal>
         </div>
 
         <Reveal delay={140}>
-          <div className="demo-chrome mt-12 overflow-hidden rounded-xl border border-[color-mix(in_oklab,var(--primary)_22%,transparent)]">
+          <div className="demo-chrome mt-12 overflow-hidden rounded-lg border border-[color-mix(in_oklab,var(--primary)_22%,transparent)]">
             {/* window bar */}
             <div className="flex items-center justify-between gap-4 border-b border-[color-mix(in_oklab,white_10%,transparent)] px-5 py-3">
               <div className="flex items-center gap-2">
@@ -145,7 +145,7 @@ export function LiveDemo() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.35, ease: EASE }}
-                        className="flex items-center gap-3 rounded-lg border border-gold/40 bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] px-4 py-3"
+                        className="flex items-center gap-3 rounded-md border border-gold/40 bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] px-4 py-3"
                       >
                         <motion.span
                           animate={{ scale: [1, 1.18, 1] }}
@@ -169,7 +169,7 @@ export function LiveDemo() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, ease: EASE }}
-                        className="flex items-center gap-3 rounded-lg border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] px-4 py-3"
+                        className="flex items-center gap-3 rounded-md border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] px-4 py-3"
                       >
                         <span className="inline-flex size-8 items-center justify-center rounded-full bg-primary/25 text-[color-mix(in_oklab,white_92%,transparent)]">
                           <PhoneIncoming className="size-4" />
@@ -178,9 +178,7 @@ export function LiveDemo() {
                           <p className="text-sm font-medium text-[color-mix(in_oklab,white_92%,transparent)]">
                             Answered by Zocalo AI
                           </p>
-                          <p className="text-xs text-[color-mix(in_oklab,white_58%,transparent)]">
-                            Transcribing live
-                          </p>
+                          <p className="text-xs text-[color-mix(in_oklab,white_58%,transparent)]">Transcribing live</p>
                         </div>
                       </motion.div>
                     ) : (
@@ -201,22 +199,16 @@ export function LiveDemo() {
                   Transcript
                 </p>
                 <ul className="mt-4 space-y-3">
-                  {transcript.slice(0, stage.lines).map((t) => (
+                  {transcript.slice(0, stage.lines).map((t, i) => (
                     <motion.li
-                      key={t.line}
+                      key={i}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, ease: EASE }}
                       className="text-sm leading-[1.7]"
                     >
-                      <span
-                        className={`mr-2 font-mono text-[0.65rem] tracking-[0.12em] uppercase ${
-                          t.who === "Caller" ? "text-[color-mix(in_oklab,white_52%,transparent)]" : "text-primary"
-                        }`}
-                      >
-                        {t.who}
-                      </span>
-                      <span className="text-[color-mix(in_oklab,white_88%,transparent)]">{t.line}</span>
+                      <span className="mr-2 font-mono text-[0.65rem] tracking-[0.12em] text-primary">{t.time}</span>
+                      <span className="text-[color-mix(in_oklab,white_88%,transparent)]">{t.text}</span>
                     </motion.li>
                   ))}
                 </ul>
@@ -228,7 +220,7 @@ export function LiveDemo() {
                   CRM pipeline
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="rounded-lg border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
+                  <div className="rounded-md border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
                     <p className="text-[0.7rem] tracking-[0.12em] text-[color-mix(in_oklab,white_58%,transparent)] uppercase">
                       New leads
                     </p>
@@ -246,9 +238,17 @@ export function LiveDemo() {
                             <p className="text-sm font-medium text-[color-mix(in_oklab,white_92%,transparent)]">
                               14 Ardmore Road
                             </p>
-                            <p className="mt-1 text-xs text-[color-mix(in_oklab,white_60%,transparent)]">
-                              No heat · Residential
-                            </p>
+                            <div className="mt-2 space-y-1 text-xs text-[color-mix(in_oklab,white_70%,transparent)]">
+                              <p>
+                                <span className="text-blue-400">📞</span> +1 555-0142
+                              </p>
+                              <p>
+                                <span className="text-blue-400">📋</span> Roofing estimate
+                              </p>
+                              <p>
+                                <span className="text-blue-400">🆔</span> #R-2026-0842
+                              </p>
+                            </div>
                             <div className="mt-3 flex items-center gap-2">
                               <span className="size-1.5 rounded-full bg-gold" />
                               <span className="font-mono text-[0.6rem] tracking-[0.14em] text-gold uppercase">
@@ -257,16 +257,16 @@ export function LiveDemo() {
                             </div>
                           </motion.div>
                         ) : (
-                          <div className="h-[5.5rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
+                          <div className="h-[8rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
                         )}
                       </AnimatePresence>
                     </div>
                   </div>
-                  <div className="rounded-lg border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
+                  <div className="rounded-md border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
                     <p className="text-[0.7rem] tracking-[0.12em] text-[color-mix(in_oklab,white_58%,transparent)] uppercase">
                       Dispatch
                     </p>
-                    <div className="mt-3 h-[5.5rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
+                    <div className="mt-3 h-[8rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
                   </div>
                 </div>
 

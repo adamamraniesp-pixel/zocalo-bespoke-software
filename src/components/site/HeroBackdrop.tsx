@@ -40,88 +40,13 @@ export function HeroBackdrop() {
         }}
       />
       <div
-        className="dot-drift absolute -inset-32 opacity-[0.35]"
-        style={{
-          transform: `translate3d(${pos.x * 8}px, ${pos.y * 6}px, 0)`,
-          transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      />
-
-      {/* Continuously drifting geometry — always moving, cursor-independent */}
-      <div className="absolute inset-0">
-        {/* top-left */}
-        <svg
-          className="float-slow absolute top-[10%] left-[4%] h-20 w-20 text-primary opacity-[0.18] md:h-28 md:w-28"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="0.8" />
-          <circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" strokeWidth="0.8" />
-        </svg>
-        {/* top-center */}
-        <svg
-          className="float-slower absolute top-[6%] left-[44%] h-16 w-16 text-secondary opacity-[0.16] md:h-24 md:w-24"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <path d="M50 10 88 84H12Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
-        </svg>
-        {/* top-right */}
-        <svg
-          className="absolute top-[12%] right-[6%] h-40 w-40 text-primary opacity-[0.2] float-slow md:h-56 md:w-56"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="0.7" />
-          <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.7" />
-        </svg>
-        {/* mid-left, near the CTA row */}
-        <svg
-          className="spin-slow absolute top-[68%] left-[26%] h-14 w-14 text-gold opacity-[0.16] md:h-20 md:w-20"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <path
-            d="M50 12 84 32v36L50 88 16 68V32Z"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.9"
-          />
-        </svg>
-        {/* bottom-right */}
-        <svg
-          className="spin-slow absolute bottom-[16%] right-[22%] h-24 w-24 text-gold opacity-[0.18] md:h-32 md:w-32"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <rect x="14" y="14" width="72" height="72" fill="none" stroke="currentColor" strokeWidth="0.8" />
-        </svg>
-        {/* bottom-right, thin crossing lines */}
-        <svg
-          className="float-slower absolute right-[5%] bottom-[6%] h-20 w-28 text-secondary opacity-[0.16] md:h-28 md:w-40"
-          viewBox="0 0 140 100"
-          aria-hidden
-        >
-          <path d="M6 82 134 18M6 58h128" stroke="currentColor" strokeWidth="0.8" fill="none" />
-          <circle cx="134" cy="18" r="3" fill="currentColor" />
-        </svg>
-        {/* left mid */}
-        <svg
-          className="float-slower absolute top-[52%] left-[4%] h-20 w-20 text-secondary opacity-[0.16] md:h-28 md:w-28"
-          viewBox="0 0 100 100"
-          aria-hidden
-        >
-          <path d="M50 8 92 82H8Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
-        </svg>
-
-      </div>
-
-      <div
-        className="absolute inset-x-0 bottom-0 h-40"
-        style={{
-          background: "linear-gradient(to bottom, transparent, var(--background))",
-        }}
-      />
-    </div>
+       <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50 200 L150 100 L250 200 L150 300 Z" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4"/>
+  <path d="M150 100 L350 80 L250 200" stroke="rgba(59,130,246,0.2)" strokeWidth="1"/>
+  <circle cx="50" cy="200" r="4" fill="#3b82f6" className="animate-pulse"/>
+  <circle cx="150" cy="100" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '0.5s' }}/>
+  <circle cx="250" cy="200" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '1s' }}/>
+  <circle cx="150" cy="300" r="4" fill="#3b82f6" className="animate-pulse" style={{ animationDelay: '1.5s' }}/>
+</svg>
   );
 }

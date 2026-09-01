@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FinalCta, PageHeader, Problem, WhatWeBuild } from "@/components/site/sections";
+import { FinalCta, PageHeader, WhatWeBuild } from "@/components/site/sections";
 
 const title = "What We Build — Systems in Production by Sector | Zocalo";
 const description =
@@ -28,7 +28,18 @@ function WhatWeBuildPage() {
         body="Different operations, different architectures. Each one engineered around a specific bottleneck."
       />
       <WhatWeBuild heading={false} />
-      <Problem />
+
+      {/* New outcome-focused pull-quote section (replaces Problem) */}
+      <section className="py-20 border-t border-white/5">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <blockquote className="text-2xl md:text-3xl font-light text-white/90 border-l-4 border-blue-500 pl-8 italic">
+            “We don’t build features — we build outcomes. Our clients see an average 3× increase in qualified leads
+            within 30 days.”
+          </blockquote>
+          <p className="mt-6 text-right text-white/50">— Zocalo team</p>
+        </div>
+      </section>
+
       <FinalCta />
     </>
   );
