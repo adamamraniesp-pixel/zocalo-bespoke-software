@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import navMark from "@/assets/zocalo-mark.png.asset.json";
-import { EASE, useMagnetic } from "./motion";
+import { EASE } from "./motion";
 import { useHeaderTheme } from "./HeaderTheme";
+import { MagneticCta } from "./MagneticCta";
 
 const links = [
   { to: "/services", label: "Services" },
@@ -17,7 +18,6 @@ export function SiteNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const listRef = useRef<HTMLUListElement | null>(null);
   const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
-  const cta = useMagnetic(0.22, 5);
 
   const headerBg = inFinalCta
     ? "border-transparent bg-transparent"
@@ -101,14 +101,9 @@ export function SiteNav() {
           />
         </ul>
 
-        <Link
-          to="/contact"
-          {...cta.handlers}
-          style={cta.style}
-          className="rounded-md bg-gold px-4 py-2 text-sm font-medium text-gold-foreground transition-colors duration-200 ease-out hover:bg-gold/90"
-        >
+        <MagneticCta to="/contact" variant="gold" size="compact">
           Book a Consultation
-        </Link>
+        </MagneticCta>
       </nav>
 
       <div className="border-t border-border/60 px-6 pb-3 md:hidden">
