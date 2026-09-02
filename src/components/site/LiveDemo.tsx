@@ -159,7 +159,7 @@ export function LiveDemo() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.35, ease: EASE }}
-                        className="flex items-center gap-3 rounded-lg border border-gold/40 bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] px-4 py-3"
+                        className="flex items-center gap-3 rounded-sm border border-gold/40 bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] px-4 py-3"
                       >
                         <motion.span
                           animate={{ scale: [1, 1.18, 1] }}
@@ -183,7 +183,7 @@ export function LiveDemo() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, ease: EASE }}
-                        className="flex items-center gap-3 rounded-lg border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] px-4 py-3"
+                        className="flex items-center gap-3 rounded-sm border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] px-4 py-3"
                       >
                         <span className="inline-flex size-8 items-center justify-center rounded-full bg-primary/25 text-[color-mix(in_oklab,white_92%,transparent)]">
                           <PhoneIncoming className="size-4" />
@@ -247,7 +247,7 @@ export function LiveDemo() {
                   CRM pipeline
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="rounded-lg border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
+                  <div className="rounded-sm border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
                     <p className="text-[0.7rem] tracking-[0.12em] text-[color-mix(in_oklab,white_58%,transparent)] uppercase">
                       New leads
                     </p>
@@ -298,7 +298,7 @@ export function LiveDemo() {
                       </AnimatePresence>
                     </div>
                   </div>
-                  <div className="rounded-lg border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
+                  <div className="rounded-sm border border-[color-mix(in_oklab,white_12%,transparent)] p-3">
                     <p className="text-[0.7rem] tracking-[0.12em] text-[color-mix(in_oklab,white_58%,transparent)] uppercase">
                       Dispatch
                     </p>
