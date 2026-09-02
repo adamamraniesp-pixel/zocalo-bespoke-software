@@ -1,154 +1,146 @@
-import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "./motion";
 
 type Variant = "a" | "b" | "c" | "d";
 
-const shapes: Record<Variant, { cls: string; svg: ReactNode }[]> = {
-  a: [
-    {
-      cls: "right-[5%] top-6 h-32 w-32 text-primary md:h-48 md:w-48",
-      svg: (
-        <>
-          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="0.7" />
-          <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="0.7" />
-        </>
-      ),
-    },
-    {
-      cls: "left-[3%] top-16 h-20 w-20 text-secondary md:h-28 md:w-28",
-      svg: <path d="M50 8 92 82H8Z" fill="none" stroke="currentColor" strokeWidth="0.8" />,
-    },
-    {
-      cls: "left-[42%] top-2 h-16 w-16 text-gold md:h-24 md:w-24",
-      svg: <path d="M12 50h76M50 12v76" stroke="currentColor" strokeWidth="0.7" fill="none" />,
-    },
-  ],
-  b: [
-    {
-      cls: "right-[16%] top-10 h-24 w-24 text-gold md:h-32 md:w-32",
-      svg: (
-        <rect
-          x="14"
-          y="14"
-          width="72"
-          height="72"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.8"
-        />
-      ),
-    },
-    {
-      cls: "left-[8%] top-4 h-28 w-28 text-primary md:h-40 md:w-40",
-      svg: (
-        <>
-          <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="0.7" />
-          <path d="M6 50h88M50 6v88" stroke="currentColor" strokeWidth="0.5" fill="none" />
-        </>
-      ),
-    },
-    {
-      cls: "left-[46%] top-14 h-14 w-14 text-secondary md:h-20 md:w-20",
-      svg: (
-        <path
-          d="M50 10 86 32v36L50 90 14 68V32Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.8"
-        />
-      ),
-    },
-  ],
-  c: [
-    {
-      cls: "right-[8%] top-8 h-28 w-28 text-secondary md:h-40 md:w-40",
-      svg: (
-        <>
-          <circle cx="38" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.7" />
-          <circle cx="62" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.7" />
-        </>
-      ),
-    },
-    {
-      cls: "left-[12%] top-20 h-16 w-16 text-gold md:h-24 md:w-24",
-      svg: (
-        <rect
-          x="20"
-          y="20"
-          width="60"
-          height="60"
-          rx="6"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.9"
-        />
-      ),
-    },
-    {
-      cls: "left-[52%] top-4 h-20 w-20 text-primary md:h-28 md:w-28",
-      svg: <path d="M50 92 8 18h84Z" fill="none" stroke="currentColor" strokeWidth="0.8" />,
-    },
-  ],
-  d: [
-    {
-      cls: "left-[6%] top-10 h-24 w-24 text-primary md:h-32 md:w-32",
-      svg: <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" strokeWidth="0.8" />,
-    },
-    {
-      cls: "right-[10%] top-4 h-20 w-20 text-gold md:h-28 md:w-28",
-      svg: (
-        <rect
-          x="18"
-          y="18"
-          width="64"
-          height="64"
-          rx="10"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.9"
-        />
-      ),
-    },
-    {
-      cls: "left-[44%] top-16 h-16 w-16 text-secondary md:h-24 md:w-24",
-      svg: <path d="M50 12 88 84H12Z" fill="none" stroke="currentColor" strokeWidth="0.8" />,
-    },
-  ],
+type Node = { x: number; y: number };
+
+/** Sparse blueprint schematics: thin connectors, small joint dots. No drifting. */
+const diagrams: Record<Variant, { nodes: Node[]; edges: [number, number][] }> = {
+  a: {
+    nodes: [
+      { x: 60, y: 120 },
+      { x: 240, y: 60 },
+      { x: 240, y: 190 },
+      { x: 470, y: 110 },
+      { x: 700, y: 55 },
+      { x: 700, y: 175 },
+      { x: 930, y: 120 },
+    ],
+    edges: [
+      [0, 1],
+      [0, 2],
+      [1, 3],
+      [2, 3],
+      [3, 4],
+      [3, 5],
+      [4, 6],
+      [5, 6],
+    ],
+  },
+  b: {
+    nodes: [
+      { x: 90, y: 70 },
+      { x: 90, y: 200 },
+      { x: 330, y: 135 },
+      { x: 560, y: 70 },
+      { x: 560, y: 200 },
+      { x: 830, y: 135 },
+      { x: 1020, y: 60 },
+    ],
+    edges: [
+      [0, 2],
+      [1, 2],
+      [2, 3],
+      [2, 4],
+      [3, 5],
+      [4, 5],
+      [5, 6],
+    ],
+  },
+  c: {
+    nodes: [
+      { x: 50, y: 190 },
+      { x: 220, y: 190 },
+      { x: 220, y: 80 },
+      { x: 440, y: 80 },
+      { x: 440, y: 200 },
+      { x: 690, y: 200 },
+      { x: 690, y: 90 },
+      { x: 960, y: 90 },
+    ],
+    edges: [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [4, 5],
+      [5, 6],
+      [6, 7],
+    ],
+  },
+  d: {
+    nodes: [
+      { x: 80, y: 130 },
+      { x: 300, y: 50 },
+      { x: 300, y: 130 },
+      { x: 300, y: 210 },
+      { x: 540, y: 130 },
+      { x: 780, y: 70 },
+      { x: 780, y: 190 },
+      { x: 1000, y: 130 },
+    ],
+    edges: [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [1, 4],
+      [2, 4],
+      [3, 4],
+      [4, 5],
+      [4, 6],
+      [5, 7],
+      [6, 7],
+    ],
+  },
 };
 
 /**
- * Subtle floating geometry pinned to the TOP band of a section only. The band
- * is masked so the shapes fade out well before the section's content, keeping
- * copy areas clean. Always sits at z-0 — content must be z-10.
+ * Low-opacity blueprint schematic pinned to the TOP band of a section, masked
+ * out before it reaches body copy. Joints breathe gently in place; nothing moves.
+ * Always z-0 — content must be z-10.
  */
 export function SectionFloaters({ variant = "a" }: { variant?: Variant }) {
   const reduced = useReducedMotion();
+  const { nodes, edges } = diagrams[variant];
 
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[42%] overflow-hidden"
+      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[38%] overflow-hidden"
       style={{
-        maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
+        maskImage: "linear-gradient(to bottom, black 0%, black 40%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 40%, transparent 100%)",
       }}
     >
-      {shapes[variant].map((s, i) => (
-        <motion.svg
-          key={i}
-          viewBox="0 0 100 100"
-          className={`absolute opacity-[0.14] ${s.cls}`}
-          animate={
-            reduced
-              ? {}
-              : { y: [0, i % 2 === 0 ? -14 : 12, 0], rotate: [0, i % 2 === 0 ? 6 : -8, 0] }
-          }
-          transition={{ duration: 16 + i * 5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {s.svg}
-        </motion.svg>
-      ))}
+      <svg
+        viewBox="0 0 1100 260"
+        preserveAspectRatio="xMidYMin slice"
+        className="absolute inset-x-0 top-0 h-full w-full text-primary opacity-[0.09]"
+      >
+        {edges.map(([a, b], i) => (
+          <line
+            key={i}
+            x1={nodes[a].x}
+            y1={nodes[a].y}
+            x2={nodes[b].x}
+            y2={nodes[b].y}
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        ))}
+        {nodes.map((n, i) => (
+          <motion.circle
+            key={i}
+            cx={n.x}
+            cy={n.y}
+            r="3"
+            fill="currentColor"
+            animate={reduced ? {} : { r: [2.4, 3.6, 2.4], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 5 + (i % 4), delay: i * 0.4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+      </svg>
     </div>
   );
 }
