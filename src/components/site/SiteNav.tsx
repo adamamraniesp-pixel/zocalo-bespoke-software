@@ -101,7 +101,7 @@ export function SiteNav() {
           />
         </ul>
 
-        <MagneticCta to="/contact" variant="gold" size="compact">
+        <MagneticCta to="/contact" variant="solid" size="compact">
           Book a Consultation
         </MagneticCta>
       </nav>

@@ -108,10 +108,10 @@ export function Hero() {
           </Reveal>
           <Reveal delay={180}>
             <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <MagneticCta to="/contact" variant="gold">
+              <MagneticCta to="/contact" variant="solid">
                 Book a Consultation
               </MagneticCta>
-              <MagneticCta to="/what-we-build" variant="primary">
+              <MagneticCta to="/what-we-build" variant="outline">
                 View Our Work
               </MagneticCta>
             </div>
@@ -1140,7 +1140,7 @@ export function FinalCta() {
         >
           <div className="halo-ring relative rounded-md">
             <div className="shimmer-sweep relative overflow-hidden rounded-md">
-              <MagneticCta to="/contact" variant="gold">
+              <MagneticCta to="/contact" variant="solid">
                 Let's Build It
               </MagneticCta>
             </div>
