@@ -6,10 +6,24 @@ import { Reveal, useReducedMotion } from "./motion";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const transcript = [
-  { who: "Caller", line: "Hi — our heating packed in and it's freezing." },
-  { who: "Zocalo AI", line: "I can help. Is this a residential or commercial property?" },
-  { who: "Caller", line: "Residential. 14 Ardmore Road." },
-  { who: "Zocalo AI", line: "Booked as an urgent no-heat call. An engineer will confirm by 8am." },
+  { at: "23:47:02", who: "Caller", line: "Hi — our heating packed in and it's freezing." },
+  {
+    at: "23:47:06",
+    who: "Zocalo AI",
+    line: "I can help. Is this a residential or commercial property?",
+  },
+  { at: "23:47:11", who: "Caller", line: "Residential. 14 Ardmore Road, BT9." },
+  {
+    at: "23:47:15",
+    who: "Zocalo AI",
+    line: "Is the boiler showing a fault code, or is there no response at all?",
+  },
+  { at: "23:47:22", who: "Caller", line: "No response. Nothing on the display." },
+  {
+    at: "23:47:28",
+    who: "Zocalo AI",
+    line: "Logged as an urgent no-heat call. An engineer will confirm by 08:00.",
+  },
 ];
 
 /** Timeline (ms from start) for each stage of the sequence. */
@@ -17,10 +31,10 @@ const T = {
   ring: 300,
   answer: 1500,
   transcriptStart: 2200,
-  transcriptStep: 1300,
-  card: 7600,
-  logged: 8600,
-  loop: 10600,
+  transcriptStep: 1050,
+  card: 8600,
+  logged: 9600,
+  loop: 11800,
 };
 
 type Stage = {
@@ -96,7 +110,7 @@ export function LiveDemo() {
         </div>
 
         <Reveal delay={140}>
-          <div className="demo-chrome mt-12 overflow-hidden rounded-xl border border-[color-mix(in_oklab,var(--primary)_22%,transparent)]">
+          <div className="demo-chrome mt-12 overflow-hidden rounded-md border border-[color-mix(in_oklab,var(--primary)_22%,transparent)]">
             {/* window bar */}
             <div className="flex items-center justify-between gap-4 border-b border-[color-mix(in_oklab,white_10%,transparent)] px-5 py-3">
               <div className="flex items-center gap-2">
@@ -104,7 +118,7 @@ export function LiveDemo() {
                 <span className="size-2.5 rounded-full bg-primary/60" />
                 <span className="size-2.5 rounded-full bg-[color-mix(in_oklab,white_28%,transparent)]" />
                 <span className="ml-3 font-mono text-[0.7rem] tracking-[0.18em] text-[color-mix(in_oklab,white_62%,transparent)] uppercase">
-                  ops console · 02:14
+                  ops console · 23:47 · after hours
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -207,8 +221,12 @@ export function LiveDemo() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, ease: EASE }}
-                      className="text-sm leading-[1.7]"
+                      className="flex gap-3 text-sm leading-[1.7]"
                     >
+                      <span className="mt-[0.2rem] font-mono text-[0.65rem] tracking-[0.06em] text-[color-mix(in_oklab,white_38%,transparent)]">
+                        {t.at}
+                      </span>
+                      <span className="flex-1">
                       <span
                         className={`mr-2 font-mono text-[0.65rem] tracking-[0.12em] uppercase ${
                           t.who === "Caller" ? "text-[color-mix(in_oklab,white_52%,transparent)]" : "text-primary"
@@ -217,6 +235,7 @@ export function LiveDemo() {
                         {t.who}
                       </span>
                       <span className="text-[color-mix(in_oklab,white_88%,transparent)]">{t.line}</span>
+                      </span>
                     </motion.li>
                   ))}
                 </ul>
@@ -241,14 +260,31 @@ export function LiveDemo() {
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                            className="rounded-md border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_16%,transparent)] p-3"
+                            className="rounded-sm border border-primary/40 bg-[color-mix(in_oklab,var(--primary)_16%,transparent)] p-3"
                           >
                             <p className="text-sm font-medium text-[color-mix(in_oklab,white_92%,transparent)]">
                               14 Ardmore Road
                             </p>
-                            <p className="mt-1 text-xs text-[color-mix(in_oklab,white_60%,transparent)]">
-                              No heat · Residential
-                            </p>
+                            <dl className="mt-2 space-y-1 font-mono text-[0.62rem] tracking-[0.04em] text-[color-mix(in_oklab,white_60%,transparent)]">
+                              <div className="flex justify-between gap-2">
+                                <dt>PHONE</dt>
+                                <dd className="text-[color-mix(in_oklab,white_82%,transparent)]">
+                                  +44 7700 900431
+                                </dd>
+                              </div>
+                              <div className="flex justify-between gap-2">
+                                <dt>SERVICE</dt>
+                                <dd className="text-[color-mix(in_oklab,white_82%,transparent)]">
+                                  No heat · Residential
+                                </dd>
+                              </div>
+                              <div className="flex justify-between gap-2">
+                                <dt>REF</dt>
+                                <dd className="text-[color-mix(in_oklab,white_82%,transparent)]">
+                                  ZC-4182
+                                </dd>
+                              </div>
+                            </dl>
                             <div className="mt-3 flex items-center gap-2">
                               <span className="size-1.5 rounded-full bg-gold" />
                               <span className="font-mono text-[0.6rem] tracking-[0.14em] text-gold uppercase">
@@ -257,7 +293,7 @@ export function LiveDemo() {
                             </div>
                           </motion.div>
                         ) : (
-                          <div className="h-[5.5rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
+                          <div className="h-[8.5rem] rounded-sm border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
                         )}
                       </AnimatePresence>
                     </div>
@@ -266,7 +302,7 @@ export function LiveDemo() {
                     <p className="text-[0.7rem] tracking-[0.12em] text-[color-mix(in_oklab,white_58%,transparent)] uppercase">
                       Dispatch
                     </p>
-                    <div className="mt-3 h-[5.5rem] rounded-md border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
+                    <div className="mt-3 h-[8.5rem] rounded-sm border border-dashed border-[color-mix(in_oklab,white_12%,transparent)]" />
                   </div>
                 </div>
 
