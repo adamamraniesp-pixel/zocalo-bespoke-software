@@ -164,7 +164,7 @@ function ConsultationForm() {
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.9, y: 3 }}
         transition={{ type: "spring", stiffness: 620, damping: 12, mass: 0.6 }}
-        className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-gold px-7 py-4 text-sm font-medium tracking-[0.02em] text-gold-foreground shadow-[0_14px_36px_-20px_color-mix(in_oklab,var(--gold)_80%,transparent)] transition-colors duration-200 ease-out hover:bg-gold/90"
+        className="group inline-flex w-full items-center justify-center gap-2 rounded-md border border-[color-mix(in_oklab,var(--navy)_80%,black)] bg-navy px-7 py-4 text-sm font-medium tracking-[0.02em] text-white transition-[background-color,box-shadow] duration-200 ease-out hover:bg-[color-mix(in_oklab,var(--navy)_92%,black)] hover:shadow-[0_16px_36px_-18px_color-mix(in_oklab,var(--navy)_55%,transparent)]"
       >
         <AnimatePresence mode="wait" initial={false}>
           {sent ? (
