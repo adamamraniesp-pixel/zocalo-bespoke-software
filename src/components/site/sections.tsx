@@ -4,7 +4,7 @@ import type { CSSProperties, ReactElement, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
+import { Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
@@ -260,11 +260,11 @@ function ServiceDetail({ service }: { service: Service }) {
       exit={{ opacity: 0, x: -14 }}
       transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
       style={{ ["--service-accent" as never]: service.accent }}
-      className="grid gap-10 md:grid-cols-[minmax(0,1fr)_14rem] md:gap-12"
+      className="relative z-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_14rem] md:gap-12"
     >
       <div>
         <div className="flex items-center gap-4">
-          <span className="font-mono text-xs tracking-[0.22em]" style={{ color: service.accent }}>
+          <span className="font-mono text-[2.75rem] leading-none font-bold text-transparent [font-variant-numeric:tabular-nums] [-webkit-text-stroke:1px_var(--service-accent)]">
             {service.n}
           </span>
           <span className="h-px w-10" style={{ background: service.accent }} />
@@ -299,9 +299,9 @@ function ServiceDetail({ service }: { service: Service }) {
         </ul>
       </div>
 
-      <DrawIn className="w-full md:justify-self-end" delay={40}>
+      <div key={`diagram-${service.n}`} className="service-diagram w-full md:justify-self-end">
         <service.Glyph className="h-32 w-full md:h-40" style={{ color: service.accent }} />
-      </DrawIn>
+      </div>
     </motion.div>
   );
 }
@@ -315,7 +315,8 @@ export function Services({
 }) {
   const items = condensed ? services.slice(0, 3) : services;
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = (items[activeIndex] ?? items[0])!;
+  const active = items[activeIndex] ?? items[0];
+  if (!active) return null;
 
   return (
     <section className={`relative overflow-hidden ${heading ? "section" : "section pt-0 md:pt-0"}`}>
@@ -335,7 +336,7 @@ export function Services({
         ) : null}
 
         <Reveal delay={80}>
-          <div className="mt-12 grid gap-0 overflow-hidden rounded-lg border border-border bg-card/40 lg:grid-cols-[20rem_minmax(0,1fr)]">
+          <div className="mt-12 grid gap-0 overflow-hidden rounded-md border border-border bg-card/40 lg:grid-cols-[20rem_minmax(0,1fr)]">
             {/* Selector rail */}
             <div
               role="tablist"
@@ -360,17 +361,10 @@ export function Services({
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
+                    {isActive ? <motion.span layoutId="service-active-indicator" aria-hidden className="absolute inset-y-0 left-0 w-[3px]" style={{ background: s.accent }} transition={{ type: "spring", stiffness: 420, damping: 36 }} /> : null}
                     <span
-                      aria-hidden
-                      className="absolute inset-y-0 left-0 w-[2px] origin-top transition-transform duration-400 ease-out"
-                      style={{
-                        background: s.accent,
-                        transform: `scaleY(${isActive ? 1 : 0})`,
-                      }}
-                    />
-                    <span
-                      className="font-mono text-[0.7rem] tracking-[0.2em]"
-                      style={{ color: isActive ? s.accent : undefined }}
+                      className="font-mono text-[1.65rem] leading-none font-bold text-transparent [font-variant-numeric:tabular-nums] [-webkit-text-stroke:1px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 group-hover:[-webkit-text-stroke-color:var(--primary)]"
+                      style={isActive ? { WebkitTextStrokeColor: s.accent } : undefined}
                     >
                       {s.n}
                     </span>
@@ -383,7 +377,7 @@ export function Services({
             </div>
 
             {/* Detail panel */}
-            <div className="relative min-h-[26rem] p-8 md:p-12">
+            <div className="service-panel relative min-h-[26rem] overflow-hidden p-8 md:p-12" style={{ ["--service-accent" as never]: active.accent }}>
               <AnimatePresence mode="wait" initial={false}>
                 <ServiceDetail key={active.n} service={active} />
               </AnimatePresence>
