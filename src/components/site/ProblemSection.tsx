@@ -4,11 +4,11 @@ import { Plus } from "lucide-react";
 import { useElementProgress, useReducedMotion } from "./motion";
 
 const pains = [
-  { title: "Missed calls after hours", body: "Demand arrives when nobody is at the desk, and the enquiry goes to whoever answers first." },
-  { title: "Manual admin and re-entry", body: "The same customer record is typed into several tools, creating delay and avoidable errors." },
-  { title: "Disconnected tools", body: "Critical context gets lost between subscriptions that were never designed to work together." },
-  { title: "Repetitive work", body: "Skilled people lose productive hours to mechanical steps that software should handle." },
-  { title: "Lost opportunities", body: "Follow-up depends on memory instead of a dependable system, so valuable work quietly disappears." },
+  { title: "One decline feels like the end", body: "A no from one lender should mean the next qualified option—not another application from scratch." },
+  { title: "Rates and terms buried in fine print", body: "Factor rates, APR, holdbacks, and total payback should be explained with clear math before you sign." },
+  { title: "The SBA timeline does not fit every need", body: "SBA loans can offer strong rates, but a 60–90 day process is the wrong answer when capital is urgent." },
+  { title: "Every lender wants different paperwork", body: "Repeated applications waste time and make it harder to compare real offers on equal terms." },
+  { title: "Stacked debt hides the full picture", body: "Multiple advances can compound quickly without a clear view of cash flow, payoff, and consolidation options." },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -24,12 +24,12 @@ export function Problem() {
         <div className="self-start lg:sticky lg:top-32">
           <motion.p className="eyebrow" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE }}>The Problem</motion.p>
           <motion.h2 className="mt-6 max-w-xl text-3xl leading-[1.12] font-medium tracking-display md:text-[2.75rem]" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.08, ease: EASE }}>
-            Growth stalls in the gaps between your tools
+            Good businesses are often matched to the wrong capital
           </motion.h2>
           <motion.p className="mt-7 max-w-md text-base leading-[1.8] text-muted-foreground" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.14, ease: EASE }}>
-            Most businesses don't lose margin to strategy. They lose it to friction—work handed between inboxes, spreadsheets, and subscriptions no one owns.
+            Approval depends on far more than a credit score. Revenue, time in business, industry, use of funds, and urgency all change which lender is the right fit.
           </motion.p>
-          <p className="mt-10 max-w-sm border-l border-primary pl-5 text-sm leading-[1.7] text-foreground/80">We engineer the missing layer between your people, data, and decisions.</p>
+          <p className="mt-10 max-w-sm border-l border-primary pl-5 text-sm leading-[1.7] text-foreground/80">We make the lender market easier to navigate—and keep qualified applications moving.</p>
         </div>
 
         <div ref={ref} className="relative pl-5 sm:pl-9">

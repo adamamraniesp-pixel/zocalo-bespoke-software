@@ -4,7 +4,7 @@ import type { CSSProperties, ReactElement, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
+import { DrawIn, Reveal, StaggerWords, useElementProgress, useReducedMotion } from "./motion";
 import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
 import { HeroBackdrop } from "./HeroBackdrop";
@@ -34,7 +34,7 @@ import {
 
 /* --------------------------------- SHARED --------------------------------- */
 
-type Path = "/" | "/services" | "/what-we-build" | "/process" | "/why-zocalo" | "/contact";
+type Path = "/" | "/loan-products" | "/how-it-works" | "/why-zocalo" | "/contact";
 
 export function LearnMore({ to, label = "Learn more" }: { to: Path; label?: string }) {
   return (
@@ -92,27 +92,26 @@ export function Hero() {
       <div className="container-x relative z-10 grid items-center gap-14 lg:grid-cols-[55%_45%]">
         <div className="max-w-3xl">
           <Reveal>
-            <p className="eyebrow">Bespoke Software Engineering</p>
+            <p className="eyebrow">Commercial Finance</p>
           </Reveal>
           <Reveal delay={60}>
             <h1 className="mt-7 max-w-3xl text-[2.75rem] leading-[1.06] font-medium tracking-display text-balance md:text-[4.25rem]">
-              Software Built Around Your Business
+              Capital Matched to How Your Business Actually Qualifies
             </h1>
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-8 max-w-2xl text-base leading-[1.75] text-muted-foreground md:text-lg">
-              We design and build bespoke software—from CRMs and AI systems to internal platforms,
-              automation, and high-performance websites—built around the way your business actually
-              works.
+              One application gives your business access to a panel of commercial lenders. We match
+              your profile to the right product, terms, and funding timeline.
             </p>
           </Reveal>
           <Reveal delay={180}>
             <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
               <MagneticCta to="/contact" variant="solid">
-                Book a Consultation
+                Get Funded
               </MagneticCta>
-              <MagneticCta to="/what-we-build" variant="outline">
-                View Our Work
+              <MagneticCta to="/how-it-works" variant="outline">
+                See How It Works
               </MagneticCta>
             </div>
           </Reveal>
@@ -133,9 +132,9 @@ export function TrustStatement() {
       <div className="container-x relative z-10">
         <Reveal>
           <p className="max-w-4xl text-2xl leading-[1.45] font-light tracking-[-0.02em] text-balance md:text-[2.1rem]">
-            No templates. No unnecessary subscriptions.{" "}
+            One application. Multiple commercial lenders.{" "}
             <span className="text-muted-foreground">
-              Every system is engineered around your business.
+              A decline from one should lead to the next best fit—not a dead end.
             </span>
           </p>
         </Reveal>
@@ -159,85 +158,85 @@ type Service = {
 const services: Service[] = [
   {
     n: "01",
-    title: "Bespoke Software Development",
-    body: "Systems engineered from first principles for your operation. No templates, no forced workflows.",
+    title: "Merchant Cash Advance",
+    body: "Fast working capital based on future card and receivables sales, designed for businesses with steady revenue.",
     accent: "var(--primary)",
-    duration: "8-16 weeks",
+    duration: "24-72 hours",
     included: [
-      "Operational discovery and process mapping",
-      "Architecture and data model design",
-      "Staged delivery with fortnightly demos",
-      "Documentation and handover",
+      "Funds in 24–72 hours",
+      "Minimal documentation",
+      "Repayment tied to daily or weekly sales",
+      "Flexible credit profile review",
     ],
     Glyph: GlyphBespoke,
   },
   {
     n: "02",
-    title: "CRM Systems",
-    body: "Pipelines, data models, and automations that mirror how your team actually sells and serves.",
+    title: "Business Line of Credit",
+    body: "Reusable revolving capital for payroll, inventory, seasonal gaps, and other ongoing working needs.",
     accent: "var(--secondary)",
-    duration: "4-8 weeks",
+    duration: "2-7 days",
     included: [
-      "Custom pipeline design",
-      "Data migration from existing tools",
-      "Team training",
-      "30-day post-launch support",
+      "Draw only what you need",
+      "Pay interest on funds in use",
+      "Capital replenishes as you repay",
+      "Suitable for recurring cash-flow needs",
     ],
     Glyph: GlyphCrm,
   },
   {
     n: "03",
-    title: "AI Automation",
-    body: "Answering, triage, summarisation, and decision support wired directly into your operations.",
+    title: "Equipment Financing",
+    body: "Financing for vehicles, machinery, medical equipment, kitchen assets, and other revenue-producing purchases.",
     accent: "var(--amber)",
-    duration: "3-6 weeks",
+    duration: "2-10 days",
     included: [
-      "Call and message capture with transcription",
-      "Qualification and routing rules",
-      "Escalation paths to a human",
-      "Accuracy review in the first 30 days",
+      "Equipment generally serves as collateral",
+      "Competitive secured rates",
+      "Terms aligned to useful asset life",
+      "Common across trucking, construction, medical, and restaurants",
     ],
     Glyph: GlyphAi,
   },
   {
     n: "04",
-    title: "Internal Platforms",
-    body: "One operating system for scheduling, reporting, and approvals—replacing spreadsheets and silos.",
+    title: "SBA Loans",
+    body: "Longer-term financing through SBA-approved lenders for established businesses seeking the strongest available rates.",
     accent: "var(--teal)",
-    duration: "6-12 weeks",
+    duration: "60-90 days",
     included: [
-      "Role-based access and approvals",
-      "Scheduling and workload views",
-      "Reporting dashboards",
-      "Spreadsheet consolidation",
+      "Competitive rates and longer terms",
+      "Typically requires 2+ years in business",
+      "Strong credit and complete documentation",
+      "Best suited to planned, non-urgent capital needs",
     ],
     Glyph: GlyphPlatform,
   },
   {
     n: "05",
-    title: "Websites",
-    body: "High-performance, conversion-focused front ends engineered for speed and search visibility.",
+    title: "Invoice / AR Factoring",
+    body: "Convert unpaid business invoices into immediate cash, with approval weighted toward your customers’ creditworthiness.",
     accent: "var(--gold)",
-    duration: "3-5 weeks",
+    duration: "1-5 days",
     included: [
-      "Design system and copy structure",
-      "Core Web Vitals performance budget",
-      "Technical SEO and analytics",
-      "CMS or direct-edit handover",
+      "Advance against eligible receivables",
+      "Customer credit drives approval",
+      "Ongoing facilities can scale with sales",
+      "Useful for long payment cycles",
     ],
     Glyph: GlyphWebsite,
   },
   {
     n: "06",
-    title: "Integrations",
-    body: "APIs and data pipelines that connect the tools you keep and retire the ones you don't.",
+    title: "Short-Term Loans",
+    body: "A fixed lump sum with a defined, shorter repayment window for time-sensitive business opportunities or expenses.",
     accent: "var(--primary)",
-    duration: "2-6 weeks",
+    duration: "1-5 days",
     included: [
-      "System and API audit",
-      "Sync and reconciliation logic",
-      "Failure alerting and retries",
-      "Runbook for your team",
+      "Fixed funding amount",
+      "Defined repayment schedule",
+      "More structure than an advance",
+      "Fast underwriting for qualified businesses",
     ],
     Glyph: GlyphIntegration,
   },
@@ -325,11 +324,11 @@ export function Services({
         {heading ? (
           <>
             <Reveal>
-              <p className="eyebrow">Services</p>
+              <p className="eyebrow">Loan Products</p>
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Engineering across the full operational stack
+                Financing matched to your profile and purpose
               </h2>
             </Reveal>
           </>
@@ -340,7 +339,7 @@ export function Services({
             {/* Selector rail */}
             <div
               role="tablist"
-              aria-label="Services"
+              aria-label="Loan products"
               aria-orientation="vertical"
               className="flex overflow-x-auto border-b border-border lg:flex-col lg:overflow-visible lg:border-r lg:border-b-0"
             >
@@ -388,7 +387,7 @@ export function Services({
         {condensed ? (
           <Reveal delay={200}>
             <div className="mt-12">
-              <LearnMore to="/services" label="All services" />
+              <LearnMore to="/loan-products" label="All loan products" />
             </div>
           </Reveal>
         ) : null}
@@ -532,7 +531,7 @@ export function WhatWeBuild({
         {condensed ? (
           <Reveal delay={200}>
             <div className="mt-14 border-t border-border pt-10">
-              <LearnMore to="/what-we-build" label="See all use cases" />
+              <LearnMore to="/how-it-works" label="See how matching works" />
             </div>
           </Reveal>
         ) : null}
@@ -546,29 +545,29 @@ export function WhatWeBuild({
 const steps = [
   {
     n: "01",
-    title: "Discover",
-    body: "We map how your business runs today—people, handoffs, systems, and cost of friction.",
+    title: "Apply once",
+    body: "Share your business profile, revenue, time in operation, and funding need in one application—not six.",
     accent: "text-secondary",
     Glyph: GlyphDiscover,
   },
   {
     n: "02",
-    title: "Design",
-    body: "Architecture, data model, and interface designed around the workflow you actually use.",
+    title: "Matched across our lender panel",
+    body: "We assess your profile against multiple commercial lenders and products at the same time.",
     accent: "text-primary",
     Glyph: GlyphDesign,
   },
   {
     n: "03",
-    title: "Build",
-    body: "Shipped in tight increments with production-grade engineering and continuous review.",
+    title: "Declined by one, routed to the next",
+    body: "If one lender says no, your application moves to the next best fit without making you start over.",
     accent: "text-gold",
     Glyph: GlyphBuild,
   },
   {
     n: "04",
-    title: "Scale",
-    body: "Monitoring, iteration, and expansion as the system becomes core infrastructure.",
+    title: "Funded",
+    body: "Once approved, funds are disbursed directly—often within days, depending on the product.",
     accent: "text-secondary",
     Glyph: GlyphScale,
   },
@@ -682,11 +681,11 @@ export function Process({
         {heading ? (
           <>
             <Reveal>
-              <p className="eyebrow">Process</p>
+                <p className="eyebrow">How It Works</p>
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Discover → Design → Build → Scale
+                  Apply → Match → Route → Fund
               </h2>
             </Reveal>
           </>
@@ -717,7 +716,7 @@ export function Process({
         {condensed ? (
           <Reveal delay={260}>
             <div className="mt-14">
-              <LearnMore to="/process" label="How we work" />
+              <LearnMore to="/how-it-works" label="How funding works" />
             </div>
           </Reveal>
         ) : null}

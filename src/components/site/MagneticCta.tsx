@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useMagnetic } from "./motion";
 
 type Props = {
-  to: "/" | "/services" | "/what-we-build" | "/process" | "/why-zocalo" | "/contact";
+  to: "/" | "/loan-products" | "/how-it-works" | "/why-zocalo" | "/contact";
   children: ReactNode;
   variant?: "solid" | "outline";
   size?: "default" | "compact";

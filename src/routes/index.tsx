@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FinalCta, Hero, Problem, StatsBand, TrustStatement } from "@/components/site/sections";
 import { LiveDemo } from "@/components/site/LiveDemo";
 
-const title = "Zocalo — Bespoke Software Built Around Your Business";
+const title = "Commercial Business Financing | Zocalo";
 const description =
-  "Zocalo designs and builds bespoke software: custom CRMs, AI automation, internal platforms, high-performance websites, and integrations engineered around how your business operates.";
+  "Zocalo matches businesses with commercial lenders and the right financing product through one streamlined application.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

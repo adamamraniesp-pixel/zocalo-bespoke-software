@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LoanProductsRouteImport } from './routes/loan-products'
 import { Route as ProcessRouteImport } from './routes/process'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WhatWeBuildRouteImport } from './routes/what-we-build'
@@ -24,6 +26,16 @@ const IndexRoute = IndexRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoanProductsRoute = LoanProductsRouteImport.update({
+  id: '/loan-products',
+  path: '/loan-products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProcessRoute = ProcessRouteImport.update({
@@ -50,6 +62,8 @@ const WhyZocaloRoute = WhyZocaloRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/loan-products': typeof LoanProductsRoute
   '/process': typeof ProcessRoute
   '/services': typeof ServicesRoute
   '/what-we-build': typeof WhatWeBuildRoute
@@ -58,6 +72,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/loan-products': typeof LoanProductsRoute
   '/process': typeof ProcessRoute
   '/services': typeof ServicesRoute
   '/what-we-build': typeof WhatWeBuildRoute
@@ -67,6 +83,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/loan-products': typeof LoanProductsRoute
   '/process': typeof ProcessRoute
   '/services': typeof ServicesRoute
   '/what-we-build': typeof WhatWeBuildRoute
@@ -77,6 +95,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/how-it-works'
+    | '/loan-products'
     | '/process'
     | '/services'
     | '/what-we-build'
@@ -85,6 +105,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/how-it-works'
+    | '/loan-products'
     | '/process'
     | '/services'
     | '/what-we-build'
@@ -93,6 +115,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact'
+    | '/how-it-works'
+    | '/loan-products'
     | '/process'
     | '/services'
     | '/what-we-build'
@@ -102,6 +126,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  HowItWorksRoute: typeof HowItWorksRoute
+  LoanProductsRoute: typeof LoanProductsRoute
   ProcessRoute: typeof ProcessRoute
   ServicesRoute: typeof ServicesRoute
   WhatWeBuildRoute: typeof WhatWeBuildRoute
@@ -122,6 +148,20 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loan-products': {
+      id: '/loan-products'
+      path: '/loan-products'
+      fullPath: '/loan-products'
+      preLoaderRoute: typeof LoanProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/process': {
@@ -158,6 +198,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  HowItWorksRoute: HowItWorksRoute,
+  LoanProductsRoute: LoanProductsRoute,
   ProcessRoute: ProcessRoute,
   ServicesRoute: ServicesRoute,
   WhatWeBuildRoute: WhatWeBuildRoute,
