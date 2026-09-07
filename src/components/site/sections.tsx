@@ -531,7 +531,7 @@ export function WhatWeBuild({
         {condensed ? (
           <Reveal delay={200}>
             <div className="mt-14 border-t border-border pt-10">
-              <LearnMore to="/what-we-build" label="See all use cases" />
+              <LearnMore to="/how-it-works" label="See how matching works" />
             </div>
           </Reveal>
         ) : null}
@@ -545,29 +545,29 @@ export function WhatWeBuild({
 const steps = [
   {
     n: "01",
-    title: "Discover",
-    body: "We map how your business runs today—people, handoffs, systems, and cost of friction.",
+    title: "Apply once",
+    body: "Share your business profile, revenue, time in operation, and funding need in one application—not six.",
     accent: "text-secondary",
     Glyph: GlyphDiscover,
   },
   {
     n: "02",
-    title: "Design",
-    body: "Architecture, data model, and interface designed around the workflow you actually use.",
+    title: "Matched across our lender panel",
+    body: "We assess your profile against multiple commercial lenders and products at the same time.",
     accent: "text-primary",
     Glyph: GlyphDesign,
   },
   {
     n: "03",
-    title: "Build",
-    body: "Shipped in tight increments with production-grade engineering and continuous review.",
+    title: "Declined by one, routed to the next",
+    body: "If one lender says no, your application moves to the next best fit without making you start over.",
     accent: "text-gold",
     Glyph: GlyphBuild,
   },
   {
     n: "04",
-    title: "Scale",
-    body: "Monitoring, iteration, and expansion as the system becomes core infrastructure.",
+    title: "Funded",
+    body: "Once approved, funds are disbursed directly—often within days, depending on the product.",
     accent: "text-secondary",
     Glyph: GlyphScale,
   },
@@ -681,11 +681,11 @@ export function Process({
         {heading ? (
           <>
             <Reveal>
-              <p className="eyebrow">Process</p>
+                <p className="eyebrow">How It Works</p>
             </Reveal>
             <Reveal delay={50}>
               <h2 className="mt-6 max-w-2xl text-3xl leading-[1.15] font-medium tracking-display md:text-[2.6rem]">
-                Discover → Design → Build → Scale
+                  Apply → Match → Route → Fund
               </h2>
             </Reveal>
           </>
@@ -716,7 +716,7 @@ export function Process({
         {condensed ? (
           <Reveal delay={260}>
             <div className="mt-14">
-              <LearnMore to="/process" label="How we work" />
+              <LearnMore to="/how-it-works" label="How funding works" />
             </div>
           </Reveal>
         ) : null}

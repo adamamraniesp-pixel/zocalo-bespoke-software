@@ -6,9 +6,8 @@ import { useHeaderTheme } from "./HeaderTheme";
 import { MagneticCta } from "./MagneticCta";
 
 const links = [
-  { to: "/services", label: "Services" },
-  { to: "/what-we-build", label: "What We Build" },
-  { to: "/process", label: "Process" },
+  { to: "/loan-products", label: "Loan Products" },
+  { to: "/how-it-works", label: "How It Works" },
   { to: "/why-zocalo", label: "Why Zocalo" },
 ] as const;
 
@@ -67,7 +66,10 @@ export function SiteNav() {
       >
         <Link to="/" className="inline-flex items-center gap-2.5 rounded-sm" aria-label="Zocalo home">
           <img src={navMark.url} alt="" aria-hidden className="h-10 w-10 object-contain" />
-          <span className="text-[1.25rem] font-medium tracking-[-0.02em] lowercase">zocalo</span>
+          <span>
+            <span className="block text-[1.25rem] leading-none font-medium tracking-[-0.02em] lowercase">zocalo</span>
+            <span className="mt-1 hidden font-mono text-[0.48rem] tracking-[0.14em] text-muted-foreground uppercase sm:block">Commercial Finance</span>
+          </span>
         </Link>
 
 
@@ -102,7 +104,7 @@ export function SiteNav() {
         </ul>
 
         <MagneticCta to="/contact" variant="solid" size="compact">
-          Book a Consultation
+          Get Funded
         </MagneticCta>
       </nav>
 
